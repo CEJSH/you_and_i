@@ -1413,34 +1413,38 @@ function TrustStrip({
 }) {
   const marqueeBadges = [...badges, ...badges];
   return (
-    <section className="relative z-10 overflow-hidden px-4 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_18%_24%,rgba(34,211,238,0.1),transparent_58%),radial-gradient(circle_at_86%_12%,rgba(125,211,252,0.08),transparent_54%),linear-gradient(170deg,rgba(7,13,29,0.76),rgba(11,17,30,0.84))] before:opacity-44">
+    <section className="relative z-10 overflow-hidden px-4 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_18%_24%,#22d3ee1a,#0000_58%),radial-gradient(circle_at_86%_12%,#7dd3fc14,#0000_54%),linear-gradient(170deg,#070d1dc2,#0b111ed6)] before:opacity-100">
       <div className="mx-auto max-w-7xl overflow-hidden rounded-2xl py-3">
         <div className="px-4 pb-2 text-sm lg:text-[20px] uppercase tracking-[0.22em] text-slate-200">
           {label}
         </div>
-        <motion.div
-          className="flex w-max items-center gap-3 px-2"
-          animate={reduceMotion ? undefined : { x: ["0%", "-50%"] }}
-          transition={
-            reduceMotion
-              ? undefined
-              : { duration: 60, repeat: Infinity, ease: "linear" }
-          }
-        >
-          {marqueeBadges.map((badge, i) => (
-            <div
-              key={`${badge.name}-${i}`}
-              className="flex items-center gap-2 rounded-xl border border-cyan-100/20 bg-white/8 px-4 py-2 text-sm lg:text-[20px] font-semibold text-slate-200"
-            >
-              <span>
-                <BodyChars text={badge.name} />
-              </span>
-              <span className="text-sm lg:text-[20px] uppercase tracking-[0.16em] text-slate-200">
-                <BodyChars text={badge.note} />
-              </span>
-            </div>
-          ))}
-        </motion.div>
+        <div className="relative">
+          <div className="pointer-events-none absolute inset-y-0 -left-10 z-10 w-28 bg-[linear-gradient(to_right,#070d1d_0%,#070d1d_58%,rgba(7,13,29,0)_100%)] blur-[16px]" />
+          <div className="pointer-events-none absolute inset-y-0 -right-10 z-10 w-28 bg-[linear-gradient(to_left,#070d1d_0%,#070d1d_58%,rgba(7,13,29,0)_100%)] blur-[16px]" />
+          <motion.div
+            className="flex w-max items-center gap-3 px-2"
+            animate={reduceMotion ? undefined : { x: ["0%", "-50%"] }}
+            transition={
+              reduceMotion
+                ? undefined
+                : { duration: 60, repeat: Infinity, ease: "linear" }
+            }
+          >
+            {marqueeBadges.map((badge, i) => (
+              <div
+                key={`${badge.name}-${i}`}
+                className="flex items-center gap-2 rounded-xl border border-cyan-100/20 bg-white/8 px-4 py-2 text-sm lg:text-[20px] font-semibold text-slate-200"
+              >
+                <span>
+                  <BodyChars text={badge.name} />
+                </span>
+                <span className="text-sm lg:text-[20px] uppercase tracking-[0.16em] text-slate-200">
+                  <BodyChars text={badge.note} />
+                </span>
+              </div>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );
