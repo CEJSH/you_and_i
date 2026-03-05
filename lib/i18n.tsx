@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react"
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react"
 
 export type Locale = "ko" | "en"
 
@@ -262,11 +262,26 @@ interface I18nContextType {
 const I18nContext = createContext<I18nContextType | null>(null)
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocale] = useState<Locale>("ko")
+  const [locale, setLocale] = useState<Locale>(() => {
+    if (typeof window === "undefined") return "ko"
+    const saved = window.localStorage.getItem("youandi-locale")
+    if (saved === "en" || saved === "ko") return saved
+    const browserLocale = window.navigator.language?.toLowerCase()
+    if (browserLocale.startsWith("en")) return "en"
+    return "ko"
+  })
 
   const toggleLocale = useCallback(() => {
     setLocale((prev) => (prev === "ko" ? "en" : "ko"))
   }, [])
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem("youandi-locale", locale)
+    } catch {
+      // localStorage can be unavailable in some restricted environments.
+    }
+  }, [locale])
 
   return (
     <I18nContext.Provider value={{ locale, toggleLocale, t: translations }}>
