@@ -456,17 +456,20 @@ const pageCopy = {
         {
           period: "Q1",
           title: "Genesis Alpha",
-          detail: "Open mainnet gateway and run governance and deployment bridges in parallel.",
+          detail:
+            "Open mainnet gateway and run governance and deployment bridges in parallel.",
         },
         {
           period: "Q2",
           title: "Fluid Core",
-          detail: "Deploy AI risk engine beta and synchronize with institution testnets.",
+          detail:
+            "Deploy AI risk engine beta and synchronize with institution testnets.",
         },
         {
           period: "Q3",
           title: "Global Mesh",
-          detail: "Integrate the top five L1/L2 chains and launch compliant onboarding.",
+          detail:
+            "Integrate the top five L1/L2 chains and launch compliant onboarding.",
         },
         {
           period: "Q4",
@@ -483,7 +486,8 @@ const pageCopy = {
       ecosystemBtn: "Explore the Ecosystem",
     },
     footer: {
-      description: "Building a Web3 infrastructure platform for the next generation of digital assets.",
+      description:
+        "Building a Web3 infrastructure platform for the next generation of digital assets.",
       links: {
         Technology: ["Quantum Mesh", "Vault Engine", "RWA Grid", "SDK"],
         Ecosystem: ["Bridge", "API Mesh", "Settlement", "Custody"],
@@ -850,7 +854,7 @@ function NetworkBg() {
           cx={n.x}
           cy={n.y}
           r={n.r}
-          fill="#050608"
+          fill="#070a12"
           stroke="#67e8f9"
           strokeOpacity={n.primary ? "0.4" : "0.12"}
           strokeWidth={n.primary ? "0.5" : "0.3"}
@@ -883,7 +887,11 @@ function useCountUp(target: number, duration: number, inView: boolean) {
 
 /* ── Dashboard/Performance ── */
 
-function DashboardSection({ copy }: { copy: (typeof pageCopy)["ko"]["dashboard"] }) {
+function DashboardSection({
+  copy,
+}: {
+  copy: (typeof pageCopy)["ko"]["dashboard"];
+}) {
   const bars = copy.tabs;
   const chart = [
     { name: "ETH", tps: 84 },
@@ -897,7 +905,24 @@ function DashboardSection({ copy }: { copy: (typeof pageCopy)["ko"]["dashboard"]
   const label = copy.chartTitle;
 
   return (
-    <section className="relative z-10 overflow-hidden px-6 py-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_15%_12%,rgba(56,189,248,0.16),transparent_56%),linear-gradient(175deg,rgba(5,6,8,0.8),rgba(8,12,20,0.95))] before:opacity-70">
+    <section className="relative z-10 overflow-hidden px-6 py-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_15%_12%,rgba(56,189,248,0.16),transparent_56%),radial-gradient(circle_at_88%_86%,rgba(129,140,248,0.08),transparent_60%),linear-gradient(175deg,rgba(8,14,32,0.84),rgba(5,18,36,0.94))] before:opacity-50">
+      <AmbientSweep
+        angle="35deg"
+        color="rgba(125,211,252,0.12)"
+        duration={20}
+        zIndex="-z-20"
+      />
+      <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(59,130,246,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(59,130,246,0.06)_1px,transparent_1px)] bg-[size:80px_52px] opacity-15" />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute -left-28 top-8 h-80 w-80 rounded-full bg-cyan-300/12 blur-[100px]"
+        animate={{
+          x: [0, 34, 0],
+          y: [0, 8, 0],
+          opacity: [0.08, 0.16, 0.08],
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -905,14 +930,14 @@ function DashboardSection({ copy }: { copy: (typeof pageCopy)["ko"]["dashboard"]
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="relative z-10 mb-10 max-w-lg"
-          >
-          <p className="text-[17px] font-medium uppercase tracking-[0.2em] text-cyan-300/60">
+        >
+          <p className="text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
             <HeadingChars text={copy.eyebrow} />
           </p>
-          <h2 className="mt-4 text-3xl font-bold text-white sm:text-5xl">
+          <h2 className="mt-4 text-3xl font-semibold text-white sm:text-5xl">
             <HeadingChars text={copy.title} />
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-slate-300">
+          <p className="mt-4 text-xl leading-relaxed text-slate-200">
             <BodyChars text={copy.desc} />
           </p>
         </motion.div>
@@ -928,27 +953,27 @@ function DashboardSection({ copy }: { copy: (typeof pageCopy)["ko"]["dashboard"]
             {bars.map((s) => (
               <div
                 key={s.label}
-                className="rounded-xl border border-white/6 bg-white/2 p-4"
+                className="rounded-xl border border-white/6 bg-white/8 p-4"
               >
-                <p className="text-[17px] uppercase tracking-wider text-slate-500">
+                <p className="text-[20px] uppercase tracking-wider text-slate-200">
                   <BodyChars text={s.label} />
                 </p>
-                <p className={`mt-1.5 text-xl font-bold ${s.color}`}>
+                <p className={`mt-1.5 text-xl font-semibold ${s.color}`}>
                   <BodyChars text={s.value} />
                 </p>
               </div>
             ))}
 
-            <div className="sm:col-span-3 rounded-xl border border-white/6 bg-white/2 p-5">
+            <div className="sm:col-span-3 rounded-xl border border-white/6 bg-white/8 p-5">
               <div className="flex items-center justify-between">
-                <p className="text-[17px] uppercase tracking-wider text-slate-500">
+                <p className="text-[20px] uppercase tracking-wider text-slate-200">
                   {label}
                 </p>
                 <div className="flex gap-3">
                   {copy.timeframe.map((t) => (
                     <span
                       key={t}
-                      className={`text-[17px] ${t === copy.timeframe[2] ? "text-cyan-300" : "text-slate-500"}`}
+                      className={`text-[20px] ${t === copy.timeframe[2] ? "text-cyan-300" : "text-slate-200"}`}
                     >
                       <BodyChars text={t} />
                     </span>
@@ -964,7 +989,9 @@ function DashboardSection({ copy }: { copy: (typeof pageCopy)["ko"]["dashboard"]
                     key={`${h.name}-${i}`}
                     className="flex-1 rounded-t bg-linear-to-t from-cyan-500/30 to-cyan-300/50"
                     initial={{ height: 0 }}
-                    whileInView={{ height: `${[92, 74, 88, 68, 83, 56, 81][i]}%` }}
+                    whileInView={{
+                      height: `${[92, 74, 88, 68, 83, 56, 81][i]}%`,
+                    }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.3 + i * 0.03 }}
                   />
@@ -974,7 +1001,7 @@ function DashboardSection({ copy }: { copy: (typeof pageCopy)["ko"]["dashboard"]
                 {copy.bulletItems.map((item) => (
                   <span
                     key={item}
-                    className="flex items-center gap-1.5 text-[17px] text-slate-300"
+                    className="flex items-center gap-1.5 text-[20px] text-slate-200"
                   >
                     <svg
                       width="10"
@@ -994,8 +1021,8 @@ function DashboardSection({ copy }: { copy: (typeof pageCopy)["ko"]["dashboard"]
               </div>
             </div>
 
-            <div className="rounded-xl border border-white/6 bg-white/2 p-4">
-                <p className="text-[17px] uppercase tracking-wider text-slate-500">
+            <div className="rounded-xl border border-white/6 bg-white/8 p-4">
+              <p className="text-[20px] uppercase tracking-wider text-slate-200">
                 <BodyChars text={copy.chainTitle} />
               </p>
               <div className="mt-3 flex flex-col gap-2">
@@ -1006,13 +1033,13 @@ function DashboardSection({ copy }: { copy: (typeof pageCopy)["ko"]["dashboard"]
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.3, delay: 0.5 + i * 0.04 }}
-                    className="flex items-center gap-2 rounded-lg border border-white/4 bg-white/2 px-3 py-2"
+                    className="flex items-center gap-2 rounded-lg border border-white/4 bg-white/8 px-3 py-2"
                   >
                     <span className="h-1.5 w-1.5 rounded-full bg-green-400/80" />
-                <span className="text-[17px] font-medium text-slate-300">
+                    <span className="text-[20px] font-semibold text-slate-200">
                       <BodyChars text={chain.name} />
                     </span>
-                    <span className="ml-auto text-[17px] tabular-nums text-slate-400">
+                    <span className="ml-auto text-[20px] tabular-nums text-slate-200">
                       <BodyChars text={`${chain.tps} ${copy.tpsLabel}`} />
                     </span>
                   </motion.div>
@@ -1023,20 +1050,55 @@ function DashboardSection({ copy }: { copy: (typeof pageCopy)["ko"]["dashboard"]
 
           <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-cyan-500/5 blur-[80px]" />
           <div className="pointer-events-none absolute -bottom-12 -left-12 h-36 w-36 rounded-full bg-cyan-400/4 blur-[60px]" />
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-linear-to-r from-transparent via-cyan-400/30 to-transparent opacity-0"
+            animate={{
+              opacity: [0, 0.55, 0],
+              x: ["-100%", "100%", "100%"],
+            }}
+            transition={{
+              duration: 4.4,
+              repeat: Infinity,
+              ease: "linear",
+              delay: 0.6,
+            }}
+          />
         </motion.div>
       </div>
     </section>
   );
 }
 
-function PerformanceSection({ copy }: { copy: (typeof pageCopy)["ko"]["performance"] }) {
+function PerformanceSection({
+  copy,
+}: {
+  copy: (typeof pageCopy)["ko"]["performance"];
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.3 });
   return (
     <section
       ref={ref}
-      className="relative z-10 overflow-hidden px-6 py-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_88%_10%,rgba(45,212,191,0.16),transparent_52%),linear-gradient(172deg,rgba(4,7,13,0.88),rgba(7,10,16,0.95))] before:opacity-75"
+      className="relative z-10 overflow-hidden px-6 py-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_88%_10%,rgba(45,212,191,0.16),transparent_52%),radial-gradient(circle_at_24%_86%,rgba(125,211,252,0.09),transparent_56%),linear-gradient(172deg,rgba(10,14,34,0.84),rgba(6,14,28,0.9))] before:opacity-44"
     >
+      <AmbientSweep
+        angle="160deg"
+        color="rgba(45,212,191,0.13)"
+        duration={22}
+        zIndex="-z-20"
+      />
+      <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(125,211,252,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(125,211,252,0.08)_1px,transparent_1px)] bg-[size:60px_34px] opacity-15" />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute right-[-130px] top-10 h-72 w-72 rounded-full bg-sky-300/10 blur-[95px]"
+        animate={{
+          x: [0, -30, 0],
+          y: [0, -16, 0],
+          opacity: [0.06, 0.15, 0.06],
+        }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -1044,10 +1106,10 @@ function PerformanceSection({ copy }: { copy: (typeof pageCopy)["ko"]["performan
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-[17px] font-medium uppercase tracking-[0.2em] text-cyan-300/60">
+          <p className="text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
             <HeadingChars text={copy.eyebrow} />
           </p>
-          <h2 className="mt-4 text-3xl font-bold text-white sm:text-5xl">
+          <h2 className="mt-4 text-3xl font-semibold text-white sm:text-5xl">
             <HeadingChars text={copy.title} />
           </h2>
         </motion.div>
@@ -1057,20 +1119,20 @@ function PerformanceSection({ copy }: { copy: (typeof pageCopy)["ko"]["performan
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="relative mt-14 overflow-hidden rounded-2xl border border-white/6 bg-white/2 p-8 sm:p-10"
+          className="relative mt-14 overflow-hidden rounded-2xl border border-white/6 bg-white/8 p-8 sm:p-10"
         >
           <div className="mb-10 grid grid-cols-1 gap-6 border-b border-white/6 pb-8 sm:grid-cols-3">
             {copy.top.map((stat) => (
               <div key={stat.desc}>
-                <p className="text-2xl font-bold text-white sm:text-4xl">
+                <p className="text-2xl font-semibold text-white sm:text-4xl">
                   <BodyChars text={stat.value} />
                   {stat.unit && (
-                    <span className="ml-1 text-lg font-normal text-slate-400">
+                    <span className="ml-1 text-xl font-normal text-slate-200">
                       <BodyChars text={stat.unit} />
                     </span>
                   )}
                 </p>
-                <p className="mt-1 text-[17px] tracking-wider text-slate-400">
+                <p className="mt-1 text-[20px] tracking-wider text-slate-200">
                   <BodyChars text={stat.desc} />
                 </p>
               </div>
@@ -1086,12 +1148,12 @@ function PerformanceSection({ copy }: { copy: (typeof pageCopy)["ko"]["performan
               return (
                 <div key={bar.label} className="space-y-2">
                   <div className="flex items-baseline justify-between">
-                    <span className="text-[17px] font-medium text-slate-300">
+                    <span className="text-[20px] font-semibold text-slate-200">
                       <BodyChars text={bar.label} />
                     </span>
-                    <span className="text-lg font-bold tabular-nums text-white sm:text-3xl">
+                    <span className="text-xl font-semibold tabular-nums text-white sm:text-3xl">
                       <CountVal />
-                      <span className="ml-1 text-[17px] font-normal text-slate-400">
+                      <span className="ml-1 text-[20px] font-normal text-slate-200">
                         <BodyChars text="TPS" />
                       </span>
                     </span>
@@ -1120,11 +1182,77 @@ function PerformanceSection({ copy }: { copy: (typeof pageCopy)["ko"]["performan
   );
 }
 
-function SectionDivider() {
+function SectionDivider({
+  delay = 0,
+  duration = 3.2,
+}: {
+  delay?: number;
+  duration?: number;
+}) {
   return (
-    <div className="relative z-20 flex items-center justify-center py-4">
-      <div className="h-px w-full max-w-5xl bg-linear-to-r from-transparent via-white/10 to-transparent" />
-    </div>
+    <motion.div
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.25 }}
+      className="relative z-20 flex items-center justify-center"
+    >
+      <div className="relative h-px w-full max-w-7xl overflow-hidden bg-linear-to-r from-transparent via-white/10 to-transparent">
+        <motion.div
+          aria-hidden
+          className="absolute inset-0 bg-linear-to-r from-transparent via-cyan-300/45 to-transparent"
+          variants={{
+            hidden: { x: "-120%" },
+            show: {
+              x: ["-120%", "120%"],
+              transition: {
+                duration,
+                delay,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "linear",
+              },
+            },
+          }}
+        />
+      </div>
+    </motion.div>
+  );
+}
+
+function AmbientSweep({
+  angle,
+  color,
+  duration,
+  delay = 0,
+  zIndex = "-z-4",
+  className = "",
+}: {
+  angle: string;
+  color: string;
+  duration: number;
+  delay?: number;
+  zIndex?: string;
+  className?: string;
+}) {
+  return (
+    <motion.div
+      aria-hidden
+      className={`pointer-events-none absolute inset-0 ${zIndex} mix-blend-screen ${className}`}
+      style={{
+        backgroundImage: `linear-gradient(${angle}, transparent 40%, ${color} 50%, transparent 60%)`,
+        backgroundSize: "240% 240%",
+      }}
+      animate={{
+        opacity: [0.02, 0.2, 0.02],
+        backgroundPosition: ["0% 0%", "80% 80%"],
+      }}
+      transition={{
+        duration,
+        repeat: Infinity,
+        ease: "linear",
+        delay,
+      }}
+    />
   );
 }
 
@@ -1212,8 +1340,10 @@ function HeadingChars({
   text: string;
   className?: string;
 }) {
+  const { locale } = useI18n();
   return (
     <motion.span
+      key={`${text}-${locale}`}
       initial="hidden"
       whileInView="show"
       variants={headingReveal.container}
@@ -1240,8 +1370,10 @@ function BodyChars({
   text: string;
   className?: string;
 }) {
+  const { locale } = useI18n();
   return (
     <motion.span
+      key={`${text}-${locale}`}
       initial="hidden"
       whileInView="show"
       variants={bodyReveal.container}
@@ -1282,9 +1414,9 @@ function TrustStrip({
 }) {
   const marqueeBadges = [...badges, ...badges];
   return (
-    <section className="relative z-10 overflow-hidden px-6 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_18%_24%,rgba(34,211,238,0.08),transparent_58%),linear-gradient(170deg,rgba(5,7,13,0.85),rgba(7,10,15,0.95))] before:opacity-65">
+    <section className="relative z-10 overflow-hidden px-6 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_18%_24%,rgba(34,211,238,0.1),transparent_58%),radial-gradient(circle_at_86%_12%,rgba(125,211,252,0.08),transparent_54%),linear-gradient(170deg,rgba(7,13,29,0.76),rgba(11,17,30,0.84))] before:opacity-44">
       <div className="mx-auto max-w-7xl overflow-hidden rounded-2xl py-3">
-        <div className="px-4 pb-2 text-[17px] uppercase tracking-[0.22em] text-slate-500">
+        <div className="px-4 pb-2 text-[20px] uppercase tracking-[0.22em] text-slate-200">
           {label}
         </div>
         <motion.div
@@ -1299,12 +1431,12 @@ function TrustStrip({
           {marqueeBadges.map((badge, i) => (
             <div
               key={`${badge.name}-${i}`}
-              className="flex items-center gap-2 rounded-xl border border-cyan-100/20 bg-white/4 px-4 py-2 text-[17px] font-medium text-slate-200"
+              className="flex items-center gap-2 rounded-xl border border-cyan-100/20 bg-white/8 px-4 py-2 text-[20px] font-semibold text-slate-200"
             >
               <span>
                 <BodyChars text={badge.name} />
               </span>
-              <span className="text-[17px] uppercase tracking-[0.16em] text-slate-500">
+              <span className="text-[20px] uppercase tracking-[0.16em] text-slate-200">
                 <BodyChars text={badge.note} />
               </span>
             </div>
@@ -1324,13 +1456,17 @@ function HomePageContent() {
   const reduceMotion = useReducedMotion() ?? false;
   const heroFloat = useTransform(scrollYProgress, [0, 1], [0, -80]);
   const ambientFloat = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const heroRef = useRef<HTMLDivElement>(null);
   const audienceRef = useRef<HTMLDivElement>(null);
+  const featuresRef = useRef<HTMLDivElement>(null);
   const launchRef = useRef<HTMLDivElement>(null);
   const roadmapRef = useRef<HTMLDivElement>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const audienceInView = useInView(audienceRef, { once: true, amount: 0.25 });
-  const launchInView = useInView(launchRef, { once: true, amount: 0.25 });
-  const roadmapInView = useInView(roadmapRef, { once: true, amount: 0.25 });
+  const heroInView = useInView(heroRef, { amount: 0.25 });
+  const audienceInView = useInView(audienceRef, { amount: 0.25 });
+  const featuresInView = useInView(featuresRef, { amount: 0.18 });
+  const launchInView = useInView(launchRef, { amount: 0.25 });
+  const roadmapInView = useInView(roadmapRef, { amount: 0.25 });
 
   const handleLogoClick = () => {
     if (typeof window === "undefined") return;
@@ -1342,739 +1478,910 @@ function HomePageContent() {
   };
 
   return (
-    <main className="relative isolate min-h-screen overflow-x-hidden bg-[#050608] text-xl leading-[1.8] text-slate-100">
-        <div className="pointer-events-none fixed inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.08),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(14,165,233,0.06),transparent_50%)]" />
-        </div>
+    <main
+      key={locale}
+      className="relative isolate min-h-screen overflow-x-hidden bg-[#070a12] text-2xl leading-[1.9] text-slate-100 font-semibold"
+    >
+      <div className="pointer-events-none fixed inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.08),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(14,165,233,0.06),transparent_50%)]" />
+      </div>
 
-        {/* Header */}
-        <header className="fixed inset-x-0 top-0 z-50 border-b border-white/6 bg-[#050608]/80 backdrop-blur-xl">
-          <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
-            <button
-              type="button"
-              onClick={handleLogoClick}
-              className="cursor-pointer text-lg font-bold tracking-tight text-white"
-            >
-              YOU&I
-            </button>
-            <nav className="hidden items-center gap-8 md:flex">
-              {copy.header.navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-[17px] text-slate-100 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050608]"
-                >
-                  <BodyChars text={link.label} />
-                </a>
-              ))}
-            </nav>
-            <div className="hidden items-center gap-2 md:flex">
-              <button
-                type="button"
-                onClick={toggleLocale}
-                className="rounded-full border border-white/10 bg-white/5 px-3 py-2.5 text-[17px] font-medium uppercase tracking-[0.12em] text-slate-200 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050608]"
-              >
-                {locale === "ko" ? "EN" : "KO"}
-              </button>
+      {/* Header */}
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/6 bg-[#070a12]/70 backdrop-blur-xl">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
+          <button
+            type="button"
+            onClick={handleLogoClick}
+            className="cursor-pointer text-xl font-semibold tracking-tight text-white"
+          >
+            YOU&I
+          </button>
+          <nav className="hidden items-center gap-8 md:flex">
+            {copy.header.navLinks.map((link) => (
               <a
-                href="#contact"
-                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-lg font-medium text-white transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050608]"
+                key={link.href}
+                href={link.href}
+                className="text-[20px] text-slate-100 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
               >
-                <BodyChars text={copy.header.cta} /> <ArrowIcon />
+                <BodyChars text={link.label} />
               </a>
-            </div>
+            ))}
+          </nav>
+          <div className="hidden items-center gap-2 md:flex">
             <button
               type="button"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="flex min-h-11 min-w-11 items-center justify-center text-slate-200 md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050608]"
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              onClick={toggleLocale}
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-2.5 text-[20px] font-semibold uppercase tracking-[0.12em] text-slate-200 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
+              {locale === "ko" ? "EN" : "KO"}
+            </button>
+            <a
+              href="#contact"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-xl font-semibold text-white transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+            >
+              <BodyChars text={copy.header.cta} /> <ArrowIcon />
+            </a>
+          </div>
+          <button
+            type="button"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="flex min-h-11 min-w-11 items-center justify-center text-slate-200 md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {mobileOpen ? (
+                <>
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </>
+              ) : (
+                <>
+                  <line x1="4" y1="8" x2="20" y2="8" />
+                  <line x1="4" y1="16" x2="20" y2="16" />
+                </>
+              )}
+            </svg>
+          </button>
+        </div>
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.nav
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="overflow-hidden border-t border-white/6 md:hidden"
+            >
+              <div className="flex flex-col gap-4 px-6 py-6 text-[20px] font-semibold text-slate-200">
+                {copy.header.navLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="text-[20px] text-slate-100 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+                  >
+                    <BodyChars text={link.label} />
+                  </a>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    toggleLocale();
+                    setMobileOpen(false);
+                  }}
+                  className="w-fit rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-[20px] font-semibold uppercase tracking-[0.12em] text-slate-200 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+                >
+                  {locale === "ko" ? "EN" : "KO"}
+                </button>
+                <a
+                  href="#contact"
+                  onClick={() => setMobileOpen(false)}
+                  className="mt-2 inline-flex w-fit min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-xl font-semibold text-white"
+                >
+                  <BodyChars text={copy.header.cta} /> <ArrowIcon />
+                </a>
+              </div>
+            </motion.nav>
+          )}
+        </AnimatePresence>
+      </header>
+
+      {/* ═══ Hero ═══ */}
+      <motion.section
+        ref={heroRef}
+        id="hero"
+        initial="hidden"
+        whileInView="show"
+        variants={heroReveal.container}
+        viewport={{ once: true, amount: 0.2 }}
+        className="relative z-10 flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pb-20 pt-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-20 before:bg-[radial-gradient(circle_at_72%_18%,rgba(56,189,248,0.16),transparent_60%),radial-gradient(circle_at_20%_80%,rgba(14,165,233,0.1),transparent_56%),linear-gradient(165deg,rgba(4,8,18,0.58),rgba(5,12,28,0.78))] before:opacity-44"
+      >
+        <AmbientSweep
+          angle="130deg"
+          color="rgba(125,211,252,0.18)"
+          duration={18}
+          zIndex="-z-20"
+        />
+        <motion.div
+          style={{ y: heroFloat }}
+          className="absolute inset-0 -z-10"
+          aria-hidden
+        >
+          <motion.div style={{ y: ambientFloat }} className="absolute inset-0">
+            <div className="absolute left-1/2 top-[-18%] h-[140vh] w-[140vw] -translate-x-1/2 overflow-hidden">
+              <div className="h-full w-full origin-center scale-105">
+                <HeroFluidCanvas reducedMotion={reduceMotion} />
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <div className="relative z-20 mx-auto flex max-w-5xl flex-col items-center text-center">
+          <motion.div variants={heroReveal.textBlock} className="flex">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[20px] font-semibold uppercase tracking-widest text-slate-200">
+              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              <HeroChars text={copy.hero.label} />
+            </span>
+          </motion.div>
+          <motion.h1
+            variants={heroReveal.textBlock}
+            className="mt-8 max-w-4xl text-4xl font-semibold leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl"
+          >
+            <HeroChars text={copy.hero.title1} className="block text-white" />
+            <HeroChars
+              text={copy.hero.title2}
+              className="mt-2 block bg-linear-to-r from-cyan-200 to-cyan-400 bg-clip-text text-transparent"
+            />
+          </motion.h1>
+          <motion.p
+            variants={heroReveal.textBlock}
+            className="mt-6 max-w-2xl text-xl leading-relaxed text-slate-200"
+          >
+            <HeroChars text={copy.hero.desc} />
+          </motion.p>
+          <motion.div
+            variants={heroReveal.textBlock}
+            className="mt-10 flex flex-col items-center gap-3 sm:flex-row"
+          >
+            <motion.a
+              href="#contact"
+              variants={heroReveal.textBlock}
+              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-7 py-3 text-xl font-semibold text-[#070a12] transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+            >
+              <HeroChars text={copy.hero.ctaPrimary} />
+              <ArrowIcon />
+            </motion.a>
+            <motion.a
+              href="#features"
+              variants={heroReveal.textBlock}
+              className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/15 px-7 py-3 text-xl font-semibold text-slate-200 transition-all duration-300 hover:border-white/30 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+            >
+              <HeroChars text={copy.hero.ctaSecondary} />
+              <ArrowIcon />
+            </motion.a>
+          </motion.div>
+          <motion.div
+            variants={heroReveal.textBlock}
+            className="mt-20 grid w-full max-w-3xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/6 bg-white/6 sm:grid-cols-4"
+          >
+            {copy.hero.stats.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.45, delay: i * 0.08 }}
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="group relative overflow-hidden bg-[#070a12] px-6 py-5 text-center"
+              >
+                <motion.div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-linear-to-r from-transparent via-cyan-200/45 to-transparent"
+                  animate={
+                    reduceMotion || !heroInView
+                      ? undefined
+                      : {
+                          x: ["-100%", "150%"],
+                          opacity: [0, 0.6, 0],
+                        }
+                  }
+                  transition={
+                    reduceMotion || !heroInView
+                      ? undefined
+                      : {
+                          duration: 4.2,
+                          repeat: Infinity,
+                          repeatDelay: 2.4,
+                          ease: "linear",
+                        }
+                  }
+                />
+                <p className="text-2xl font-semibold text-white sm:text-3xl">
+                  <BodyChars text={stat.value} />
+                </p>
+                <p className="mt-1 text-[20px] tracking-wider text-slate-200">
+                  <HeroChars text={stat.label} />
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+          <motion.div variants={heroReveal.textBlock} className="mt-16">
+              <motion.a
+                href="#features"
+                animate={
+                  reduceMotion || !heroInView
+                    ? undefined
+                    : { y: [0, 6, 0] }
+                }
+                transition={
+                  reduceMotion || !heroInView
+                    ? undefined
+                    : {
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }
+                }
+                className="inline-flex flex-col items-center gap-2 rounded-full px-1 py-1 text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              >
+              <span className="text-[20px] uppercase tracking-[0.2em]">
+                <HeroChars text={copy.hero.scroll} />
+              </span>
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-                {mobileOpen ? (
-                  <>
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </>
-                ) : (
-                  <>
-                    <line x1="4" y1="8" x2="20" y2="8" />
-                    <line x1="4" y1="16" x2="20" y2="16" />
-                  </>
-                )}
+                <path d="M8 3v10M4 9l4 4 4-4" />
               </svg>
-            </button>
-          </div>
-          <AnimatePresence>
-            {mobileOpen && (
-              <motion.nav
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.25 }}
-                className="overflow-hidden border-t border-white/6 md:hidden"
-              >
-                <div className="flex flex-col gap-4 px-6 py-6 text-[17px] font-medium text-slate-300">
-                  {copy.header.navLinks.map((link) => (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      onClick={() => setMobileOpen(false)}
-                      className="text-[17px] text-slate-100 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050608]"
-                    >
-                      <BodyChars text={link.label} />
-                    </a>
-                  ))}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      toggleLocale();
-                      setMobileOpen(false);
-                    }}
-                    className="w-fit rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-[17px] font-medium uppercase tracking-[0.12em] text-slate-200 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050608]"
-                  >
-                    {locale === "ko" ? "EN" : "KO"}
-                  </button>
-                  <a
-                    href="#contact"
-                    onClick={() => setMobileOpen(false)}
-                    className="mt-2 inline-flex w-fit min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-lg font-medium text-white"
-                  >
-                    <BodyChars text={copy.header.cta} /> <ArrowIcon />
-                  </a>
-                </div>
-              </motion.nav>
-            )}
-          </AnimatePresence>
-        </header>
-
-        {/* ═══ Hero ═══ */}
-        <motion.section
-          id="hero"
-          initial="hidden"
-          whileInView="show"
-          variants={heroReveal.container}
-          viewport={{ once: true, amount: 0.2 }}
-          className="relative z-10 flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pb-20 pt-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-20 before:bg-[radial-gradient(circle_at_72%_18%,rgba(56,189,248,0.12),transparent_60%),radial-gradient(circle_at_20%_80%,rgba(14,165,233,0.08),transparent_56%),linear-gradient(165deg,rgba(3,5,12,0.6),rgba(5,6,8,0.88))] before:opacity-75"
-        >
-          <motion.div
-            style={{ y: heroFloat }}
-            className="absolute inset-0 -z-10"
-            aria-hidden
-          >
-            <motion.div
-              style={{ y: ambientFloat }}
-              className="absolute inset-0"
-            >
-              <div className="absolute left-1/2 top-[-18%] h-[140vh] w-[140vw] -translate-x-1/2 overflow-hidden">
-                <div className="h-full w-full origin-center scale-105">
-                  <HeroFluidCanvas reducedMotion={reduceMotion} />
-                </div>
-              </div>
-            </motion.div>
+            </motion.a>
           </motion.div>
+        </div>
+      </motion.section>
 
-          <div className="relative z-20 mx-auto flex max-w-5xl flex-col items-center text-center">
-            <motion.div
-              variants={heroReveal.textBlock}
-              className="flex"
-            >
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[17px] font-medium uppercase tracking-widest text-slate-300">
-                <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                <HeroChars text={copy.hero.label} />
-              </span>
-            </motion.div>
-            <motion.h1
-              variants={heroReveal.textBlock}
-              className="mt-8 max-w-4xl text-4xl font-bold leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl"
-            >
-              <HeroChars text={copy.hero.title1} className="block text-white" />
-              <HeroChars
-                text={copy.hero.title2}
-                className="mt-2 block bg-linear-to-r from-cyan-200 to-cyan-400 bg-clip-text text-transparent"
-              />
-            </motion.h1>
-            <motion.p
-              variants={heroReveal.textBlock}
-              className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-200"
-            >
-              <HeroChars text={copy.hero.desc} />
-            </motion.p>
-            <motion.div
-              variants={heroReveal.textBlock}
-              className="mt-10 flex flex-col items-center gap-3 sm:flex-row"
-            >
-                <motion.a
-                  href="#contact"
-                  variants={heroReveal.textBlock}
-                  className="inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-7 py-3 text-lg font-semibold text-[#050608] transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050608]"
-                >
-                  <HeroChars text={copy.hero.ctaPrimary} />
-                  <ArrowIcon />
-                </motion.a>
-                <motion.a
-                  href="#features"
-                  variants={heroReveal.textBlock}
-                  className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/15 px-7 py-3 text-lg font-medium text-slate-200 transition-all duration-300 hover:border-white/30 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050608]"
-                >
-                  <HeroChars text={copy.hero.ctaSecondary} />
-                  <ArrowIcon />
-                </motion.a>
-            </motion.div>
-            <motion.div
-              variants={heroReveal.textBlock}
-              className="mt-20 grid w-full max-w-3xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/6 bg-white/6 sm:grid-cols-4"
-            >
-              {copy.hero.stats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="bg-[#050608] px-6 py-5 text-center"
-                >
-                  <p className="text-2xl font-bold text-white sm:text-3xl">
-                    <BodyChars text={stat.value} />
-                  </p>
-                  <p className="mt-1 text-[17px] tracking-wider text-slate-400">
-                    <HeroChars text={stat.label} />
-                  </p>
-                </div>
-              ))}
-            </motion.div>
-            <motion.div
-              variants={heroReveal.textBlock}
-              className="mt-16"
-            >
-                <motion.a
-                  href="#features"
-                  animate={{ y: [0, 6, 0] }}
-                transition={{
-                  duration: 2,
+      <div className="pt-8 sm:pt-10">
+        <TrustStrip
+          reduceMotion={reduceMotion}
+          badges={copy.trustStrip.badges}
+          label={copy.trustStrip.badgeLabel}
+        />
+      </div>
+
+      {/* ═══ Features — visual product matrix ═══ */}
+      <section
+        id="features"
+        className="relative z-10 overflow-hidden px-6 py-24 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_20%_10%,rgba(45,212,191,0.18),transparent_45%),radial-gradient(circle_at_82%_76%,rgba(125,211,252,0.14),transparent_45%),linear-gradient(to_bottom,rgba(10,12,24,0.8),rgba(6,10,20,0.9))] before:opacity-44"
+      >
+        <AmbientSweep
+          angle="20deg"
+          color="rgba(103,232,249,0.13)"
+          duration={24}
+          zIndex="-z-20"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(34,211,238,0.14),transparent_45%),radial-gradient(circle_at_80%_80%,rgba(56,189,248,0.1),transparent_40%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(59,130,246,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(59,130,246,0.06)_1px,transparent_1px)] bg-[size:44px_27px] opacity-12" />
+        <div className="pointer-events-none absolute inset-0 -z-5 bg-[radial-gradient(circle_at_18%_70%,rgba(56,189,248,0.08),transparent_60%),radial-gradient(circle_at_82%_20%,rgba(125,211,252,0.08),transparent_65%)]" />
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute -left-24 top-16 h-72 w-72 rounded-full bg-cyan-300/14 blur-[95px]"
+          animate={
+            reduceMotion || !featuresInView
+              ? undefined
+              : {
+                  x: [0, 52, 8, 0],
+                  y: [0, 18, -9, 0],
+                  opacity: [0.12, 0.2, 0.12],
+                }
+          }
+          transition={
+            reduceMotion || !featuresInView
+              ? undefined
+              : { duration: 14, repeat: Infinity, ease: "easeInOut" }
+          }
+        />
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-sky-300/12 blur-[110px]"
+          animate={
+            reduceMotion || !featuresInView
+              ? undefined
+              : {
+                  x: [0, -40, -8, 0],
+                  y: [0, -12, 8, 0],
+                  opacity: [0.1, 0.18, 0.1],
+                }
+          }
+          transition={
+            reduceMotion || !featuresInView
+              ? undefined
+              : {
+                  duration: 16,
                   repeat: Infinity,
                   ease: "easeInOut",
-                }}
-                className="inline-flex flex-col items-center gap-2 rounded-full px-1 py-1 text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050608]"
-              >
-              <span className="text-[17px] uppercase tracking-[0.2em]">
-                  <HeroChars text={copy.hero.scroll} />
-                </span>
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M8 3v10M4 9l4 4 4-4" />
-                </svg>
-              </motion.a>
-            </motion.div>
-          </div>
-        </motion.section>
+                  delay: 0.4,
+                }
+          }
+        />
 
-        <div className="pt-8 sm:pt-10">
-          <TrustStrip
-            reduceMotion={reduceMotion}
-            badges={copy.trustStrip.badges}
-            label={copy.trustStrip.badgeLabel}
-          />
-        </div>
-
-        {/* ═══ Features — visual product matrix ═══ */}
-        <section
-          id="features"
-          className="relative z-10 overflow-hidden px-6 py-24 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_20%_10%,rgba(34,211,238,0.14),transparent_45%),radial-gradient(circle_at_82%_76%,rgba(125,211,252,0.1),transparent_45%),linear-gradient(to_bottom,rgba(7,10,15,0.8),rgba(5,8,14,0.9))] before:opacity-75"
-        >
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(34,211,238,0.14),transparent_45%),radial-gradient(circle_at_80%_80%,rgba(56,189,248,0.1),transparent_40%)]" />
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(148,163,184,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.05)_1px,transparent_1px)] bg-[size:44px_27px] opacity-10" />
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute -left-24 top-16 h-72 w-72 rounded-full bg-cyan-300/14 blur-[95px]"
-            animate={
-              reduceMotion
-                ? undefined
-                : {
-                    x: [0, 52, 8, 0],
-                    y: [0, 18, -9, 0],
-                    opacity: [0.12, 0.2, 0.12],
-                  }
-            }
-            transition={
-              reduceMotion
-                ? undefined
-                : { duration: 14, repeat: Infinity, ease: "easeInOut" }
-            }
-          />
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-sky-300/12 blur-[110px]"
-            animate={
-              reduceMotion
-                ? undefined
-                : {
-                    x: [0, -40, -8, 0],
-                    y: [0, -12, 8, 0],
-                    opacity: [0.1, 0.18, 0.1],
-                  }
-            }
-            transition={
-              reduceMotion
-                ? undefined
-                : {
-                    duration: 16,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.4,
-                  }
-            }
-          />
-
-          <div className="relative mx-auto max-w-7xl">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="mb-12 text-left"
-            >
-              <p className="text-[17px] font-medium uppercase tracking-[0.2em] text-cyan-300/60">
-                  <HeadingChars text={copy.features.eyebrow} />
-                </p>
-                <h2 className="mt-4 max-w-3xl text-3xl font-bold text-white sm:text-5xl">
-                  <span className="block">
-                    <HeadingChars text={copy.features.title1} />
-                  </span>
-                  <span className="mt-2 block bg-linear-to-r from-cyan-200 via-sky-300 to-cyan-400 bg-clip-text text-transparent">
-                    <HeadingChars text={copy.features.title2} />
-                  </span>
-                </h2>
-                <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-300">
-                  <BodyChars text={copy.features.desc} />
-                </p>
-              </motion.div>
-
-            <div className="grid gap-px overflow-hidden rounded-[28px] border border-white/10 bg-white/10 md:grid-cols-2 lg:grid-cols-3">
-              {copy.features.cards.map((f, i) => (
-                <motion.div
-                  key={f.title}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.25 }}
-                  transition={{ duration: 0.6, delay: 0.1 + i * 0.1 }}
-                  whileHover={{ y: -10, scale: 1.01 }}
-                  whileTap={{ scale: 0.995 }}
-                  className="group relative min-h-[360px] bg-[linear-gradient(160deg,rgba(10,14,22,0.95),rgba(13,18,28,0.9))] p-7 transition-colors hover:bg-[linear-gradient(160deg,rgba(14,18,30,0.98),rgba(13,18,28,0.9))]"
-                >
-                  <motion.div
-                    aria-hidden
-                    className="pointer-events-none absolute -left-12 top-4 h-40 w-40 rounded-full bg-cyan-300/10 blur-3xl"
-                    animate={
-                      reduceMotion
-                        ? undefined
-                        : {
-                            x: [0, 26, 0],
-                            y: [0, 14, 0],
-                            opacity: [0.08, 0.16, 0.08],
-                          }
-                    }
-                    transition={
-                      reduceMotion
-                        ? undefined
-                        : {
-                            duration: 8 + i * 0.7,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }
-                    }
-                  />
-                  <motion.div
-                    aria-hidden
-                    className="pointer-events-none absolute left-0 right-0 h-px bg-linear-to-r from-transparent via-cyan-300/38 to-transparent"
-                    animate={
-                      reduceMotion
-                        ? undefined
-                        : { y: [16, 340, 16], opacity: [0, 0.4, 0] }
-                    }
-                    transition={
-                      reduceMotion
-                        ? undefined
-                        : {
-                            duration: 5.6 + i * 0.35,
-                            repeat: Infinity,
-                            ease: "linear",
-                            delay: i * 0.28,
-                          }
-                    }
-                  />
-                  <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_65%_10%,rgba(34,211,238,0.18),transparent_40%)]" />
-                  </div>
-                  <motion.div
-                    className="relative mb-6 border-b border-white/10 pb-6"
-                    animate={
-                      reduceMotion
-                        ? undefined
-                        : { y: [0, -3, 0, 2, 0], rotate: [0, -0.2, 0, 0.2, 0] }
-                    }
-                    transition={
-                      reduceMotion
-                        ? undefined
-                        : {
-                            duration: 7.2 + i * 0.4,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }
-                    }
-                  >
-                    <FeatureGraphic type={f.icon} />
-                  </motion.div>
-                  <h3 className="relative text-2xl font-semibold text-white">
-                    <HeadingChars text={f.title} />
-                  </h3>
-                <p className="relative mt-3 text-[17px] leading-relaxed text-slate-200/90">
-                  <BodyChars text={f.text} />
-                </p>
-                <p className="relative mt-7 inline-flex border-l border-cyan-300/80 pl-3 text-[17px] font-medium tracking-wide text-cyan-100">
-                    <BodyChars text={f.metric} />
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-        <SectionDivider />
-
-        {/* ═══ Launch highlights (Galxe-style metric rail) ═══ */}
-        <section className="relative z-10 overflow-hidden px-6 py-20 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_8%,rgba(186,230,253,0.12),transparent_54%),linear-gradient(170deg,rgba(6,9,16,0.84),rgba(5,7,13,0.95))] before:opacity-70">
-          <div
-            ref={launchRef}
-            className="mx-auto grid max-w-7xl gap-4 md:grid-cols-3"
-          >
-            {copy.launchHighlights.map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial="hidden"
-                animate={launchInView ? "show" : "hidden"}
-                custom={i}
-                variants={{
-                  hidden: { opacity: 0, y: 18 },
-                  show: (index: number) => ({
-                    opacity: 1,
-                    y: 0,
-                    transition: {
-                      duration: 0.7,
-                      ease: "easeOut",
-                      delay: reduceMotion ? 0 : index * 0.7,
-                    },
-                  }),
-                }}
-                className="relative overflow-hidden rounded-2xl border border-white/8 bg-[#050608]/80 px-6 py-7 sm:px-8"
-              >
-              <p className="text-[17px] uppercase tracking-[0.18em] text-slate-500">
-                  {item.title}
-                </p>
-                <p className="mt-2 text-3xl font-semibold text-white sm:text-4xl">
-                  {item.value}
-                </p>
-                <p className="mt-2 text-[17px] text-slate-300">
-                  {item.desc}
-                </p>
-                <div className="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={launchInView ? "filled" : "empty"}
-                    variants={{
-                      empty: { width: 0 },
-                      filled: (index: number) => ({
-                        width: "88%",
-                        transition: {
-                          duration: 0.8,
-                          delay: reduceMotion ? 0 : index * 0.7 + 0.18,
-                          ease: "easeOut",
-                        },
-                      }),
-                    }}
-                    custom={i}
-                    className="h-full rounded-full bg-linear-to-r from-cyan-400/80 to-cyan-200/90"
-                  />
-                </div>
-                <div className="pointer-events-none absolute -right-12 -top-10 h-28 w-28 rounded-full bg-cyan-400/8 blur-[34px]" />
-              </motion.div>
-            ))}
-          </div>
-        </section>
-        <SectionDivider />
-
-        {/* ═══ Dashboard — full-width, text overlaid ═══ */}
-        <DashboardSection copy={copy.dashboard} />
-        <SectionDivider />
-
-        {/* ═══ Performance — unified card ═══ */}
-        <PerformanceSection copy={copy.performance} />
-        <SectionDivider />
-
-        {/* ═══ Built for teams & builders (inspired by Galxe audience split style) ═══ */}
-        <section className="relative z-10 overflow-hidden px-6 py-24 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_90%_14%,rgba(45,212,191,0.1),transparent_56%),linear-gradient(168deg,rgba(6,9,18,0.86),rgba(5,7,13,0.95))] before:opacity-72">
-          <div
-            ref={audienceRef}
-            className="mx-auto grid max-w-7xl gap-4 md:grid-cols-3"
-          >
-            {copy.audience.blocks.map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial="hidden"
-                animate={audienceInView ? "show" : "hidden"}
-                custom={i}
-                variants={{
-                  hidden: { opacity: 0, y: 24 },
-                  show: (index: number) => ({
-                    opacity: 1,
-                    y: 0,
-                    transition: {
-                      duration: 0.45,
-                      ease: "easeOut",
-                      delay: reduceMotion ? 0 : index * 0.45,
-                    },
-                  }),
-                }}
-                className="group relative rounded-2xl border border-white/10 bg-white/2 p-6 backdrop-blur-sm transition-colors hover:border-cyan-300/25"
-              >
-                <p className="text-[17px] uppercase tracking-[0.2em] text-cyan-200/70">
-                  {`0${i + 1}`}
-              </p>
-                <h3 className="mt-3 text-xl font-bold text-white">
-                  {item.title}
-                </h3>
-                <p className="mt-4 text-[17px] leading-relaxed text-slate-300">
-                  {item.desc}
-                </p>
-                <a
-                  href="#contact"
-                  className="mt-6 inline-flex min-h-11 items-center gap-2 text-[17px] font-medium text-slate-200 transition-colors group-hover:text-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050608]"
-                >
-                  {item.action}
-                  <ArrowIcon />
-                </a>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-        <SectionDivider />
-
-        {/* ═══ Ecosystem — network bg with floating cards ═══ */}
-        <section
-          id="ecosystem"
-          className="relative z-10 overflow-hidden px-6 py-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_20%,rgba(14,165,233,0.1),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(56,189,248,0.06),transparent_50%),linear-gradient(170deg,rgba(5,7,14,0.8),rgba(6,9,16,0.95))] before:opacity-70"
-        >
-          {/* Network bg behind everything */}
-          <div className="pointer-events-none absolute inset-0 opacity-40">
-            <NetworkBg />
-          </div>
-          <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-[#050608] via-[#050608]/80 to-[#050608]" />
-
-          <div className="relative mx-auto max-w-7xl">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center"
-            >
-              <p className="text-[17px] font-medium uppercase tracking-[0.2em] text-cyan-300/60">
-                <HeadingChars text={copy.ecosystem.eyebrow} />
-              </p>
-                <h2 className="mt-4 text-3xl font-bold text-white sm:text-5xl">
-                  <HeadingChars text={copy.ecosystem.title} />
-                </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-slate-300">
-                <BodyChars text={copy.ecosystem.desc} />
-              </p>
-            </motion.div>
-            <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {copy.ecosystem.items.map((item, i) => (
-                <motion.div
-                  key={item.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.5, delay: 0.05 + i * 0.06 }}
-                  whileHover={{ y: -4, borderColor: "rgba(103,232,249,0.2)" }}
-                  className="flex items-center gap-4 rounded-xl border border-white/6 bg-[#050608]/70 px-6 py-5 backdrop-blur-sm transition-colors"
-                >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/6 bg-white/3">
-                    <EcoIcon type={item.icon} />
-                  </div>
-                  <span className="text-[17px] font-medium text-slate-200">
-                    <BodyChars text={item.name} />
-                  </span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-        <SectionDivider />
-
-        {/* ═══ Roadmap ═══ */}
-        <section
-          id="roadmap"
-          className="relative z-10 overflow-hidden px-6 py-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_70%_20%,rgba(56,189,248,0.11),transparent_52%),linear-gradient(172deg,rgba(5,8,14,0.84),rgba(7,10,18,0.96))] before:opacity-72"
-        >
-          <div className="mx-auto max-w-7xl">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center"
-            >
-              <p className="text-[17px] font-medium uppercase tracking-[0.2em] text-cyan-300/60">
-                <HeadingChars text={copy.roadmap.eyebrow} />
-              </p>
-                <h2 className="mt-4 text-3xl font-bold text-white sm:text-5xl">
-                  <HeadingChars text={copy.roadmap.title} />
-                </h2>
-            </motion.div>
-
-              {/* Horizontal timeline */}
-              <div className="relative mt-14" ref={roadmapRef}>
-                {/* Connecting line */}
-                <div className="absolute left-0 right-0 top-8 hidden h-px bg-linear-to-r from-transparent via-cyan-400/20 to-transparent lg:block" />
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                  {copy.roadmap.phases.map((node, i) => (
-                    <motion.div
-                      key={node.period}
-                      initial="hidden"
-                      animate={roadmapInView ? "show" : "hidden"}
-                      custom={i}
-                      variants={{
-                        hidden: { opacity: 0, y: 24 },
-                        show: (index: number) => ({
-                          opacity: 1,
-                          y: 0,
-                          transition: {
-                            duration: 0.7,
-                            ease: "easeOut",
-                            delay: reduceMotion ? 0 : index * 0.7,
-                          },
-                        }),
-                      }}
-                      whileHover={{ borderColor: "rgba(103,232,249,0.2)" }}
-                      className="relative rounded-2xl border border-white/6 bg-white/2 p-6 transition-colors"
-                    >
-                    {/* Dot on timeline */}
-                    <div className="absolute -top-1.25 left-1/2 hidden h-2.5 w-2.5 -translate-x-1/2 rounded-full border-2 border-cyan-400/40 bg-[#050608] lg:block" />
-                    <span className="inline-flex w-fit rounded-full bg-cyan-400/10 px-3 py-1 text-[17px] font-bold tracking-widest text-cyan-300">
-                      <BodyChars text={node.period} />
-                    </span>
-                    <h3 className="mt-4 text-lg font-bold text-white">
-                      <HeadingChars text={node.title} />
-                    </h3>
-                <p className="mt-2 text-[17px] leading-relaxed text-slate-300">
-                  <BodyChars text={node.detail} />
-                </p>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-        <SectionDivider />
-
-        {/* ═══ Contact CTA ═══ */}
-        <section
-          id="contact"
-          className="relative z-10 overflow-hidden px-6 py-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_24%_20%,rgba(125,211,252,0.12),transparent_50%),radial-gradient(circle_at_84%_82%,rgba(56,189,248,0.08),transparent_50%),linear-gradient(175deg,rgba(5,6,10,0.86),rgba(6,8,15,0.94))] before:opacity-74"
-        >
-          <div className="pointer-events-none absolute inset-0 opacity-30">
-            <NetworkBg />
-          </div>
-          <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-[#050608] via-transparent to-[#050608]" />
+        <div ref={featuresRef} className="relative mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.7 }}
-            className="relative mx-auto flex max-w-4xl flex-col items-center gap-8 text-center"
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-12 text-left"
           >
-            <h2 className="text-4xl font-bold leading-tight text-white sm:text-6xl">
+            <p className="text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
+              <HeadingChars text={copy.features.eyebrow} />
+            </p>
+            <h2 className="mt-4 max-w-3xl text-3xl font-semibold text-white sm:text-5xl">
               <span className="block">
-                <HeadingChars text={copy.contact.title1} />
+                <HeadingChars text={copy.features.title1} />
               </span>
-              <span className="bg-linear-to-r from-cyan-200 to-cyan-400 bg-clip-text text-transparent">
-                <HeadingChars text={copy.contact.title2} />
+              <span className="mt-2 block bg-linear-to-r from-cyan-200 via-sky-300 to-cyan-400 bg-clip-text text-transparent">
+                <HeadingChars text={copy.features.title2} />
               </span>
             </h2>
-            <p className="max-w-2xl text-lg leading-relaxed text-slate-300">
-              <BodyChars text={copy.contact.desc} />
+            <p className="mt-4 max-w-2xl text-xl leading-relaxed text-slate-200">
+              <BodyChars text={copy.features.desc} />
             </p>
-            <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row">
-              <a
-                href="mailto:contact@youandi.io"
-                className="inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-8 py-3.5 text-lg font-semibold text-[#050608] transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050608]"
-              >
-                <BodyChars text={copy.ctaButtons.contact} /> <ArrowIcon />
-              </a>
-              <a
-                href="#ecosystem"
-                className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/15 px-8 py-3.5 text-lg font-medium text-slate-200 transition-all duration-300 hover:border-white/30 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050608]"
-              >
-                <BodyChars text={copy.ctaButtons.explore} /> <ArrowIcon />
-              </a>
-            </div>
           </motion.div>
-        </section>
 
-        {/* ═══ Footer ═══ */}
-        <footer className="relative z-10 border-t border-white/6 px-6 pt-16 pb-8 sm:px-10 lg:px-14">
-          <div className="mx-auto max-w-7xl">
-            <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
-                <div className="lg:col-span-1">
-                  <span className="text-lg font-bold text-white">YOU&I</span>
-                <p className="mt-4 text-[17px] leading-relaxed text-slate-300">
-                  {copy.footer.description}
-                </p>
-              </div>
-              {Object.entries(copy.footer.links).map(([cat, links]) => (
-                <div key={cat}>
-                <h4 className="text-[17px] font-semibold text-slate-300">
-                    {cat}
-                  </h4>
-                  <ul className="mt-4 flex flex-col gap-2.5">
-                    {links.map((l) => (
-                      <li key={l}>
-                        <a
-                          href="#"
-                          className="text-[17px] text-slate-300 transition-colors duration-200 hover:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050608]"
-                        >
-                          {l}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
+          <div className="grid gap-px overflow-hidden rounded-[28px] border border-white/10 bg-white/10 md:grid-cols-2 lg:grid-cols-3">
+            {copy.features.cards.map((f, i) => (
+              <motion.div
+                key={f.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ duration: 0.6, delay: 0.1 + i * 0.1 }}
+                whileHover={{ y: -10, scale: 1.01 }}
+                whileTap={{ scale: 0.995 }}
+                className="group relative min-h-[360px] bg-[linear-gradient(160deg,rgba(10,14,22,0.88),rgba(13,18,28,0.84))] p-7 transition-colors hover:bg-[linear-gradient(160deg,rgba(14,18,30,0.92),rgba(13,18,28,0.84))]"
+              >
+                <motion.div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-0 -top-12 h-24 bg-[radial-gradient(circle_at_50%_0%,rgba(34,211,238,0.2),transparent_64%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  animate={
+                    reduceMotion || !featuresInView
+                      ? undefined
+                      : {
+                          opacity: [0.02, 0.26, 0.02],
+                          y: [0, 6, 0],
+                        }
+                  }
+                  transition={
+                    reduceMotion || !featuresInView
+                      ? undefined
+                      : {
+                          duration: 4,
+                          repeat: Infinity,
+                          repeatDelay: 1.6,
+                          ease: "linear",
+                        }
+                  }
+                />
+                <motion.div
+                  aria-hidden
+                  className="pointer-events-none absolute -left-12 top-4 h-40 w-40 rounded-full bg-cyan-300/10 blur-3xl"
+                  animate={
+                    reduceMotion || !featuresInView
+                      ? undefined
+                      : {
+                          x: [0, 26, 0],
+                          y: [0, 14, 0],
+                          opacity: [0.08, 0.16, 0.08],
+                        }
+                  }
+                  transition={
+                    reduceMotion || !featuresInView
+                      ? undefined
+                      : {
+                          duration: 8 + i * 0.7,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }
+                  }
+                />
+                <motion.div
+                  aria-hidden
+                  className="pointer-events-none absolute left-0 right-0 h-px bg-linear-to-r from-transparent via-cyan-300/38 to-transparent"
+                  animate={
+                    reduceMotion || !featuresInView
+                      ? undefined
+                      : { y: [16, 340, 16], opacity: [0, 0.4, 0] }
+                  }
+                  transition={
+                    reduceMotion || !featuresInView
+                      ? undefined
+                      : {
+                          duration: 5.6 + i * 0.35,
+                          repeat: Infinity,
+                          ease: "linear",
+                          delay: i * 0.28,
+                        }
+                  }
+                />
+                <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_65%_10%,rgba(34,211,238,0.18),transparent_40%)]" />
                 </div>
+                <motion.div
+                  className="relative mb-6 border-b border-white/10 pb-6"
+                  animate={
+                    reduceMotion || !featuresInView
+                      ? undefined
+                      : { y: [0, -3, 0, 2, 0], rotate: [0, -0.2, 0, 0.2, 0] }
+                  }
+                  transition={
+                    reduceMotion || !featuresInView
+                      ? undefined
+                      : {
+                          duration: 7.2 + i * 0.4,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }
+                  }
+                >
+                  <FeatureGraphic type={f.icon} />
+                </motion.div>
+                <h3 className="relative text-2xl font-semibold text-white">
+                  <HeadingChars text={f.title} />
+                </h3>
+                <p className="relative mt-3 text-[20px] leading-relaxed text-slate-200/90">
+                  <BodyChars text={f.text} />
+                </p>
+                <p className="relative mt-7 inline-flex border-l border-cyan-300/80 pl-3 text-[20px] font-semibold tracking-wide text-cyan-100">
+                  <BodyChars text={f.metric} />
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <SectionDivider />
+
+      {/* ═══ Launch highlights (Galxe-style metric rail) ═══ */}
+      <section className="relative z-10 overflow-hidden px-6 py-20 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_8%,rgba(147,197,253,0.14),transparent_54%),radial-gradient(circle_at_90%_90%,rgba(103,232,249,0.1),transparent_50%),linear-gradient(170deg,rgba(9,14,30,0.82),rgba(6,12,20,0.9))] before:opacity-50">
+        <AmbientSweep
+          angle="75deg"
+          color="rgba(125,211,252,0.14)"
+          duration={21}
+          zIndex="-z-20"
+        />
+        <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(147,197,253,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(125,211,252,0.06)_1px,transparent_1px)] bg-[size:52px_38px] opacity-12" />
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute right-[-28%] top-8 h-56 w-56 rounded-full bg-cyan-200/12 blur-[100px]"
+          animate={
+            reduceMotion || !launchInView
+              ? undefined
+              : {
+                  x: [0, -28, 6, 0],
+                  opacity: [0.05, 0.14, 0.05],
+                }
+          }
+          transition={
+            reduceMotion || !launchInView
+              ? undefined
+              : {
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }
+          }
+        />
+        <div
+          ref={launchRef}
+          className="mx-auto grid max-w-7xl gap-4 md:grid-cols-3"
+        >
+          {copy.launchHighlights.map((item, i) => (
+            <motion.div
+              key={item.title}
+              initial={reduceMotion ? "show" : "hidden"}
+              animate={
+                reduceMotion ? "show" : launchInView ? "show" : "hidden"
+              }
+              custom={i}
+              variants={{
+                hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 },
+                show: (index: number) =>
+                  reduceMotion
+                    ? { opacity: 1, y: 0 }
+                    : {
+                        opacity: 1,
+                        y: 0,
+                        transition: {
+                          duration: 0.7,
+                          ease: "easeOut",
+                          delay: index * 0.7,
+                        },
+                      },
+              }}
+              whileHover={
+                reduceMotion
+                  ? undefined
+                  : {
+                      y: -6,
+                      scale: 1.01,
+                    }
+              }
+              className="relative overflow-hidden rounded-2xl border border-white/8 bg-[#070a12]/70 px-6 py-7 sm:px-8"
+            >
+              <p className="text-[20px] uppercase tracking-[0.18em] text-slate-200">
+                {item.title}
+              </p>
+              <p className="mt-2 text-3xl font-semibold text-white sm:text-4xl">
+                {item.value}
+              </p>
+              <p className="mt-2 text-[20px] text-slate-200">{item.desc}</p>
+              <div className="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={
+                    reduceMotion || launchInView ? "filled" : "empty"
+                  }
+                  variants={{
+                    empty: { width: 0 },
+                    filled: (index: number) =>
+                      reduceMotion
+                        ? { width: "88%" }
+                        : {
+                            width: "88%",
+                            transition: {
+                              duration: 0.8,
+                              delay: index * 0.7 + 0.18,
+                              ease: "easeOut",
+                            },
+                          },
+                  }}
+                  custom={i}
+                  className="h-full rounded-full bg-linear-to-r from-cyan-400/80 to-cyan-200/90"
+                />
+              </div>
+              <div className="pointer-events-none absolute -right-12 -top-10 h-28 w-28 rounded-full bg-cyan-400/8 blur-[34px]" />
+            </motion.div>
+          ))}
+        </div>
+      </section>
+      <SectionDivider />
+
+      {/* ═══ Dashboard — full-width, text overlaid ═══ */}
+      <DashboardSection copy={copy.dashboard} />
+      <SectionDivider />
+
+      {/* ═══ Performance — unified card ═══ */}
+      <PerformanceSection copy={copy.performance} />
+      <SectionDivider />
+
+      {/* ═══ Built for teams & builders (inspired by Galxe audience split style) ═══ */}
+      <section className="relative z-10 overflow-hidden px-6 py-24 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_90%_14%,rgba(45,212,191,0.14),transparent_56%),radial-gradient(circle_at_10%_86%,rgba(125,211,252,0.08),transparent_52%),linear-gradient(168deg,rgba(7,14,22,0.82),rgba(5,8,16,0.9))] before:opacity-50">
+        <AmbientSweep
+          angle="145deg"
+          color="rgba(56,189,248,0.13)"
+          duration={23}
+          zIndex="-z-20"
+        />
+        <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(45,212,191,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(125,211,252,0.1)_1px,transparent_1px)] bg-[size:46px_46px] opacity-12" />
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute left-[-18%] top-1/3 h-64 w-64 rounded-full bg-sky-300/10 blur-[110px]"
+          animate={{
+            x: [0, 28, 0],
+            y: [0, -18, 0],
+            opacity: [0.08, 0.18, 0.08],
+          }}
+          transition={{
+            duration: 11,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <div
+          ref={audienceRef}
+          className="mx-auto grid max-w-7xl gap-4 md:grid-cols-3"
+        >
+          {copy.audience.blocks.map((item, i) => (
+            <motion.div
+              key={item.title}
+              initial={reduceMotion ? "show" : "hidden"}
+              animate={reduceMotion ? "show" : audienceInView ? "show" : "hidden"}
+              custom={i}
+              variants={{
+                hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 },
+                show: (index: number) =>
+                  reduceMotion
+                    ? { opacity: 1, y: 0 }
+                    : ({
+                        opacity: 1,
+                        y: 0,
+                        transition: {
+                          duration: 0.45,
+                          ease: "easeOut",
+                          delay: index * 0.45,
+                        },
+                      }),
+              }}
+              whileHover={
+                reduceMotion
+                  ? {}
+                  : {
+                      y: -6,
+                      scale: 1.01,
+                    }
+              }
+              className="group relative rounded-2xl border border-white/12 bg-white/8 p-6 backdrop-blur-sm transition-all duration-300 hover:border-cyan-300/35 hover:bg-white/12 hover:shadow-[0_0_24px_rgba(34,211,238,0.2)]"
+            >
+              <p className="text-[20px] uppercase tracking-[0.2em] text-cyan-200/70">
+                {`0${i + 1}`}
+              </p>
+              <h3
+                className={`mt-3 text-xl font-semibold ${i === 0 ? "text-cyan-300" : i === 1 ? "text-sky-300" : "text-blue-300"}`}
+              >
+                {item.title}
+              </h3>
+              <p className="mt-4 text-[20px] leading-relaxed text-slate-200">
+                {item.desc}
+              </p>
+              <a
+                href="#contact"
+                className="mt-6 inline-flex min-h-11 items-center gap-2 text-[20px] font-semibold text-slate-200 transition-colors group-hover:text-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              >
+                {item.action}
+                <ArrowIcon />
+              </a>
+            </motion.div>
+          ))}
+          </div>
+        </section>
+      <SectionDivider />
+
+      {/* ═══ Ecosystem — network bg with floating cards ═══ */}
+      <section
+        id="ecosystem"
+        className="relative z-10 overflow-hidden px-6 py-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_20%,rgba(14,165,233,0.12),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(56,189,248,0.08),transparent_50%),linear-gradient(170deg,rgba(8,12,24,0.76),rgba(6,10,20,0.86))] before:opacity-50"
+      >
+        <AmbientSweep
+          angle="-20deg"
+          color="rgba(56,189,248,0.14)"
+          duration={25}
+          zIndex="-z-20"
+        />
+        {/* Network bg behind everything */}
+        <div className="pointer-events-none absolute inset-0 opacity-40">
+          <NetworkBg />
+        </div>
+        <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(14,165,233,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,165,233,0.08)_1px,transparent_1px)] bg-[size:56px_56px] opacity-15" />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-[#070a12] via-[#070a12]/80 to-[#070a12]" />
+
+        <div className="relative mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center"
+          >
+            <p className="text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
+              <HeadingChars text={copy.ecosystem.eyebrow} />
+            </p>
+            <h2 className="mt-4 text-3xl font-semibold text-white sm:text-5xl">
+              <HeadingChars text={copy.ecosystem.title} />
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-xl leading-relaxed text-slate-200">
+              <BodyChars text={copy.ecosystem.desc} />
+            </p>
+          </motion.div>
+          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {copy.ecosystem.items.map((item, i) => (
+              <motion.div
+                key={item.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: 0.05 + i * 0.06 }}
+                whileHover={{
+                  y: -6,
+                  scale: 1.02,
+                  borderColor: "rgba(103,232,249,0.25)",
+                }}
+                className="flex items-center gap-4 rounded-xl border border-white/6 bg-[#070a12]/60 px-6 py-5 backdrop-blur-sm transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,211,238,0.18)]"
+              >
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/6 bg-white/6">
+                  <EcoIcon type={item.icon} />
+                </div>
+                <span className="text-[20px] font-semibold text-slate-200">
+                  <BodyChars text={item.name} />
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <SectionDivider />
+
+      {/* ═══ Roadmap ═══ */}
+      <section
+        id="roadmap"
+        className="relative z-10 overflow-hidden px-6 py-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_70%_20%,rgba(56,189,248,0.13),transparent_52%),radial-gradient(circle_at_26%_84%,rgba(129,140,248,0.08),transparent_56%),linear-gradient(172deg,rgba(7,12,24,0.78),rgba(9,15,26,0.9))] before:opacity-50"
+      >
+        <AmbientSweep
+          angle="45deg"
+          color="rgba(129,140,248,0.13)"
+          duration={19}
+          zIndex="-z-20"
+        />
+        <div className="mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center"
+          >
+            <p className="text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
+              <HeadingChars text={copy.roadmap.eyebrow} />
+            </p>
+            <h2 className="mt-4 text-3xl font-semibold text-white sm:text-5xl">
+              <HeadingChars text={copy.roadmap.title} />
+            </h2>
+          </motion.div>
+
+          {/* Horizontal timeline */}
+          <div className="relative mt-14" ref={roadmapRef}>
+            {/* Connecting line */}
+            <div className="absolute left-0 right-0 top-8 hidden h-px bg-linear-to-r from-transparent via-cyan-400/20 to-transparent lg:block" />
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {copy.roadmap.phases.map((node, i) => (
+            <motion.div
+              key={node.period}
+              initial={reduceMotion ? "show" : "hidden"}
+              animate={
+                reduceMotion ? "show" : roadmapInView ? "show" : "hidden"
+              }
+              custom={i}
+              variants={{
+                hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 },
+                show: (index: number) =>
+                  reduceMotion
+                    ? { opacity: 1, y: 0 }
+                    : {
+                        opacity: 1,
+                        y: 0,
+                        transition: {
+                          duration: 0.5,
+                          ease: "easeOut",
+                          delay: index * 0.15,
+                        },
+                      },
+              }}
+              whileHover={
+                reduceMotion
+                  ? undefined
+                  : {
+                      y: -6,
+                      scale: 1.01,
+                      borderColor: "rgba(103,232,249,0.2)",
+                    }
+              }
+              className="relative rounded-2xl border border-white/6 bg-white/8 p-6 transition-all duration-300"
+            >
+                  {/* Dot on timeline */}
+                  <div className="absolute -top-1.25 left-1/2 hidden h-2.5 w-2.5 -translate-x-1/2 rounded-full border-2 border-cyan-400/40 bg-[#070a12] lg:block" />
+                  <span className="inline-flex w-fit rounded-full bg-cyan-400/10 px-3 py-1 text-[20px] font-semibold tracking-widest text-cyan-300">
+                    <BodyChars text={node.period} />
+                  </span>
+                  <h3 className="mt-4 text-xl font-semibold text-white">
+                    <HeadingChars text={node.title} />
+                  </h3>
+                  <p className="mt-2 text-[20px] leading-relaxed text-slate-200">
+                    <BodyChars text={node.detail} />
+                  </p>
+                </motion.div>
               ))}
             </div>
-            <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/6 pt-8 sm:flex-row">
-              <p className="text-[17px] text-slate-400">
-                {copy.footer.copyright}
-              </p>
-              <p className="text-[17px] text-slate-400">
-                {copy.footer.legal}
+          </div>
+        </div>
+      </section>
+      <SectionDivider />
+
+      {/* ═══ Contact CTA ═══ */}
+      <section
+        id="contact"
+        className="relative z-10 overflow-hidden px-6 py-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_24%_20%,rgba(125,211,252,0.12),transparent_50%),radial-gradient(circle_at_84%_82%,rgba(56,189,248,0.08),transparent_50%),linear-gradient(175deg,rgba(5,9,18,0.8),rgba(8,12,22,0.9))] before:opacity-44"
+      >
+        <div className="pointer-events-none absolute inset-0 opacity-30">
+          <NetworkBg />
+        </div>
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-[#070a12] via-transparent to-[#070a12]" />
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.7 }}
+          className="relative mx-auto flex max-w-4xl flex-col items-center gap-8 text-center"
+        >
+          <h2 className="text-4xl font-semibold leading-tight text-white sm:text-6xl">
+            <span className="block">
+              <HeadingChars text={copy.contact.title1} />
+            </span>
+            <span className="bg-linear-to-r from-cyan-200 to-cyan-400 bg-clip-text text-transparent">
+              <HeadingChars text={copy.contact.title2} />
+            </span>
+          </h2>
+          <p className="max-w-2xl text-xl leading-relaxed text-slate-200">
+            <BodyChars text={copy.contact.desc} />
+          </p>
+          <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row">
+            <a
+              href="mailto:contact@youandi.io"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-8 py-3.5 text-xl font-semibold text-[#070a12] transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+            >
+              <BodyChars text={copy.ctaButtons.contact} /> <ArrowIcon />
+            </a>
+            <a
+              href="#ecosystem"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/15 px-8 py-3.5 text-xl font-semibold text-slate-200 transition-all duration-300 hover:border-white/30 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+            >
+              <BodyChars text={copy.ctaButtons.explore} /> <ArrowIcon />
+            </a>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* ═══ Footer ═══ */}
+      <footer className="relative z-10 border-t border-white/6 px-6 pt-16 pb-8 sm:px-10 lg:px-14">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="lg:col-span-1">
+              <span className="text-xl font-semibold text-white">YOU&I</span>
+              <p className="mt-4 text-[20px] leading-relaxed text-slate-200">
+                {copy.footer.description}
               </p>
             </div>
+            {Object.entries(copy.footer.links).map(([cat, links]) => (
+              <div key={cat}>
+                <h4 className="text-[20px] font-semibold text-slate-200">
+                  {cat}
+                </h4>
+                <ul className="mt-4 flex flex-col gap-2.5">
+                  {links.map((l) => (
+                    <li key={l}>
+                      <a
+                        href="#"
+                        className="text-[20px] text-slate-200 transition-colors duration-200 hover:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+                      >
+                        {l}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-        </footer>
-      </main>
+          <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/6 pt-8 sm:flex-row">
+            <p className="text-[20px] text-slate-200">
+              {copy.footer.copyright}
+            </p>
+            <p className="text-[20px] text-slate-200">{copy.footer.legal}</p>
+          </div>
+        </div>
+      </footer>
+    </main>
   );
 }
 
