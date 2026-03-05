@@ -905,7 +905,7 @@ function DashboardSection({
   const label = copy.chartTitle;
 
   return (
-    <section className="relative z-10 overflow-hidden px-6 py-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_15%_12%,rgba(56,189,248,0.16),transparent_56%),radial-gradient(circle_at_88%_86%,rgba(129,140,248,0.08),transparent_60%),linear-gradient(175deg,rgba(8,14,32,0.84),rgba(5,18,36,0.94))] before:opacity-50">
+    <section className="relative z-10 overflow-hidden px-4 py-16 sm:px-10 sm:py-24 lg:px-14 lg:py-32 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_15%_12%,rgba(56,189,248,0.16),transparent_56%),radial-gradient(circle_at_88%_86%,rgba(129,140,248,0.08),transparent_60%),linear-gradient(175deg,rgba(8,14,32,0.84),rgba(5,18,36,0.94))] before:opacity-50">
       <AmbientSweep
         angle="35deg"
         color="rgba(125,211,252,0.12)"
@@ -931,13 +931,13 @@ function DashboardSection({
           transition={{ duration: 0.6 }}
           className="relative z-10 mb-10 max-w-lg"
         >
-          <p className="text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
+          <p className="text-sm lg:text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
             <HeadingChars text={copy.eyebrow} />
           </p>
           <h2 className="mt-4 text-3xl font-semibold text-white sm:text-5xl">
             <HeadingChars text={copy.title} />
           </h2>
-          <p className="mt-4 text-xl leading-relaxed text-slate-200">
+          <p className="mt-4 text-sm sm:text-base lg:text-xl leading-relaxed text-slate-200">
             <BodyChars text={copy.desc} />
           </p>
         </motion.div>
@@ -949,31 +949,33 @@ function DashboardSection({
           transition={{ duration: 0.8, delay: 0.1 }}
           className="relative overflow-hidden rounded-2xl border border-white/6 bg-[#0a0c14]"
         >
-          <div className="grid gap-3 p-5 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 p-4 sm:p-5 sm:grid-cols-4">
             {bars.map((s) => (
               <div
                 key={s.label}
                 className="rounded-xl border border-white/6 bg-white/8 p-4"
               >
-                <p className="text-[20px] uppercase tracking-wider text-slate-200">
+                <p className="text-sm lg:text-[20px] uppercase tracking-wider text-slate-200">
                   <BodyChars text={s.label} />
                 </p>
-                <p className={`mt-1.5 text-xl font-semibold ${s.color}`}>
+                <p
+                  className={`mt-1.5 text-sm sm:text-base lg:text-xl font-semibold ${s.color}`}
+                >
                   <BodyChars text={s.value} />
                 </p>
               </div>
             ))}
 
-            <div className="sm:col-span-3 rounded-xl border border-white/6 bg-white/8 p-5">
+            <div className="col-span-2 sm:col-span-3 flex flex-col rounded-xl border border-white/6 bg-white/8 p-3 sm:p-5">
               <div className="flex items-center justify-between">
-                <p className="text-[20px] uppercase tracking-wider text-slate-200">
+                <p className="text-sm lg:text-[20px] uppercase tracking-wider text-slate-200">
                   {label}
                 </p>
                 <div className="flex gap-3">
                   {copy.timeframe.map((t) => (
                     <span
                       key={t}
-                      className={`text-[20px] ${t === copy.timeframe[2] ? "text-cyan-300" : "text-slate-200"}`}
+                      className={`text-sm lg:text-[20px] ${t === copy.timeframe[2] ? "text-cyan-300" : "text-slate-200"}`}
                     >
                       <BodyChars text={t} />
                     </span>
@@ -981,8 +983,7 @@ function DashboardSection({
                 </div>
               </div>
               <div
-                className="mt-4 flex items-end gap-0.75"
-                style={{ height: 120 }}
+                className="mt-4 flex min-h-30 flex-1 items-end gap-0.75"
               >
                 {chart.map((h, i) => (
                   <motion.div
@@ -1001,7 +1002,7 @@ function DashboardSection({
                 {copy.bulletItems.map((item) => (
                   <span
                     key={item}
-                    className="flex items-center gap-1.5 text-[20px] text-slate-200"
+                    className="flex items-center gap-1.5 text-sm lg:text-[20px] text-slate-200"
                   >
                     <svg
                       width="10"
@@ -1021,8 +1022,8 @@ function DashboardSection({
               </div>
             </div>
 
-            <div className="rounded-xl border border-white/6 bg-white/8 p-4">
-              <p className="text-[20px] uppercase tracking-wider text-slate-200">
+            <div className="col-span-3 md:col-span-1 rounded-xl border border-white/6 bg-white/8 p-4">
+              <p className="text-sm lg:text-[20px] uppercase tracking-wider text-slate-200">
                 <BodyChars text={copy.chainTitle} />
               </p>
               <div className="mt-3 flex flex-col gap-2">
@@ -1036,10 +1037,10 @@ function DashboardSection({
                     className="flex items-center gap-2 rounded-lg border border-white/4 bg-white/8 px-3 py-2"
                   >
                     <span className="h-1.5 w-1.5 rounded-full bg-green-400/80" />
-                    <span className="text-[20px] font-semibold text-slate-200">
+                    <span className="text-sm lg:text-[20px] font-semibold text-slate-200">
                       <BodyChars text={chain.name} />
                     </span>
-                    <span className="ml-auto text-[20px] tabular-nums text-slate-200">
+                    <span className="ml-auto text-sm lg:text-[20px] tabular-nums text-slate-200">
                       <BodyChars text={`${chain.tps} ${copy.tpsLabel}`} />
                     </span>
                   </motion.div>
@@ -1080,7 +1081,7 @@ function PerformanceSection({
   return (
     <section
       ref={ref}
-      className="relative z-10 overflow-hidden px-6 py-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_88%_10%,rgba(45,212,191,0.16),transparent_52%),radial-gradient(circle_at_24%_86%,rgba(125,211,252,0.09),transparent_56%),linear-gradient(172deg,rgba(10,14,34,0.84),rgba(6,14,28,0.9))] before:opacity-44"
+      className="relative z-10 overflow-hidden px-4 py-16 sm:px-10 sm:py-24 lg:px-14 lg:py-32 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_88%_10%,rgba(45,212,191,0.16),transparent_52%),radial-gradient(circle_at_24%_86%,rgba(125,211,252,0.09),transparent_56%),linear-gradient(172deg,rgba(10,14,34,0.84),rgba(6,14,28,0.9))] before:opacity-44"
     >
       <AmbientSweep
         angle="160deg"
@@ -1106,7 +1107,7 @@ function PerformanceSection({
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
+          <p className="text-sm lg:text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
             <HeadingChars text={copy.eyebrow} />
           </p>
           <h2 className="mt-4 text-3xl font-semibold text-white sm:text-5xl">
@@ -1119,7 +1120,7 @@ function PerformanceSection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="relative mt-14 overflow-hidden rounded-2xl border border-white/6 bg-white/8 p-8 sm:p-10"
+          className="relative mt-14 overflow-hidden rounded-2xl border border-white/6 bg-white/8 p-4 sm:p-8 lg:p-10"
         >
           <div className="mb-10 grid grid-cols-1 gap-6 border-b border-white/6 pb-8 sm:grid-cols-3">
             {copy.top.map((stat) => (
@@ -1127,12 +1128,12 @@ function PerformanceSection({
                 <p className="text-2xl font-semibold text-white sm:text-4xl">
                   <BodyChars text={stat.value} />
                   {stat.unit && (
-                    <span className="ml-1 text-xl font-normal text-slate-200">
+                    <span className="ml-1 text-sm sm:text-base lg:text-xl font-normal text-slate-200">
                       <BodyChars text={stat.unit} />
                     </span>
                   )}
                 </p>
-                <p className="mt-1 text-[20px] tracking-wider text-slate-200">
+                <p className="mt-1 text-sm lg:text-[20px] tracking-wider text-slate-200">
                   <BodyChars text={stat.desc} />
                 </p>
               </div>
@@ -1148,12 +1149,12 @@ function PerformanceSection({
               return (
                 <div key={bar.label} className="space-y-2">
                   <div className="flex items-baseline justify-between">
-                    <span className="text-[20px] font-semibold text-slate-200">
+                    <span className="text-sm lg:text-[20px] font-semibold text-slate-200">
                       <BodyChars text={bar.label} />
                     </span>
-                    <span className="text-xl font-semibold tabular-nums text-white sm:text-3xl">
+                    <span className="text-lg font-semibold tabular-nums text-white sm:text-xl lg:text-3xl">
                       <CountVal />
-                      <span className="ml-1 text-[20px] font-normal text-slate-200">
+                      <span className="ml-1 text-sm lg:text-[20px] font-normal text-slate-200">
                         <BodyChars text="TPS" />
                       </span>
                     </span>
@@ -1414,9 +1415,9 @@ function TrustStrip({
 }) {
   const marqueeBadges = [...badges, ...badges];
   return (
-    <section className="relative z-10 overflow-hidden px-6 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_18%_24%,rgba(34,211,238,0.1),transparent_58%),radial-gradient(circle_at_86%_12%,rgba(125,211,252,0.08),transparent_54%),linear-gradient(170deg,rgba(7,13,29,0.76),rgba(11,17,30,0.84))] before:opacity-44">
+    <section className="relative z-10 overflow-hidden px-4 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_18%_24%,rgba(34,211,238,0.1),transparent_58%),radial-gradient(circle_at_86%_12%,rgba(125,211,252,0.08),transparent_54%),linear-gradient(170deg,rgba(7,13,29,0.76),rgba(11,17,30,0.84))] before:opacity-44">
       <div className="mx-auto max-w-7xl overflow-hidden rounded-2xl py-3">
-        <div className="px-4 pb-2 text-[20px] uppercase tracking-[0.22em] text-slate-200">
+        <div className="px-4 pb-2 text-sm lg:text-[20px] uppercase tracking-[0.22em] text-slate-200">
           {label}
         </div>
         <motion.div
@@ -1431,12 +1432,12 @@ function TrustStrip({
           {marqueeBadges.map((badge, i) => (
             <div
               key={`${badge.name}-${i}`}
-              className="flex items-center gap-2 rounded-xl border border-cyan-100/20 bg-white/8 px-4 py-2 text-[20px] font-semibold text-slate-200"
+              className="flex items-center gap-2 rounded-xl border border-cyan-100/20 bg-white/8 px-4 py-2 text-sm lg:text-[20px] font-semibold text-slate-200"
             >
               <span>
                 <BodyChars text={badge.name} />
               </span>
-              <span className="text-[20px] uppercase tracking-[0.16em] text-slate-200">
+              <span className="text-sm lg:text-[20px] uppercase tracking-[0.16em] text-slate-200">
                 <BodyChars text={badge.note} />
               </span>
             </div>
@@ -1480,7 +1481,7 @@ function HomePageContent() {
   return (
     <main
       key={locale}
-      className="relative isolate min-h-screen overflow-x-hidden bg-[#070a12] text-2xl leading-[1.9] text-slate-100 font-semibold"
+      className="relative isolate min-h-screen overflow-x-hidden bg-[#070a12] text-base sm:text-lg lg:text-2xl leading-[1.7] sm:leading-[1.8] lg:leading-[1.9] text-slate-100 font-semibold"
     >
       <div className="pointer-events-none fixed inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.08),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(14,165,233,0.06),transparent_50%)]" />
@@ -1488,11 +1489,11 @@ function HomePageContent() {
 
       {/* Header */}
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/6 bg-[#070a12]/70 backdrop-blur-xl">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4 lg:px-10">
           <button
             type="button"
             onClick={handleLogoClick}
-            className="cursor-pointer text-xl font-semibold tracking-tight text-white"
+            className="cursor-pointer text-sm sm:text-base lg:text-xl font-semibold tracking-tight text-white"
           >
             YOU&I
           </button>
@@ -1501,7 +1502,7 @@ function HomePageContent() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-[20px] text-slate-100 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+                className="text-sm lg:text-[20px] text-slate-100 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
               >
                 <BodyChars text={link.label} />
               </a>
@@ -1511,13 +1512,13 @@ function HomePageContent() {
             <button
               type="button"
               onClick={toggleLocale}
-              className="rounded-full border border-white/10 bg-white/5 px-3 py-2.5 text-[20px] font-semibold uppercase tracking-[0.12em] text-slate-200 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-2.5 text-sm lg:text-[20px] font-semibold uppercase tracking-[0.12em] text-slate-200 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
               {locale === "ko" ? "EN" : "KO"}
             </button>
             <a
               href="#contact"
-              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-xl font-semibold text-white transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm sm:text-base lg:text-xl font-semibold text-white transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
               <BodyChars text={copy.header.cta} /> <ArrowIcon />
             </a>
@@ -1562,13 +1563,13 @@ function HomePageContent() {
               transition={{ duration: 0.25 }}
               className="overflow-hidden border-t border-white/6 md:hidden"
             >
-              <div className="flex flex-col gap-4 px-6 py-6 text-[20px] font-semibold text-slate-200">
+              <div className="flex flex-col gap-4 px-4 py-4 sm:px-6 sm:py-6 text-sm lg:text-[20px] font-semibold text-slate-200">
                 {copy.header.navLinks.map((link) => (
                   <a
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
-                    className="text-[20px] text-slate-100 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+                    className="text-sm lg:text-[20px] text-slate-100 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
                   >
                     <BodyChars text={link.label} />
                   </a>
@@ -1579,14 +1580,14 @@ function HomePageContent() {
                     toggleLocale();
                     setMobileOpen(false);
                   }}
-                  className="w-fit rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-[20px] font-semibold uppercase tracking-[0.12em] text-slate-200 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+                  className="w-fit rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm lg:text-[20px] font-semibold uppercase tracking-[0.12em] text-slate-200 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
                 >
                   {locale === "ko" ? "EN" : "KO"}
                 </button>
                 <a
                   href="#contact"
                   onClick={() => setMobileOpen(false)}
-                  className="mt-2 inline-flex w-fit min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-xl font-semibold text-white"
+                  className="mt-2 inline-flex w-fit min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm sm:text-base lg:text-xl font-semibold text-white"
                 >
                   <BodyChars text={copy.header.cta} /> <ArrowIcon />
                 </a>
@@ -1604,7 +1605,7 @@ function HomePageContent() {
         whileInView="show"
         variants={heroReveal.container}
         viewport={{ once: true, amount: 0.2 }}
-        className="relative z-10 flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pb-20 pt-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-20 before:bg-[radial-gradient(circle_at_72%_18%,rgba(56,189,248,0.16),transparent_60%),radial-gradient(circle_at_20%_80%,rgba(14,165,233,0.1),transparent_56%),linear-gradient(165deg,rgba(4,8,18,0.58),rgba(5,12,28,0.78))] before:opacity-44"
+        className="relative z-10 flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 pb-12 pt-24 sm:px-10 sm:pb-20 sm:pt-32 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-20 before:bg-[radial-gradient(circle_at_72%_18%,rgba(56,189,248,0.16),transparent_60%),radial-gradient(circle_at_20%_80%,rgba(14,165,233,0.1),transparent_56%),linear-gradient(165deg,rgba(4,8,18,0.58),rgba(5,12,28,0.78))] before:opacity-44"
       >
         <AmbientSweep
           angle="130deg"
@@ -1628,7 +1629,7 @@ function HomePageContent() {
 
         <div className="relative z-20 mx-auto flex max-w-5xl flex-col items-center text-center">
           <motion.div variants={heroReveal.textBlock} className="flex">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[20px] font-semibold uppercase tracking-widest text-slate-200">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm lg:text-[20px] font-semibold uppercase tracking-widest text-slate-200">
               <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
               <HeroChars text={copy.hero.label} />
             </span>
@@ -1645,7 +1646,7 @@ function HomePageContent() {
           </motion.h1>
           <motion.p
             variants={heroReveal.textBlock}
-            className="mt-6 max-w-2xl text-xl leading-relaxed text-slate-200"
+            className="mt-6 max-w-2xl text-sm sm:text-base lg:text-xl leading-relaxed text-slate-200"
           >
             <HeroChars text={copy.hero.desc} />
           </motion.p>
@@ -1656,7 +1657,7 @@ function HomePageContent() {
             <motion.a
               href="#contact"
               variants={heroReveal.textBlock}
-              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-7 py-3 text-xl font-semibold text-[#070a12] transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-5 py-2.5 sm:px-7 sm:py-3 text-sm sm:text-base lg:text-xl font-semibold text-[#070a12] transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
               <HeroChars text={copy.hero.ctaPrimary} />
               <ArrowIcon />
@@ -1664,7 +1665,7 @@ function HomePageContent() {
             <motion.a
               href="#features"
               variants={heroReveal.textBlock}
-              className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/15 px-7 py-3 text-xl font-semibold text-slate-200 transition-all duration-300 hover:border-white/30 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 sm:px-7 sm:py-3 text-sm sm:text-base lg:text-xl font-semibold text-slate-200 transition-all duration-300 hover:border-white/30 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
               <HeroChars text={copy.hero.ctaSecondary} />
               <ArrowIcon />
@@ -1672,7 +1673,7 @@ function HomePageContent() {
           </motion.div>
           <motion.div
             variants={heroReveal.textBlock}
-            className="mt-20 grid w-full max-w-3xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/6 bg-white/6 sm:grid-cols-4"
+            className="mt-10 sm:mt-20 grid w-full max-w-3xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/6 bg-white/6 sm:grid-cols-4"
           >
             {copy.hero.stats.map((stat, i) => (
               <motion.div
@@ -1682,7 +1683,7 @@ function HomePageContent() {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.45, delay: i * 0.08 }}
                 whileHover={{ y: -6, scale: 1.02 }}
-                className="group relative overflow-hidden bg-[#070a12] px-6 py-5 text-center"
+                className="group relative overflow-hidden bg-[#070a12] px-4 py-3 sm:px-6 sm:py-5 text-center"
               >
                 <motion.div
                   aria-hidden
@@ -1709,32 +1710,30 @@ function HomePageContent() {
                 <p className="text-2xl font-semibold text-white sm:text-3xl">
                   <BodyChars text={stat.value} />
                 </p>
-                <p className="mt-1 text-[20px] tracking-wider text-slate-200">
+                <p className="mt-1 text-sm lg:text-[20px] tracking-wider text-slate-200">
                   <HeroChars text={stat.label} />
                 </p>
               </motion.div>
             ))}
           </motion.div>
           <motion.div variants={heroReveal.textBlock} className="mt-16">
-              <motion.a
-                href="#features"
-                animate={
-                  reduceMotion || !heroInView
-                    ? undefined
-                    : { y: [0, 6, 0] }
-                }
-                transition={
-                  reduceMotion || !heroInView
-                    ? undefined
-                    : {
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }
-                }
-                className="inline-flex flex-col items-center gap-2 rounded-full px-1 py-1 text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
-              >
-              <span className="text-[20px] uppercase tracking-[0.2em]">
+            <motion.a
+              href="#features"
+              animate={
+                reduceMotion || !heroInView ? undefined : { y: [0, 6, 0] }
+              }
+              transition={
+                reduceMotion || !heroInView
+                  ? undefined
+                  : {
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }
+              }
+              className="inline-flex flex-col items-center gap-2 rounded-full px-1 py-1 text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+            >
+              <span className="text-sm lg:text-[20px] uppercase tracking-[0.2em]">
                 <HeroChars text={copy.hero.scroll} />
               </span>
               <svg
@@ -1765,7 +1764,7 @@ function HomePageContent() {
       {/* ═══ Features — visual product matrix ═══ */}
       <section
         id="features"
-        className="relative z-10 overflow-hidden px-6 py-24 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_20%_10%,rgba(45,212,191,0.18),transparent_45%),radial-gradient(circle_at_82%_76%,rgba(125,211,252,0.14),transparent_45%),linear-gradient(to_bottom,rgba(10,12,24,0.8),rgba(6,10,20,0.9))] before:opacity-44"
+        className="relative z-10 overflow-hidden px-4 py-14 sm:px-10 sm:py-24 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_20%_10%,rgba(45,212,191,0.18),transparent_45%),radial-gradient(circle_at_82%_76%,rgba(125,211,252,0.14),transparent_45%),linear-gradient(to_bottom,rgba(10,12,24,0.8),rgba(6,10,20,0.9))] before:opacity-44"
       >
         <AmbientSweep
           angle="20deg"
@@ -1826,7 +1825,7 @@ function HomePageContent() {
             transition={{ duration: 0.6 }}
             className="mb-12 text-left"
           >
-            <p className="text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
+            <p className="text-sm lg:text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
               <HeadingChars text={copy.features.eyebrow} />
             </p>
             <h2 className="mt-4 max-w-3xl text-3xl font-semibold text-white sm:text-5xl">
@@ -1837,7 +1836,7 @@ function HomePageContent() {
                 <HeadingChars text={copy.features.title2} />
               </span>
             </h2>
-            <p className="mt-4 max-w-2xl text-xl leading-relaxed text-slate-200">
+            <p className="mt-4 max-w-2xl text-sm sm:text-base lg:text-xl leading-relaxed text-slate-200">
               <BodyChars text={copy.features.desc} />
             </p>
           </motion.div>
@@ -1852,7 +1851,7 @@ function HomePageContent() {
                 transition={{ duration: 0.6, delay: 0.1 + i * 0.1 }}
                 whileHover={{ y: -10, scale: 1.01 }}
                 whileTap={{ scale: 0.995 }}
-                className="group relative min-h-[360px] bg-[linear-gradient(160deg,rgba(10,14,22,0.88),rgba(13,18,28,0.84))] p-7 transition-colors hover:bg-[linear-gradient(160deg,rgba(14,18,30,0.92),rgba(13,18,28,0.84))]"
+                className="group relative min-h-70 sm:min-h-90 bg-[linear-gradient(160deg,rgba(10,14,22,0.88),rgba(13,18,28,0.84))] p-4 sm:p-7 transition-colors hover:bg-[linear-gradient(160deg,rgba(14,18,30,0.92),rgba(13,18,28,0.84))]"
               >
                 <motion.div
                   aria-hidden
@@ -1942,10 +1941,10 @@ function HomePageContent() {
                 <h3 className="relative text-2xl font-semibold text-white">
                   <HeadingChars text={f.title} />
                 </h3>
-                <p className="relative mt-3 text-[20px] leading-relaxed text-slate-200/90">
+                <p className="relative mt-3 text-sm lg:text-[20px] leading-relaxed text-slate-200/90">
                   <BodyChars text={f.text} />
                 </p>
-                <p className="relative mt-7 inline-flex border-l border-cyan-300/80 pl-3 text-[20px] font-semibold tracking-wide text-cyan-100">
+                <p className="relative mt-7 inline-flex border-l border-cyan-300/80 pl-3 text-sm lg:text-[20px] font-semibold tracking-wide text-cyan-100">
                   <BodyChars text={f.metric} />
                 </p>
               </motion.div>
@@ -1956,7 +1955,7 @@ function HomePageContent() {
       <SectionDivider />
 
       {/* ═══ Launch highlights (Galxe-style metric rail) ═══ */}
-      <section className="relative z-10 overflow-hidden px-6 py-20 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_8%,rgba(147,197,253,0.14),transparent_54%),radial-gradient(circle_at_90%_90%,rgba(103,232,249,0.1),transparent_50%),linear-gradient(170deg,rgba(9,14,30,0.82),rgba(6,12,20,0.9))] before:opacity-50">
+      <section className="relative z-10 overflow-hidden px-4 py-12 sm:px-10 sm:py-20 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_8%,rgba(147,197,253,0.14),transparent_54%),radial-gradient(circle_at_90%_90%,rgba(103,232,249,0.1),transparent_50%),linear-gradient(170deg,rgba(9,14,30,0.82),rgba(6,12,20,0.9))] before:opacity-50">
         <AmbientSweep
           angle="75deg"
           color="rgba(125,211,252,0.14)"
@@ -1993,12 +1992,12 @@ function HomePageContent() {
             <motion.div
               key={item.title}
               initial={reduceMotion ? "show" : "hidden"}
-              animate={
-                reduceMotion ? "show" : launchInView ? "show" : "hidden"
-              }
+              animate={reduceMotion ? "show" : launchInView ? "show" : "hidden"}
               custom={i}
               variants={{
-                hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 },
+                hidden: reduceMotion
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 18 },
                 show: (index: number) =>
                   reduceMotion
                     ? { opacity: 1, y: 0 }
@@ -2020,21 +2019,21 @@ function HomePageContent() {
                       scale: 1.01,
                     }
               }
-              className="relative overflow-hidden rounded-2xl border border-white/8 bg-[#070a12]/70 px-6 py-7 sm:px-8"
+              className="relative overflow-hidden rounded-2xl border border-white/8 bg-[#070a12]/70 px-4 py-5 sm:px-6 sm:py-7 lg:px-8"
             >
-              <p className="text-[20px] uppercase tracking-[0.18em] text-slate-200">
+              <p className="text-sm lg:text-[20px] uppercase tracking-[0.18em] text-slate-200">
                 {item.title}
               </p>
               <p className="mt-2 text-3xl font-semibold text-white sm:text-4xl">
                 {item.value}
               </p>
-              <p className="mt-2 text-[20px] text-slate-200">{item.desc}</p>
+              <p className="mt-2 text-sm lg:text-[20px] text-slate-200">
+                {item.desc}
+              </p>
               <div className="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={
-                    reduceMotion || launchInView ? "filled" : "empty"
-                  }
+                  animate={reduceMotion || launchInView ? "filled" : "empty"}
                   variants={{
                     empty: { width: 0 },
                     filled: (index: number) =>
@@ -2069,7 +2068,7 @@ function HomePageContent() {
       <SectionDivider />
 
       {/* ═══ Built for teams & builders (inspired by Galxe audience split style) ═══ */}
-      <section className="relative z-10 overflow-hidden px-6 py-24 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_90%_14%,rgba(45,212,191,0.14),transparent_56%),radial-gradient(circle_at_10%_86%,rgba(125,211,252,0.08),transparent_52%),linear-gradient(168deg,rgba(7,14,22,0.82),rgba(5,8,16,0.9))] before:opacity-50">
+      <section className="relative z-10 overflow-hidden px-4 py-14 sm:px-10 sm:py-24 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_90%_14%,rgba(45,212,191,0.14),transparent_56%),radial-gradient(circle_at_10%_86%,rgba(125,211,252,0.08),transparent_52%),linear-gradient(168deg,rgba(7,14,22,0.82),rgba(5,8,16,0.9))] before:opacity-50">
         <AmbientSweep
           angle="145deg"
           color="rgba(56,189,248,0.13)"
@@ -2099,14 +2098,18 @@ function HomePageContent() {
             <motion.div
               key={item.title}
               initial={reduceMotion ? "show" : "hidden"}
-              animate={reduceMotion ? "show" : audienceInView ? "show" : "hidden"}
+              animate={
+                reduceMotion ? "show" : audienceInView ? "show" : "hidden"
+              }
               custom={i}
               variants={{
-                hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 },
+                hidden: reduceMotion
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 24 },
                 show: (index: number) =>
                   reduceMotion
                     ? { opacity: 1, y: 0 }
-                    : ({
+                    : {
                         opacity: 1,
                         y: 0,
                         transition: {
@@ -2114,7 +2117,7 @@ function HomePageContent() {
                           ease: "easeOut",
                           delay: index * 0.45,
                         },
-                      }),
+                      },
               }}
               whileHover={
                 reduceMotion
@@ -2124,36 +2127,36 @@ function HomePageContent() {
                       scale: 1.01,
                     }
               }
-              className="group relative rounded-2xl border border-white/12 bg-white/8 p-6 backdrop-blur-sm transition-all duration-300 hover:border-cyan-300/35 hover:bg-white/12 hover:shadow-[0_0_24px_rgba(34,211,238,0.2)]"
+              className="group relative rounded-2xl border border-white/12 bg-white/8 p-4 sm:p-6 backdrop-blur-sm transition-all duration-300 hover:border-cyan-300/35 hover:bg-white/12 hover:shadow-[0_0_24px_rgba(34,211,238,0.2)]"
             >
-              <p className="text-[20px] uppercase tracking-[0.2em] text-cyan-200/70">
+              <p className="text-sm lg:text-[20px] uppercase tracking-[0.2em] text-cyan-200/70">
                 {`0${i + 1}`}
               </p>
               <h3
-                className={`mt-3 text-xl font-semibold ${i === 0 ? "text-cyan-300" : i === 1 ? "text-sky-300" : "text-blue-300"}`}
+                className={`mt-3 text-sm sm:text-base lg:text-xl font-semibold ${i === 0 ? "text-cyan-300" : i === 1 ? "text-sky-300" : "text-blue-300"}`}
               >
                 {item.title}
               </h3>
-              <p className="mt-4 text-[20px] leading-relaxed text-slate-200">
+              <p className="mt-4 text-sm lg:text-[20px] leading-relaxed text-slate-200">
                 {item.desc}
               </p>
               <a
                 href="#contact"
-                className="mt-6 inline-flex min-h-11 items-center gap-2 text-[20px] font-semibold text-slate-200 transition-colors group-hover:text-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+                className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm lg:text-[20px] font-semibold text-slate-200 transition-colors group-hover:text-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
               >
                 {item.action}
                 <ArrowIcon />
               </a>
             </motion.div>
           ))}
-          </div>
-        </section>
+        </div>
+      </section>
       <SectionDivider />
 
       {/* ═══ Ecosystem — network bg with floating cards ═══ */}
       <section
         id="ecosystem"
-        className="relative z-10 overflow-hidden px-6 py-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_20%,rgba(14,165,233,0.12),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(56,189,248,0.08),transparent_50%),linear-gradient(170deg,rgba(8,12,24,0.76),rgba(6,10,20,0.86))] before:opacity-50"
+        className="relative z-10 overflow-hidden px-4 py-14 sm:px-10 sm:py-32 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_20%,rgba(14,165,233,0.12),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(56,189,248,0.08),transparent_50%),linear-gradient(170deg,rgba(8,12,24,0.76),rgba(6,10,20,0.86))] before:opacity-50"
       >
         <AmbientSweep
           angle="-20deg"
@@ -2162,7 +2165,7 @@ function HomePageContent() {
           zIndex="-z-20"
         />
         {/* Network bg behind everything */}
-        <div className="pointer-events-none absolute inset-0 opacity-40">
+        <div className="pointer-events-none absolute inset-0 origin-center scale-55 opacity-40 sm:scale-100">
           <NetworkBg />
         </div>
         <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(14,165,233,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,165,233,0.08)_1px,transparent_1px)] bg-[size:56px_56px] opacity-15" />
@@ -2176,17 +2179,17 @@ function HomePageContent() {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <p className="text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
+            <p className="text-sm lg:text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
               <HeadingChars text={copy.ecosystem.eyebrow} />
             </p>
             <h2 className="mt-4 text-3xl font-semibold text-white sm:text-5xl">
               <HeadingChars text={copy.ecosystem.title} />
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-xl leading-relaxed text-slate-200">
+            <p className="mx-auto mt-4 max-w-2xl text-sm sm:text-base lg:text-xl leading-relaxed text-slate-200">
               <BodyChars text={copy.ecosystem.desc} />
             </p>
           </motion.div>
-          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-2.5 sm:mt-14 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {copy.ecosystem.items.map((item, i) => (
               <motion.div
                 key={item.name}
@@ -2199,12 +2202,12 @@ function HomePageContent() {
                   scale: 1.02,
                   borderColor: "rgba(103,232,249,0.25)",
                 }}
-                className="flex items-center gap-4 rounded-xl border border-white/6 bg-[#070a12]/60 px-6 py-5 backdrop-blur-sm transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,211,238,0.18)]"
+                className="flex items-center gap-2.5 rounded-xl border border-white/6 bg-[#070a12]/60 px-3 py-2.5 backdrop-blur-sm transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,211,238,0.18)] sm:px-6 sm:py-5"
               >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/6 bg-white/6">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/6 bg-white/6 sm:h-10 sm:w-10">
                   <EcoIcon type={item.icon} />
                 </div>
-                <span className="text-[20px] font-semibold text-slate-200">
+                <span className="text-sm lg:text-[20px] font-semibold text-slate-200">
                   <BodyChars text={item.name} />
                 </span>
               </motion.div>
@@ -2217,7 +2220,7 @@ function HomePageContent() {
       {/* ═══ Roadmap ═══ */}
       <section
         id="roadmap"
-        className="relative z-10 overflow-hidden px-6 py-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_70%_20%,rgba(56,189,248,0.13),transparent_52%),radial-gradient(circle_at_26%_84%,rgba(129,140,248,0.08),transparent_56%),linear-gradient(172deg,rgba(7,12,24,0.78),rgba(9,15,26,0.9))] before:opacity-50"
+        className="relative z-10 overflow-hidden px-4 py-16 sm:px-10 sm:py-24 lg:px-14 lg:py-32 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_70%_20%,rgba(56,189,248,0.13),transparent_52%),radial-gradient(circle_at_26%_84%,rgba(129,140,248,0.08),transparent_56%),linear-gradient(172deg,rgba(7,12,24,0.78),rgba(9,15,26,0.9))] before:opacity-50"
       >
         <AmbientSweep
           angle="45deg"
@@ -2233,7 +2236,7 @@ function HomePageContent() {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <p className="text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
+            <p className="text-sm lg:text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
               <HeadingChars text={copy.roadmap.eyebrow} />
             </p>
             <h2 className="mt-4 text-3xl font-semibold text-white sm:text-5xl">
@@ -2247,48 +2250,50 @@ function HomePageContent() {
             <div className="absolute left-0 right-0 top-8 hidden h-px bg-linear-to-r from-transparent via-cyan-400/20 to-transparent lg:block" />
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {copy.roadmap.phases.map((node, i) => (
-            <motion.div
-              key={node.period}
-              initial={reduceMotion ? "show" : "hidden"}
-              animate={
-                reduceMotion ? "show" : roadmapInView ? "show" : "hidden"
-              }
-              custom={i}
-              variants={{
-                hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 },
-                show: (index: number) =>
-                  reduceMotion
-                    ? { opacity: 1, y: 0 }
-                    : {
-                        opacity: 1,
-                        y: 0,
-                        transition: {
-                          duration: 0.5,
-                          ease: "easeOut",
-                          delay: index * 0.15,
-                        },
-                      },
-              }}
-              whileHover={
-                reduceMotion
-                  ? undefined
-                  : {
-                      y: -6,
-                      scale: 1.01,
-                      borderColor: "rgba(103,232,249,0.2)",
-                    }
-              }
-              className="relative rounded-2xl border border-white/6 bg-white/8 p-6 transition-all duration-300"
-            >
+                <motion.div
+                  key={node.period}
+                  initial={reduceMotion ? "show" : "hidden"}
+                  animate={
+                    reduceMotion ? "show" : roadmapInView ? "show" : "hidden"
+                  }
+                  custom={i}
+                  variants={{
+                    hidden: reduceMotion
+                      ? { opacity: 1, y: 0 }
+                      : { opacity: 0, y: 24 },
+                    show: (index: number) =>
+                      reduceMotion
+                        ? { opacity: 1, y: 0 }
+                        : {
+                            opacity: 1,
+                            y: 0,
+                            transition: {
+                              duration: 0.5,
+                              ease: "easeOut",
+                              delay: index * 0.15,
+                            },
+                          },
+                  }}
+                  whileHover={
+                    reduceMotion
+                      ? undefined
+                      : {
+                          y: -6,
+                          scale: 1.01,
+                          borderColor: "rgba(103,232,249,0.2)",
+                        }
+                  }
+                  className="relative rounded-2xl border border-white/6 bg-white/8 p-4 sm:p-6 transition-all duration-300"
+                >
                   {/* Dot on timeline */}
                   <div className="absolute -top-1.25 left-1/2 hidden h-2.5 w-2.5 -translate-x-1/2 rounded-full border-2 border-cyan-400/40 bg-[#070a12] lg:block" />
-                  <span className="inline-flex w-fit rounded-full bg-cyan-400/10 px-3 py-1 text-[20px] font-semibold tracking-widest text-cyan-300">
+                  <span className="inline-flex w-fit rounded-full bg-cyan-400/10 px-3 py-1 text-sm lg:text-[20px] font-semibold tracking-widest text-cyan-300">
                     <BodyChars text={node.period} />
                   </span>
-                  <h3 className="mt-4 text-xl font-semibold text-white">
+                  <h3 className="mt-4 text-sm sm:text-base lg:text-xl font-semibold text-white">
                     <HeadingChars text={node.title} />
                   </h3>
-                  <p className="mt-2 text-[20px] leading-relaxed text-slate-200">
+                  <p className="mt-2 text-sm lg:text-[20px] leading-relaxed text-slate-200">
                     <BodyChars text={node.detail} />
                   </p>
                 </motion.div>
@@ -2302,7 +2307,7 @@ function HomePageContent() {
       {/* ═══ Contact CTA ═══ */}
       <section
         id="contact"
-        className="relative z-10 overflow-hidden px-6 py-32 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_24%_20%,rgba(125,211,252,0.12),transparent_50%),radial-gradient(circle_at_84%_82%,rgba(56,189,248,0.08),transparent_50%),linear-gradient(175deg,rgba(5,9,18,0.8),rgba(8,12,22,0.9))] before:opacity-44"
+        className="relative z-10 overflow-hidden px-4 py-16 sm:px-10 sm:py-24 lg:px-14 lg:py-32 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_24%_20%,rgba(125,211,252,0.12),transparent_50%),radial-gradient(circle_at_84%_82%,rgba(56,189,248,0.08),transparent_50%),linear-gradient(175deg,rgba(5,9,18,0.8),rgba(8,12,22,0.9))] before:opacity-44"
       >
         <div className="pointer-events-none absolute inset-0 opacity-30">
           <NetworkBg />
@@ -2323,19 +2328,19 @@ function HomePageContent() {
               <HeadingChars text={copy.contact.title2} />
             </span>
           </h2>
-          <p className="max-w-2xl text-xl leading-relaxed text-slate-200">
+          <p className="max-w-2xl text-sm sm:text-base lg:text-xl leading-relaxed text-slate-200">
             <BodyChars text={copy.contact.desc} />
           </p>
           <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row">
             <a
               href="mailto:contact@youandi.io"
-              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-8 py-3.5 text-xl font-semibold text-[#070a12] transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-5 py-2.5 sm:px-8 sm:py-3.5 text-sm sm:text-base lg:text-xl font-semibold text-[#070a12] transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
               <BodyChars text={copy.ctaButtons.contact} /> <ArrowIcon />
             </a>
             <a
               href="#ecosystem"
-              className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/15 px-8 py-3.5 text-xl font-semibold text-slate-200 transition-all duration-300 hover:border-white/30 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 sm:px-8 sm:py-3.5 text-sm sm:text-base lg:text-xl font-semibold text-slate-200 transition-all duration-300 hover:border-white/30 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
               <BodyChars text={copy.ctaButtons.explore} /> <ArrowIcon />
             </a>
@@ -2344,18 +2349,20 @@ function HomePageContent() {
       </section>
 
       {/* ═══ Footer ═══ */}
-      <footer className="relative z-10 border-t border-white/6 px-6 pt-16 pb-8 sm:px-10 lg:px-14">
+      <footer className="relative z-10 border-t border-white/6 px-4 pt-10 pb-6 sm:px-10 sm:pt-16 sm:pb-8 lg:px-14">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
             <div className="lg:col-span-1">
-              <span className="text-xl font-semibold text-white">YOU&I</span>
-              <p className="mt-4 text-[20px] leading-relaxed text-slate-200">
+              <span className="text-sm sm:text-base lg:text-xl font-semibold text-white">
+                YOU&I
+              </span>
+              <p className="mt-4 text-sm lg:text-[20px] leading-relaxed text-slate-200">
                 {copy.footer.description}
               </p>
             </div>
             {Object.entries(copy.footer.links).map(([cat, links]) => (
               <div key={cat}>
-                <h4 className="text-[20px] font-semibold text-slate-200">
+                <h4 className="text-sm lg:text-[20px] font-semibold text-slate-200">
                   {cat}
                 </h4>
                 <ul className="mt-4 flex flex-col gap-2.5">
@@ -2363,7 +2370,7 @@ function HomePageContent() {
                     <li key={l}>
                       <a
                         href="#"
-                        className="text-[20px] text-slate-200 transition-colors duration-200 hover:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+                        className="text-sm lg:text-[20px] text-slate-200 transition-colors duration-200 hover:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
                       >
                         {l}
                       </a>
@@ -2374,10 +2381,12 @@ function HomePageContent() {
             ))}
           </div>
           <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/6 pt-8 sm:flex-row">
-            <p className="text-[20px] text-slate-200">
+            <p className="text-sm lg:text-[20px] text-slate-200">
               {copy.footer.copyright}
             </p>
-            <p className="text-[20px] text-slate-200">{copy.footer.legal}</p>
+            <p className="text-sm lg:text-[20px] text-slate-200">
+              {copy.footer.legal}
+            </p>
           </div>
         </div>
       </footer>
