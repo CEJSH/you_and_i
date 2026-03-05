@@ -780,37 +780,44 @@ function FeatureGraphic({ type }: { type: string }) {
 
 /* ── Network Diagram (used as background) ── */
 
-function NetworkBg() {
-  const nodes = [
-    { x: 50, y: 15, r: 6, primary: true },
-    { x: 20, y: 40, r: 4 },
-    { x: 80, y: 40, r: 4 },
-    { x: 10, y: 70, r: 3 },
-    { x: 35, y: 80, r: 3 },
-    { x: 55, y: 65, r: 3 },
-    { x: 75, y: 75, r: 3 },
-    { x: 90, y: 60, r: 3 },
-    { x: 30, y: 55, r: 2.5 },
-    { x: 65, y: 50, r: 2.5 },
-  ];
-  const edges = [
-    [0, 1],
-    [0, 2],
-    [1, 3],
-    [1, 4],
-    [1, 8],
-    [2, 5],
-    [2, 6],
-    [2, 7],
-    [2, 9],
-    [8, 3],
-    [8, 4],
-    [9, 5],
-    [9, 6],
-    [4, 5],
-    [6, 7],
-  ];
+const networkBgNodes = [
+  { x: 50, y: 15, r: 6, primary: true },
+  { x: 20, y: 40, r: 4 },
+  { x: 80, y: 40, r: 4 },
+  { x: 10, y: 70, r: 3 },
+  { x: 35, y: 80, r: 3 },
+  { x: 55, y: 65, r: 3 },
+  { x: 75, y: 75, r: 3 },
+  { x: 90, y: 60, r: 3 },
+  { x: 30, y: 55, r: 2.5 },
+  { x: 65, y: 50, r: 2.5 },
+];
 
+const networkBgEdges = [
+  [0, 1],
+  [0, 2],
+  [1, 3],
+  [1, 4],
+  [1, 8],
+  [2, 5],
+  [2, 6],
+  [2, 7],
+  [2, 9],
+  [8, 3],
+  [8, 4],
+  [9, 5],
+  [9, 6],
+  [4, 5],
+  [6, 7],
+];
+
+function NetworkBg({
+  reduceMotion,
+  active = true,
+}: {
+  reduceMotion: boolean;
+  active?: boolean;
+}) {
   return (
     <svg
       viewBox="0 0 100 100"
@@ -818,13 +825,13 @@ function NetworkBg() {
       preserveAspectRatio="xMidYMid slice"
       fill="none"
     >
-      {edges.map(([a, b], i) => (
+      {networkBgEdges.map(([a, b], i) => (
         <line
           key={i}
-          x1={nodes[a].x}
-          y1={nodes[a].y}
-          x2={nodes[b].x}
-          y2={nodes[b].y}
+          x1={networkBgNodes[a].x}
+          y1={networkBgNodes[a].y}
+          x2={networkBgNodes[b].x}
+          y2={networkBgNodes[b].y}
           stroke="#67e8f9"
           strokeOpacity="0.08"
           strokeWidth="0.3"
@@ -836,20 +843,34 @@ function NetworkBg() {
           r="0.8"
           fill="#67e8f9"
           fillOpacity="0.5"
-          animate={{
-            cx: [nodes[edges[ei][0]].x, nodes[edges[ei][1]].x],
-            cy: [nodes[edges[ei][0]].y, nodes[edges[ei][1]].y],
-            opacity: [0, 0.6, 0.6, 0],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            delay: ei * 0.7,
-            ease: "linear",
-          }}
+          animate={
+            reduceMotion || !active
+              ? undefined
+              : {
+                  cx: [
+                    networkBgNodes[networkBgEdges[ei][0]].x,
+                    networkBgNodes[networkBgEdges[ei][1]].x,
+                  ],
+                  cy: [
+                    networkBgNodes[networkBgEdges[ei][0]].y,
+                    networkBgNodes[networkBgEdges[ei][1]].y,
+                  ],
+                  opacity: [0, 0.6, 0.6, 0],
+                }
+          }
+          transition={
+            reduceMotion
+              ? undefined
+              : {
+                  duration: 3,
+                  repeat: Infinity,
+                  delay: ei * 0.7,
+                  ease: "linear",
+                }
+          }
         />
       ))}
-      {nodes.map((n, i) => (
+      {networkBgNodes.map((n, i) => (
         <circle
           key={i}
           cx={n.x}
@@ -869,30 +890,71 @@ function NetworkBg() {
 
 function useCountUp(target: number, duration: number, inView: boolean) {
   const [count, setCount] = useState(0);
-  const started = useRef(false);
+  const hasStarted = useRef(false);
+  const frameRef = useRef<number | null>(null);
   useEffect(() => {
-    if (!inView || started.current) return;
-    started.current = true;
+    if (!inView) {
+      hasStarted.current = false;
+      if (frameRef.current !== null) {
+        cancelAnimationFrame(frameRef.current);
+        frameRef.current = null;
+      }
+      return;
+    }
+
+    if (hasStarted.current) return;
+    hasStarted.current = true;
+    setCount(0);
+
     const start = performance.now();
+    const integerMode = target <= 20;
     const step = (now: number) => {
       const elapsed = now - start;
       const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.round(target * eased));
-      if (progress < 1) requestAnimationFrame(step);
+      if (integerMode) {
+        setCount(Math.min(target, Math.max(0, Math.ceil(progress * target))));
+      } else {
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setCount(Math.round(target * eased));
+      }
+      if (progress < 1) {
+        frameRef.current = requestAnimationFrame(step);
+      }
     };
-    requestAnimationFrame(step);
+    frameRef.current = requestAnimationFrame(step);
+
+    return () => {
+      if (frameRef.current !== null) {
+        cancelAnimationFrame(frameRef.current);
+        frameRef.current = null;
+      }
+    };
   }, [inView, target, duration]);
   return count;
 }
+
+const CountValue = memo(function CountValue({
+  target,
+  inView,
+}: {
+  target: number;
+  inView: boolean;
+}) {
+  const count = useCountUp(target, 1800, inView);
+  return <span className="tabular-nums">{count.toLocaleString()}</span>;
+});
 
 /* ── Dashboard/Performance ── */
 
 const DashboardSection = memo(function DashboardSection({
   copy,
+  reduceMotion,
 }: {
   copy: (typeof pageCopy)["ko"]["dashboard"];
+  reduceMotion: boolean;
 }) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(sectionRef, { amount: 0.15 });
   const bars = copy.tabs;
   const chart = [
     { name: "ETH", tps: 84 },
@@ -906,25 +968,34 @@ const DashboardSection = memo(function DashboardSection({
   const label = copy.chartTitle;
 
   return (
-    <section className="relative z-10 overflow-hidden px-4 py-16 sm:px-10 sm:py-24 lg:px-14 lg:py-32 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_15%_12%,rgba(56,189,248,0.16),transparent_56%),radial-gradient(circle_at_88%_86%,rgba(129,140,248,0.08),transparent_60%),linear-gradient(175deg,rgba(8,14,32,0.84),rgba(5,18,36,0.94))] before:opacity-50">
+    <section className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_15%_12%,rgba(56,189,248,0.16),transparent_56%),radial-gradient(circle_at_88%_86%,rgba(129,140,248,0.08),transparent_60%),linear-gradient(175deg,rgba(8,14,32,0.84),rgba(5,18,36,0.94))] before:opacity-50">
       <AmbientSweep
         angle="35deg"
         color="rgba(125,211,252,0.12)"
         duration={20}
         zIndex="-z-20"
+        active={inView && !reduceMotion}
       />
       <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(59,130,246,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(59,130,246,0.06)_1px,transparent_1px)] bg-[size:80px_52px] opacity-15" />
       <motion.div
         aria-hidden
         className="pointer-events-none absolute -left-28 top-8 h-80 w-80 rounded-full bg-cyan-300/12 blur-[100px]"
-        animate={{
-          x: [0, 34, 0],
-          y: [0, 8, 0],
-          opacity: [0.08, 0.16, 0.08],
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        animate={
+          inView
+            ? {
+                x: [0, 34, 0],
+                y: [0, 8, 0],
+                opacity: [0.08, 0.16, 0.08],
+              }
+            : undefined
+        }
+        transition={
+          inView
+            ? { duration: 10, repeat: Infinity, ease: "easeInOut" }
+            : undefined
+        }
       />
-      <div className="mx-auto max-w-7xl">
+      <div ref={sectionRef} className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -976,7 +1047,7 @@ const DashboardSection = memo(function DashboardSection({
                   {copy.timeframe.map((t) => (
                     <span
                       key={t}
-                      className={`text-sm lg:text-[20px] ${t === copy.timeframe[2] ? "text-cyan-300" : "text-slate-200"}`}
+                      className={`text-xs lg:text-[20px] ${t === copy.timeframe[2] ? "text-cyan-300" : "text-slate-200"}`}
                     >
                       <BodyChars text={t} />
                     </span>
@@ -992,7 +1063,7 @@ const DashboardSection = memo(function DashboardSection({
                     whileInView={{
                       height: `${[92, 74, 88, 68, 83, 56, 81][i]}%`,
                     }}
-                    viewport={{ once: true }}
+                    viewport={{ once: false }}
                     transition={{ duration: 0.5, delay: 0.3 + i * 0.03 }}
                   />
                 ))}
@@ -1031,7 +1102,7 @@ const DashboardSection = memo(function DashboardSection({
                     key={chain.name}
                     initial={{ opacity: 0, x: -10 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: false }}
                     transition={{ duration: 0.3, delay: 0.5 + i * 0.04 }}
                     className="flex items-center gap-2 rounded-lg border border-white/4 bg-white/8 px-3 py-2"
                   >
@@ -1053,16 +1124,24 @@ const DashboardSection = memo(function DashboardSection({
           <motion.div
             aria-hidden
             className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-linear-to-r from-transparent via-cyan-400/30 to-transparent opacity-0"
-            animate={{
-              opacity: [0, 0.55, 0],
-              x: ["-100%", "100%", "100%"],
-            }}
-            transition={{
-              duration: 4.4,
-              repeat: Infinity,
-              ease: "linear",
-              delay: 0.6,
-            }}
+            animate={
+              inView
+                ? {
+                    opacity: [0, 0.55, 0],
+                    x: ["-100%", "100%", "100%"],
+                  }
+                : undefined
+            }
+            transition={
+              inView
+                ? {
+                    duration: 4.4,
+                    repeat: Infinity,
+                    ease: "linear",
+                    delay: 0.6,
+                  }
+                : undefined
+            }
           />
         </motion.div>
       </div>
@@ -1072,32 +1151,43 @@ const DashboardSection = memo(function DashboardSection({
 
 const PerformanceSection = memo(function PerformanceSection({
   copy,
+  reduceMotion,
 }: {
   copy: (typeof pageCopy)["ko"]["performance"];
+  reduceMotion: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.3 });
+  const inView = useInView(ref, { amount: 0.15 });
   return (
     <section
       ref={ref}
-      className="relative z-10 overflow-hidden px-4 py-16 sm:px-10 sm:py-24 lg:px-14 lg:py-32 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_88%_10%,rgba(45,212,191,0.16),transparent_52%),radial-gradient(circle_at_24%_86%,rgba(125,211,252,0.09),transparent_56%),linear-gradient(172deg,rgba(10,14,34,0.84),rgba(6,14,28,0.9))] before:opacity-44"
+      className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_88%_10%,rgba(45,212,191,0.16),transparent_52%),radial-gradient(circle_at_24%_86%,rgba(125,211,252,0.09),transparent_56%),linear-gradient(172deg,rgba(10,14,34,0.84),rgba(6,14,28,0.9))] before:opacity-44"
     >
       <AmbientSweep
         angle="160deg"
         color="rgba(45,212,191,0.13)"
         duration={22}
         zIndex="-z-20"
+        active={inView && !reduceMotion}
       />
       <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(125,211,252,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(125,211,252,0.08)_1px,transparent_1px)] bg-[size:60px_34px] opacity-15" />
       <motion.div
         aria-hidden
         className="pointer-events-none absolute right-[-130px] top-10 h-72 w-72 rounded-full bg-sky-300/10 blur-[95px]"
-        animate={{
-          x: [0, -30, 0],
-          y: [0, -16, 0],
-          opacity: [0.06, 0.15, 0.06],
-        }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        animate={
+          inView
+            ? {
+                x: [0, -30, 0],
+                y: [0, -16, 0],
+                opacity: [0.06, 0.15, 0.06],
+              }
+            : undefined
+        }
+        transition={
+          inView
+            ? { duration: 12, repeat: Infinity, ease: "easeInOut" }
+            : undefined
+        }
       />
       <div className="mx-auto max-w-7xl">
         <motion.div
@@ -1109,7 +1199,7 @@ const PerformanceSection = memo(function PerformanceSection({
           <p className="text-sm lg:text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
             <HeadingChars text={copy.eyebrow} />
           </p>
-          <h2 className="mt-4 text-3xl font-semibold text-white sm:text-5xl">
+          <h2 className="mt-4 text-xl font-semibold text-white sm:text-5xl">
             <HeadingChars text={copy.title} />
           </h2>
         </motion.div>
@@ -1141,10 +1231,6 @@ const PerformanceSection = memo(function PerformanceSection({
 
           <div className="space-y-6">
             {copy.bars.map((bar, i) => {
-              const CountVal = () => {
-                const count = useCountUp(bar.value, 1800, inView);
-                return <BodyChars text={count.toLocaleString()} />;
-              };
               return (
                 <div key={bar.label} className="space-y-2">
                   <div className="flex items-baseline justify-between">
@@ -1152,7 +1238,7 @@ const PerformanceSection = memo(function PerformanceSection({
                       <BodyChars text={bar.label} />
                     </span>
                     <span className="text-lg font-semibold tabular-nums text-white sm:text-xl lg:text-3xl">
-                      <CountVal />
+                      <CountValue target={bar.value} inView={inView} />
                       <span className="ml-1 text-sm lg:text-[20px] font-normal text-slate-200">
                         <BodyChars text="TPS" />
                       </span>
@@ -1185,9 +1271,11 @@ const PerformanceSection = memo(function PerformanceSection({
 const SectionDivider = memo(function SectionDivider({
   delay = 0,
   duration = 3.2,
+  reduceMotion = false,
 }: {
   delay?: number;
   duration?: number;
+  reduceMotion?: boolean;
 }) {
   return (
     <motion.div
@@ -1200,7 +1288,7 @@ const SectionDivider = memo(function SectionDivider({
         <motion.div
           aria-hidden
           className="absolute inset-0 bg-linear-to-r from-transparent via-cyan-300/45 to-transparent"
-          custom={{ duration, delay }}
+          custom={{ duration, delay, reduceMotion }}
           variants={sectionDividerVariants}
         />
       </div>
@@ -1208,13 +1296,14 @@ const SectionDivider = memo(function SectionDivider({
   );
 });
 
-function AmbientSweep({
+const AmbientSweep = memo(function AmbientSweep({
   angle,
   color,
   duration,
   delay = 0,
   zIndex = "-z-4",
   className = "",
+  active = true,
 }: {
   angle: string;
   color: string;
@@ -1222,6 +1311,7 @@ function AmbientSweep({
   delay?: number;
   zIndex?: string;
   className?: string;
+  active?: boolean;
 }) {
   return (
     <motion.div
@@ -1230,20 +1320,29 @@ function AmbientSweep({
       style={{
         backgroundImage: `linear-gradient(${angle}, transparent 40%, ${color} 50%, transparent 60%)`,
         backgroundSize: "240% 240%",
+        backgroundPosition: "0% 0%",
       }}
-      animate={{
-        opacity: [0.02, 0.2, 0.02],
-        backgroundPosition: ["0% 0%", "80% 80%"],
-      }}
-      transition={{
-        duration,
-        repeat: Infinity,
-        ease: "linear",
-        delay,
-      }}
+      animate={
+        active
+          ? {
+              opacity: [0.02, 0.2, 0.02],
+              backgroundPosition: ["0% 0%", "80% 80%"],
+            }
+          : undefined
+      }
+      transition={
+        active
+          ? {
+              duration,
+              repeat: Infinity,
+              ease: "linear",
+              delay,
+            }
+          : undefined
+      }
     />
   );
-}
+});
 
 const heroReveal = {
   container: {
@@ -1324,15 +1423,23 @@ const bodyReveal = {
 
 const sectionDividerVariants: Variants = {
   hidden: { x: "-120%" },
-  show: ({ duration, delay }: { duration: number; delay: number }) => ({
-    x: ["-120%", "120%"],
-    transition: {
-      duration,
-      delay,
-      repeat: Infinity,
-      repeatType: "reverse" as const,
-      ease: "linear" as const,
-    },
+  show: ({
+    duration,
+    delay,
+    reduceMotion,
+  }: {
+    duration: number;
+    delay: number;
+    reduceMotion: boolean;
+  }) => ({
+    x: reduceMotion ? "-120%" : ["-120%", "120%"],
+    transition: reduceMotion
+      ? undefined
+      : {
+          duration,
+          delay,
+          ease: "linear" as const,
+        },
   }),
 };
 
@@ -1438,21 +1545,24 @@ const TrustStrip = memo(function TrustStrip({
   reduceMotion,
   badges,
   label,
+  active = true,
 }: {
   reduceMotion: boolean;
   badges: { name: string; note: string }[];
   label: string;
+  active?: boolean;
 }) {
   const marqueeBadges = [...badges, ...badges];
-  const marqueeAnimation = reduceMotion ? undefined : { x: ["0%", "-50%"] };
-  const marqueeTransition = reduceMotion
-    ? undefined
-    : { duration: 60, repeat: Infinity, ease: "linear" };
+  const shouldAnimate = active && !reduceMotion;
+  const marqueeAnimation = shouldAnimate ? { x: ["0%", "-50%"] } : undefined;
+  const marqueeTransition = shouldAnimate
+    ? { duration: 60, repeat: Infinity, ease: "linear" }
+    : undefined;
 
   return (
     <section className="relative z-10 overflow-hidden px-4 sm:px-10 py-1.5 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:opacity-100">
       <div className="mx-auto max-w-7xl overflow-hidden rounded-2xl py-3">
-        <div className="px-4 pb-4 text-sm lg:text-base uppercase font-bold tracking-[0.15em] text-slate-200">
+        <div className="px-0 md:px-4 pb-4 text-sm lg:text-base uppercase font-bold tracking-[0.15em] text-slate-200">
           {label}
         </div>
         <div className="relative">
@@ -1494,21 +1604,21 @@ function HomePageContent() {
   const heroRef = useRef<HTMLDivElement>(null);
   const audienceRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
+  const ecosystemRef = useRef<HTMLDivElement>(null);
   const launchRef = useRef<HTMLDivElement>(null);
   const roadmapRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const heroInView = useInView(heroRef, { once: true, amount: 0.25 });
   const audienceInView = useInView(audienceRef, { once: true, amount: 0.25 });
   const featuresInView = useInView(featuresRef, { once: true, amount: 0.18 });
+  const ecosystemInView = useInView(ecosystemRef, { once: true, amount: 0.2 });
   const launchInView = useInView(launchRef, { once: true, amount: 0.25 });
   const roadmapInView = useInView(roadmapRef, { once: true, amount: 0.25 });
+  const contactInView = useInView(contactRef, { once: true, amount: 0.15 });
 
   const handleLogoClick = () => {
     if (typeof window === "undefined") return;
-    if (window.scrollY <= 0) {
-      window.location.reload();
-      return;
-    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -1647,6 +1757,7 @@ function HomePageContent() {
           color="rgba(125,211,252,0.18)"
           duration={18}
           zIndex="-z-20"
+          active={!reduceMotion && heroInView}
         />
         <motion.div
           style={{ y: heroFloat }}
@@ -1789,6 +1900,7 @@ function HomePageContent() {
 
       <TrustStrip
         reduceMotion={reduceMotion}
+        active={!reduceMotion}
         badges={copy.trustStrip.badges}
         label={copy.trustStrip.badgeLabel}
       />
@@ -1796,13 +1908,14 @@ function HomePageContent() {
       {/* ═══ Features — visual product matrix ═══ */}
       <section
         id="features"
-        className="relative z-10 overflow-hidden px-4 py-14 sm:px-10 sm:py-24 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_20%_10%,rgba(45,212,191,0.18),transparent_45%),radial-gradient(circle_at_82%_76%,rgba(125,211,252,0.14),transparent_45%),linear-gradient(to_bottom,rgba(10,12,24,0.8),rgba(6,10,20,0.9))] before:opacity-44"
+        className="relative z-10 overflow-hidden px-4 py-18 sm:px-10 sm:py-28 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_20%_10%,rgba(45,212,191,0.18),transparent_45%),radial-gradient(circle_at_82%_76%,rgba(125,211,252,0.14),transparent_45%),linear-gradient(to_bottom,rgba(10,12,24,0.8),rgba(6,10,20,0.9))] before:opacity-44"
       >
         <AmbientSweep
           angle="20deg"
           color="rgba(103,232,249,0.13)"
           duration={24}
           zIndex="-z-20"
+          active={!reduceMotion && featuresInView}
         />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(34,211,238,0.14),transparent_45%),radial-gradient(circle_at_80%_80%,rgba(56,189,248,0.1),transparent_40%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(59,130,246,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(59,130,246,0.06)_1px,transparent_1px)] bg-[size:44px_27px] opacity-12" />
@@ -1891,17 +2004,13 @@ function HomePageContent() {
                   aria-hidden
                   className="pointer-events-none absolute -left-12 top-4 h-40 w-40 rounded-full bg-cyan-300/10 blur-3xl"
                 />
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute left-0 right-0 h-px bg-linear-to-r from-transparent via-cyan-300/38 to-transparent"
-                />
                 <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_65%_10%,rgba(34,211,238,0.18),transparent_40%)]" />
                 </div>
-                <div className="relative mb-6 border-b border-white/10 pb-6">
+                <div className="relative mb-3 md:mb-6 border-b border-white/10 pb-1 md:pb-5">
                   <FeatureGraphic type={f.icon} />
                 </div>
-                <h3 className="relative text-2xl font-semibold text-white">
+                <h3 className="relative text-xl md:text-2xl font-semibold text-white">
                   <HeadingChars text={f.title} />
                 </h3>
                 <p className="relative mt-3 text-sm lg:text-[20px] leading-relaxed text-slate-200/90">
@@ -1915,15 +2024,16 @@ function HomePageContent() {
           </div>
         </div>
       </section>
-      <SectionDivider />
+      <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Launch highlights (Galxe-style metric rail) ═══ */}
-      <section className="relative z-10 overflow-hidden px-4 py-12 sm:px-10 sm:py-20 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_8%,rgba(147,197,253,0.14),transparent_54%),radial-gradient(circle_at_90%_90%,rgba(103,232,249,0.1),transparent_50%),linear-gradient(170deg,rgba(9,14,30,0.82),rgba(6,12,20,0.9))] before:opacity-50">
+      <section className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_8%,rgba(147,197,253,0.14),transparent_54%),radial-gradient(circle_at_90%_90%,rgba(103,232,249,0.1),transparent_50%),linear-gradient(170deg,rgba(9,14,30,0.82),rgba(6,12,20,0.9))] before:opacity-50">
         <AmbientSweep
           angle="75deg"
           color="rgba(125,211,252,0.14)"
           duration={21}
           zIndex="-z-20"
+          active={!reduceMotion && launchInView}
         />
         <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(147,197,253,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(125,211,252,0.06)_1px,transparent_1px)] bg-[size:52px_38px] opacity-12" />
         <motion.div
@@ -2002,38 +2112,47 @@ function HomePageContent() {
           ))}
         </div>
       </section>
-      <SectionDivider />
+      <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Dashboard — full-width, text overlaid ═══ */}
-      <DashboardSection copy={copy.dashboard} />
-      <SectionDivider />
+      <DashboardSection copy={copy.dashboard} reduceMotion={reduceMotion} />
+      <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Performance — unified card ═══ */}
-      <PerformanceSection copy={copy.performance} />
-      <SectionDivider />
+      <PerformanceSection copy={copy.performance} reduceMotion={reduceMotion} />
+      <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Built for teams & builders (inspired by Galxe audience split style) ═══ */}
-      <section className="relative z-10 overflow-hidden px-4 py-14 sm:px-10 sm:py-24 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_90%_14%,rgba(45,212,191,0.14),transparent_56%),radial-gradient(circle_at_10%_86%,rgba(125,211,252,0.08),transparent_52%),linear-gradient(168deg,rgba(7,14,22,0.82),rgba(5,8,16,0.9))] before:opacity-50">
+      <section className="relative z-10 overflow-hidden px-4 py-18 sm:px-10 sm:py-28 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_90%_14%,rgba(45,212,191,0.14),transparent_56%),radial-gradient(circle_at_10%_86%,rgba(125,211,252,0.08),transparent_52%),linear-gradient(168deg,rgba(7,14,22,0.82),rgba(5,8,16,0.9))] before:opacity-50">
         <AmbientSweep
           angle="145deg"
           color="rgba(56,189,248,0.13)"
           duration={23}
           zIndex="-z-20"
+          active={!reduceMotion && audienceInView}
         />
         <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(45,212,191,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(125,211,252,0.1)_1px,transparent_1px)] bg-[size:46px_46px] opacity-12" />
         <motion.div
           aria-hidden
           className="pointer-events-none absolute left-[-18%] top-1/3 h-64 w-64 rounded-full bg-sky-300/10 blur-[110px]"
-          animate={{
-            x: [0, 28, 0],
-            y: [0, -18, 0],
-            opacity: [0.08, 0.18, 0.08],
-          }}
-          transition={{
-            duration: 11,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          animate={
+            reduceMotion || !audienceInView
+              ? undefined
+              : {
+                  x: [0, 28, 0],
+                  y: [0, -18, 0],
+                  opacity: [0.08, 0.18, 0.08],
+                }
+          }
+          transition={
+            reduceMotion || !audienceInView
+              ? undefined
+              : {
+                  duration: 11,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }
+          }
         />
         <div
           ref={audienceRef}
@@ -2078,22 +2197,27 @@ function HomePageContent() {
           ))}
         </div>
       </section>
-      <SectionDivider />
+      <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Ecosystem — network bg with floating cards ═══ */}
       <section
+        ref={ecosystemRef}
         id="ecosystem"
-        className="relative z-10 overflow-hidden px-4 py-14 sm:px-10 sm:py-32 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_20%,rgba(14,165,233,0.12),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(56,189,248,0.08),transparent_50%),linear-gradient(170deg,rgba(8,12,24,0.76),rgba(6,10,20,0.86))] before:opacity-50"
+        className="relative z-10 overflow-hidden px-4 py-18 sm:px-10 sm:py-36 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_20%,rgba(14,165,233,0.12),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(56,189,248,0.08),transparent_50%),linear-gradient(170deg,rgba(8,12,24,0.76),rgba(6,10,20,0.86))] before:opacity-50"
       >
         <AmbientSweep
           angle="-20deg"
           color="rgba(56,189,248,0.14)"
           duration={25}
           zIndex="-z-20"
+          active={!reduceMotion && ecosystemInView}
         />
         {/* Network bg behind everything */}
         <div className="pointer-events-none absolute inset-0 origin-center scale-55 opacity-40 sm:scale-100">
-          <NetworkBg />
+          <NetworkBg
+            reduceMotion={reduceMotion}
+            active={!reduceMotion && ecosystemInView}
+          />
         </div>
         <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(14,165,233,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,165,233,0.08)_1px,transparent_1px)] bg-[size:56px_56px] opacity-15" />
         <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-[#070a12] via-[#070a12]/80 to-[#070a12]" />
@@ -2137,18 +2261,19 @@ function HomePageContent() {
           </div>
         </div>
       </section>
-      <SectionDivider />
+      <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Roadmap ═══ */}
       <section
         id="roadmap"
-        className="relative z-10 overflow-hidden px-4 py-16 sm:px-10 sm:py-24 lg:px-14 lg:py-32 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_70%_20%,rgba(56,189,248,0.13),transparent_52%),radial-gradient(circle_at_26%_84%,rgba(129,140,248,0.08),transparent_56%),linear-gradient(172deg,rgba(7,12,24,0.78),rgba(9,15,26,0.9))] before:opacity-50"
+        className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_70%_20%,rgba(56,189,248,0.13),transparent_52%),radial-gradient(circle_at_26%_84%,rgba(129,140,248,0.08),transparent_56%),linear-gradient(172deg,rgba(7,12,24,0.78),rgba(9,15,26,0.9))] before:opacity-50"
       >
         <AmbientSweep
           angle="45deg"
           color="rgba(129,140,248,0.13)"
           duration={19}
           zIndex="-z-20"
+          active={!reduceMotion && roadmapInView}
         />
         <div className="mx-auto max-w-7xl">
           <motion.div
@@ -2205,15 +2330,19 @@ function HomePageContent() {
           </div>
         </div>
       </section>
-      <SectionDivider />
+      <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Contact CTA ═══ */}
       <section
+        ref={contactRef}
         id="contact"
-        className="relative z-10 overflow-hidden px-4 py-16 sm:px-10 sm:py-24 lg:px-14 lg:py-32 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_24%_20%,rgba(125,211,252,0.12),transparent_50%),radial-gradient(circle_at_84%_82%,rgba(56,189,248,0.08),transparent_50%),linear-gradient(175deg,rgba(5,9,18,0.8),rgba(8,12,22,0.9))] before:opacity-44"
+        className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_24%_20%,rgba(125,211,252,0.12),transparent_50%),radial-gradient(circle_at_84%_82%,rgba(56,189,248,0.08),transparent_50%),linear-gradient(175deg,rgba(5,9,18,0.8),rgba(8,12,22,0.9))] before:opacity-44"
       >
         <div className="pointer-events-none absolute inset-0 opacity-30">
-          <NetworkBg />
+          <NetworkBg
+            reduceMotion={reduceMotion}
+            active={!reduceMotion && contactInView}
+          />
         </div>
         <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-[#070a12] via-transparent to-[#070a12]" />
         <motion.div
