@@ -949,24 +949,24 @@ function DashboardSection({
           transition={{ duration: 0.8, delay: 0.1 }}
           className="relative overflow-hidden rounded-2xl border border-white/6 bg-[#0a0c14]"
         >
-          <div className="grid grid-cols-2 gap-3 p-4 sm:p-5 sm:grid-cols-4">
+          <div className="grid grid-cols-4 gap-2 p-2 sm:p-4 lg:grid-cols-5">
             {bars.map((s) => (
               <div
                 key={s.label}
-                className="rounded-xl border border-white/6 bg-white/8 p-4"
+                className="rounded-xl border border-white/6 bg-white/8 p-2"
               >
-                <p className="text-sm lg:text-[20px] uppercase tracking-wider text-slate-200">
+                <p className="text-[10px] leading-tight uppercase tracking-wider text-slate-200 sm:text-sm lg:text-[20px]">
                   <BodyChars text={s.label} />
                 </p>
                 <p
-                  className={`mt-1.5 text-sm sm:text-base lg:text-xl font-semibold ${s.color}`}
+                  className={`mt-1 text-[12px] sm:text-sm lg:text-xl font-semibold ${s.color}`}
                 >
                   <BodyChars text={s.value} />
                 </p>
               </div>
             ))}
 
-            <div className="col-span-2 sm:col-span-3 flex flex-col rounded-xl border border-white/6 bg-white/8 p-3 sm:p-5">
+            <div className="col-span-4 flex flex-col rounded-xl border border-white/6 bg-white/8 p-3 sm:p-5">
               <div className="flex items-center justify-between">
                 <p className="text-sm lg:text-[20px] uppercase tracking-wider text-slate-200">
                   {label}
@@ -982,9 +982,7 @@ function DashboardSection({
                   ))}
                 </div>
               </div>
-              <div
-                className="mt-4 flex min-h-30 flex-1 items-end gap-0.75"
-              >
+              <div className="mt-4 flex min-h-30 flex-1 items-end gap-0.75">
                 {chart.map((h, i) => (
                   <motion.div
                     key={`${h.name}-${i}`}
@@ -1022,7 +1020,7 @@ function DashboardSection({
               </div>
             </div>
 
-            <div className="col-span-3 md:col-span-1 rounded-xl border border-white/6 bg-white/8 p-4">
+            <div className="col-span-full rounded-xl border border-white/6 bg-white/8 p-4 lg:col-start-5 lg:row-span-2 lg:row-start-1">
               <p className="text-sm lg:text-[20px] uppercase tracking-wider text-slate-200">
                 <BodyChars text={copy.chainTitle} />
               </p>
@@ -1463,11 +1461,11 @@ function HomePageContent() {
   const launchRef = useRef<HTMLDivElement>(null);
   const roadmapRef = useRef<HTMLDivElement>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const heroInView = useInView(heroRef, { amount: 0.25 });
-  const audienceInView = useInView(audienceRef, { amount: 0.25 });
-  const featuresInView = useInView(featuresRef, { amount: 0.18 });
-  const launchInView = useInView(launchRef, { amount: 0.25 });
-  const roadmapInView = useInView(roadmapRef, { amount: 0.25 });
+  const heroInView = useInView(heroRef, { once: true, amount: 0.25 });
+  const audienceInView = useInView(audienceRef, { once: true, amount: 0.25 });
+  const featuresInView = useInView(featuresRef, { once: true, amount: 0.18 });
+  const launchInView = useInView(launchRef, { once: true, amount: 0.25 });
+  const roadmapInView = useInView(roadmapRef, { once: true, amount: 0.25 });
 
   const handleLogoClick = () => {
     if (typeof window === "undefined") return;
@@ -1489,11 +1487,11 @@ function HomePageContent() {
 
       {/* Header */}
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/6 bg-[#070a12]/70 backdrop-blur-xl">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4 lg:px-10">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4 lg:px-0">
           <button
             type="button"
             onClick={handleLogoClick}
-            className="cursor-pointer text-sm sm:text-base lg:text-xl font-semibold tracking-tight text-white"
+            className="cursor-pointer text-base sm:text-lg lg:text-2xl font-extrabold tracking-tight text-white"
           >
             YOU&I
           </button>
@@ -1502,7 +1500,7 @@ function HomePageContent() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm lg:text-[20px] text-slate-100 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+                className="text-sm lg:text-lg text-slate-100 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
               >
                 <BodyChars text={link.label} />
               </a>
@@ -1512,13 +1510,13 @@ function HomePageContent() {
             <button
               type="button"
               onClick={toggleLocale}
-              className="rounded-full border border-white/10 bg-white/5 px-3 py-2.5 text-sm lg:text-[20px] font-semibold uppercase tracking-[0.12em] text-slate-200 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-2.5 text-sm lg:text-lg font-medium uppercase tracking-[0.12em] text-slate-200 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
               {locale === "ko" ? "EN" : "KO"}
             </button>
             <a
               href="#contact"
-              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm sm:text-base lg:text-xl font-semibold text-white transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm sm:text-base lg:text-lg font-medium text-white transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
               <BodyChars text={copy.header.cta} /> <ArrowIcon />
             </a>
@@ -1580,14 +1578,14 @@ function HomePageContent() {
                     toggleLocale();
                     setMobileOpen(false);
                   }}
-                  className="w-fit rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm lg:text-[20px] font-semibold uppercase tracking-[0.12em] text-slate-200 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+                  className="w-fit rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm lg:text-lg font-medium uppercase tracking-[0.12em] text-slate-200 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
                 >
                   {locale === "ko" ? "EN" : "KO"}
                 </button>
                 <a
                   href="#contact"
                   onClick={() => setMobileOpen(false)}
-                  className="mt-2 inline-flex w-fit min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm sm:text-base lg:text-xl font-semibold text-white"
+                  className="mt-2 inline-flex w-fit min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm sm:text-base lg:text-lg font-medium text-white"
                 >
                   <BodyChars text={copy.header.cta} /> <ArrowIcon />
                 </a>
@@ -1682,8 +1680,7 @@ function HomePageContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.45, delay: i * 0.08 }}
-                whileHover={{ y: -6, scale: 1.02 }}
-                className="group relative overflow-hidden bg-[#070a12] px-4 py-3 sm:px-6 sm:py-5 text-center"
+                className="group relative overflow-hidden bg-[#070a12] px-4 py-3 sm:px-6 sm:py-5 text-center transition-transform duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.015]"
               >
                 <motion.div
                   aria-hidden
@@ -1845,99 +1842,30 @@ function HomePageContent() {
             {copy.features.cards.map((f, i) => (
               <motion.div
                 key={f.title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.6, delay: 0.1 + i * 0.1 }}
-                whileHover={{ y: -10, scale: 1.01 }}
-                whileTap={{ scale: 0.995 }}
-                className="group relative min-h-70 sm:min-h-90 bg-[linear-gradient(160deg,rgba(10,14,22,0.88),rgba(13,18,28,0.84))] p-4 sm:p-7 transition-colors hover:bg-[linear-gradient(160deg,rgba(14,18,30,0.92),rgba(13,18,28,0.84))]"
+                transition={{ duration: 0.45, delay: 0.12 + i * 0.1 }}
+                className="group relative min-h-70 sm:min-h-90 bg-[linear-gradient(160deg,rgba(10,14,22,0.88),rgba(13,18,28,0.84))] p-4 sm:p-7 transition-colors transition-transform duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:bg-[linear-gradient(160deg,rgba(14,18,30,0.92),rgba(13,18,28,0.84))]"
               >
-                <motion.div
+                <div
                   aria-hidden
                   className="pointer-events-none absolute inset-x-0 -top-12 h-24 bg-[radial-gradient(circle_at_50%_0%,rgba(34,211,238,0.2),transparent_64%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                  animate={
-                    reduceMotion || !featuresInView
-                      ? undefined
-                      : {
-                          opacity: [0.02, 0.26, 0.02],
-                          y: [0, 6, 0],
-                        }
-                  }
-                  transition={
-                    reduceMotion || !featuresInView
-                      ? undefined
-                      : {
-                          duration: 4,
-                          repeat: Infinity,
-                          repeatDelay: 1.6,
-                          ease: "linear",
-                        }
-                  }
                 />
-                <motion.div
+                <div
                   aria-hidden
                   className="pointer-events-none absolute -left-12 top-4 h-40 w-40 rounded-full bg-cyan-300/10 blur-3xl"
-                  animate={
-                    reduceMotion || !featuresInView
-                      ? undefined
-                      : {
-                          x: [0, 26, 0],
-                          y: [0, 14, 0],
-                          opacity: [0.08, 0.16, 0.08],
-                        }
-                  }
-                  transition={
-                    reduceMotion || !featuresInView
-                      ? undefined
-                      : {
-                          duration: 8 + i * 0.7,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }
-                  }
                 />
-                <motion.div
+                <div
                   aria-hidden
                   className="pointer-events-none absolute left-0 right-0 h-px bg-linear-to-r from-transparent via-cyan-300/38 to-transparent"
-                  animate={
-                    reduceMotion || !featuresInView
-                      ? undefined
-                      : { y: [16, 340, 16], opacity: [0, 0.4, 0] }
-                  }
-                  transition={
-                    reduceMotion || !featuresInView
-                      ? undefined
-                      : {
-                          duration: 5.6 + i * 0.35,
-                          repeat: Infinity,
-                          ease: "linear",
-                          delay: i * 0.28,
-                        }
-                  }
                 />
                 <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_65%_10%,rgba(34,211,238,0.18),transparent_40%)]" />
                 </div>
-                <motion.div
-                  className="relative mb-6 border-b border-white/10 pb-6"
-                  animate={
-                    reduceMotion || !featuresInView
-                      ? undefined
-                      : { y: [0, -3, 0, 2, 0], rotate: [0, -0.2, 0, 0.2, 0] }
-                  }
-                  transition={
-                    reduceMotion || !featuresInView
-                      ? undefined
-                      : {
-                          duration: 7.2 + i * 0.4,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }
-                  }
-                >
+                <div className="relative mb-6 border-b border-white/10 pb-6">
                   <FeatureGraphic type={f.icon} />
-                </motion.div>
+                </div>
                 <h3 className="relative text-2xl font-semibold text-white">
                   <HeadingChars text={f.title} />
                 </h3>
@@ -2011,15 +1939,7 @@ function HomePageContent() {
                         },
                       },
               }}
-              whileHover={
-                reduceMotion
-                  ? undefined
-                  : {
-                      y: -6,
-                      scale: 1.01,
-                    }
-              }
-              className="relative overflow-hidden rounded-2xl border border-white/8 bg-[#070a12]/70 px-4 py-5 sm:px-6 sm:py-7 lg:px-8"
+              className="relative overflow-hidden rounded-2xl border border-white/8 bg-[#070a12]/70 px-4 py-5 sm:px-6 sm:py-7 lg:px-8 transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005]"
             >
               <p className="text-sm lg:text-[20px] uppercase tracking-[0.18em] text-slate-200">
                 {item.title}
@@ -2119,15 +2039,7 @@ function HomePageContent() {
                         },
                       },
               }}
-              whileHover={
-                reduceMotion
-                  ? {}
-                  : {
-                      y: -6,
-                      scale: 1.01,
-                    }
-              }
-              className="group relative rounded-2xl border border-white/12 bg-white/8 p-4 sm:p-6 backdrop-blur-sm transition-all duration-300 hover:border-cyan-300/35 hover:bg-white/12 hover:shadow-[0_0_24px_rgba(34,211,238,0.2)]"
+              className="group relative rounded-2xl border border-white/12 bg-white/8 p-4 sm:p-6 backdrop-blur-sm transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005] hover:border-cyan-300/35 hover:bg-white/12 hover:shadow-[0_0_24px_rgba(34,211,238,0.2)]"
             >
               <p className="text-sm lg:text-[20px] uppercase tracking-[0.2em] text-cyan-200/70">
                 {`0${i + 1}`}
@@ -2197,12 +2109,7 @@ function HomePageContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: 0.05 + i * 0.06 }}
-                whileHover={{
-                  y: -6,
-                  scale: 1.02,
-                  borderColor: "rgba(103,232,249,0.25)",
-                }}
-                className="flex items-center gap-2.5 rounded-xl border border-white/6 bg-[#070a12]/60 px-3 py-2.5 backdrop-blur-sm transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,211,238,0.18)] sm:px-6 sm:py-5"
+                className="flex items-center gap-2.5 rounded-xl border border-white/6 bg-[#070a12]/60 px-3 py-2.5 backdrop-blur-sm transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.01] hover:border-cyan-300/25 hover:shadow-[0_0_20px_rgba(34,211,238,0.18)] sm:px-6 sm:py-5"
               >
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/6 bg-white/6 sm:h-10 sm:w-10">
                   <EcoIcon type={item.icon} />
@@ -2274,16 +2181,7 @@ function HomePageContent() {
                             },
                           },
                   }}
-                  whileHover={
-                    reduceMotion
-                      ? undefined
-                      : {
-                          y: -6,
-                          scale: 1.01,
-                          borderColor: "rgba(103,232,249,0.2)",
-                        }
-                  }
-                  className="relative rounded-2xl border border-white/6 bg-white/8 p-4 sm:p-6 transition-all duration-300"
+                  className="relative rounded-2xl border border-white/6 bg-white/8 p-4 sm:p-6 transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005]"
                 >
                   {/* Dot on timeline */}
                   <div className="absolute -top-1.25 left-1/2 hidden h-2.5 w-2.5 -translate-x-1/2 rounded-full border-2 border-cyan-400/40 bg-[#070a12] lg:block" />
