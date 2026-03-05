@@ -34,7 +34,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="mt-8 text-5xl font-bold leading-tight tracking-tight text-balance md:text-7xl lg:text-8xl"
+          className="mt-8 text-5xl font-bold leading-tight tracking-tight text-balance md:text-7xl"
         >
           <span className="text-gradient-hero">
             {t.hero.titleLine1[locale]}
