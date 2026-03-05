@@ -1,8 +1,15 @@
-"use client"
+"use client";
 
-import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react"
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  type ReactNode,
+} from "react";
 
-export type Locale = "ko" | "en"
+export type Locale = "ko" | "en";
 
 const translations = {
   nav: {
@@ -44,38 +51,77 @@ const translations = {
     pillars: [
       {
         title: { ko: "토큰화 레이어", en: "Tokenization Layer" },
-        subtitle: { ko: "실물 자산 토큰화", en: "Real World Asset Tokenization" },
+        subtitle: {
+          ko: "실물 자산 토큰화",
+          en: "Real World Asset Tokenization",
+        },
         description: {
           ko: "실물 자산을 블록체인 기반 디지털 토큰으로 변환합니다. 분할 소유권, 투명한 투자 구조, 스마트 컨트랙트 기반 수익 분배를 가능하게 합니다.",
           en: "Transform real-world assets into blockchain-based digital tokens. Enabling fractional ownership, transparent investment structures, and smart contract-driven revenue distribution.",
         },
         features: {
-          ko: ["자산 토큰화 (STO)", "투자 구조 설계", "수익 분배 시스템", "블록체인 자산 관리"],
-          en: ["Asset Tokenization (STO)", "Investment Structure Design", "Revenue Distribution", "Blockchain Asset Management"],
+          ko: [
+            "자산 토큰화 (STO)",
+            "투자 구조 설계",
+            "수익 분배 시스템",
+            "블록체인 자산 관리",
+          ],
+          en: [
+            "Asset Tokenization (STO)",
+            "Investment Structure Design",
+            "Revenue Distribution",
+            "Blockchain Asset Management",
+          ],
         },
       },
       {
         title: { ko: "AI 인프라", en: "AI Infrastructure" },
-        subtitle: { ko: "분산 컴퓨팅 네트워크", en: "Distributed Computing Network" },
+        subtitle: {
+          ko: "분산 컴퓨팅 네트워크",
+          en: "Distributed Computing Network",
+        },
         description: {
           ko: "강력한 AI 기반 분산 컴퓨팅 및 데이터 처리 인프라. 모델 학습, 탈중앙화 네트워크, 지능형 서비스 통합을 지원합니다.",
           en: "A robust AI-powered distributed computing and data processing infrastructure. Powering model training, decentralized networks, and intelligent service integration.",
         },
         features: {
-          ko: ["AI 모델 학습", "분산 컴퓨팅", "데이터 처리 플랫폼", "AI 서비스 통합"],
-          en: ["AI Model Training", "Distributed Computing", "Data Processing Platform", "AI Service Integration"],
+          ko: [
+            "AI 모델 학습",
+            "분산 컴퓨팅",
+            "데이터 처리 플랫폼",
+            "AI 서비스 통합",
+          ],
+          en: [
+            "AI Model Training",
+            "Distributed Computing",
+            "Data Processing Platform",
+            "AI Service Integration",
+          ],
         },
       },
       {
         title: { ko: "커머스 레이어", en: "Commerce Layer" },
-        subtitle: { ko: "글로벌 크로스보더 플랫폼", en: "Global Cross-Border Platform" },
+        subtitle: {
+          ko: "글로벌 크로스보더 플랫폼",
+          en: "Global Cross-Border Platform",
+        },
         description: {
           ko: "AI 고객 서비스, 다국어 지원, 통합 디지털 결제 시스템으로 구동되는 원활한 글로벌 커머스 플랫폼입니다.",
           en: "A seamless global commerce platform powered by AI customer service, multilingual support, and integrated digital payment systems for cross-border transactions.",
         },
         features: {
-          ko: ["크로스보더 전자상거래", "AI 고객 서비스", "다국어 지원", "디지털 결제 시스템"],
-          en: ["Cross-Border E-Commerce", "AI Customer Service", "Multilingual Support", "Digital Payment System"],
+          ko: [
+            "크로스보더 전자상거래",
+            "AI 고객 서비스",
+            "다국어 지원",
+            "디지털 결제 시스템",
+          ],
+          en: [
+            "Cross-Border E-Commerce",
+            "AI Customer Service",
+            "Multilingual Support",
+            "Digital Payment System",
+          ],
         },
       },
     ],
@@ -173,24 +219,54 @@ const translations = {
         phase: { ko: "Phase 1", en: "Phase 1" },
         title: { ko: "기반 구축", en: "Foundation" },
         items: {
-          ko: ["플랫폼 아키텍처", "생태계 설계", "토큰 구조 설계", "핵심 팀 구성"],
-          en: ["Platform Architecture", "Ecosystem Design", "Token Structure Design", "Core Team Formation"],
+          ko: [
+            "플랫폼 아키텍처",
+            "생태계 설계",
+            "토큰 구조 설계",
+            "핵심 팀 구성",
+          ],
+          en: [
+            "Platform Architecture",
+            "Ecosystem Design",
+            "Token Structure Design",
+            "Core Team Formation",
+          ],
         },
       },
       {
         phase: { ko: "Phase 2", en: "Phase 2" },
         title: { ko: "확장", en: "Expansion" },
         items: {
-          ko: ["AI 인프라 확장", "글로벌 커머스 런칭", "전략적 파트너십", "STO 플랫폼 베타"],
-          en: ["AI Infrastructure Scaling", "Global Commerce Launch", "Strategic Partnerships", "STO Platform Beta"],
+          ko: [
+            "AI 인프라 확장",
+            "글로벌 커머스 런칭",
+            "전략적 파트너십",
+            "STO 플랫폼 베타",
+          ],
+          en: [
+            "AI Infrastructure Scaling",
+            "Global Commerce Launch",
+            "Strategic Partnerships",
+            "STO Platform Beta",
+          ],
         },
       },
       {
         phase: { ko: "Phase 3", en: "Phase 3" },
         title: { ko: "성숙", en: "Maturity" },
         items: {
-          ko: ["DAO 거버넌스 런칭", "전체 생태계 통합", "글로벌 시장 확장", "크로스체인 상호운용성"],
-          en: ["DAO Governance Launch", "Full Ecosystem Integration", "Global Market Expansion", "Cross-Chain Interoperability"],
+          ko: [
+            "DAO 거버넌스 런칭",
+            "전체 생태계 통합",
+            "글로벌 시장 확장",
+            "크로스체인 상호운용성",
+          ],
+          en: [
+            "DAO Governance Launch",
+            "Full Ecosystem Integration",
+            "Global Market Expansion",
+            "Cross-Chain Interoperability",
+          ],
         },
       },
     ],
@@ -203,8 +279,22 @@ const translations = {
       en: "Built with institutional-level security protocols and full regulatory compliance, ensuring trust and transparency at every layer.",
     },
     features: {
-      ko: ["스마트 컨트랙트 감사", "PKI 인증", "AES-256 암호화", "다중 서명 지갑", "HSM / MPC 키 관리", "4단계 KYC 인증"],
-      en: ["Smart Contract Audits", "PKI Authentication", "AES-256 Encryption", "Multi-Signature Wallets", "HSM / MPC Key Management", "4-Tier KYC Verification"],
+      ko: [
+        "스마트 컨트랙트 감사",
+        "PKI 인증",
+        "AES-256 암호화",
+        "다중 서명 지갑",
+        "HSM / MPC 키 관리",
+        "4단계 KYC 인증",
+      ],
+      en: [
+        "Smart Contract Audits",
+        "PKI Authentication",
+        "AES-256 Encryption",
+        "Multi-Signature Wallets",
+        "HSM / MPC Key Management",
+        "4-Tier KYC Verification",
+      ],
     },
     badges: {
       ko: ["KYC", "AML", "투자자 보호"],
@@ -228,9 +318,9 @@ const translations = {
     },
     categories: {
       ko: {
-        "생태계": ["토큰화", "AI 인프라", "커머스 플랫폼"],
-        "회사": ["소개", "채용", "파트너"],
-        "자료": ["문서", "백서", "블로그"],
+        생태계: ["토큰화", "AI 인프라", "커머스 플랫폼"],
+        회사: ["소개", "채용", "파트너"],
+        자료: ["문서", "백서", "블로그"],
         "법적 고지": ["이용약관", "개인정보 처리방침", "위험 고지"],
       },
       en: {
@@ -249,49 +339,49 @@ const translations = {
       en: "This website does not constitute investment advice. Digital asset investments carry inherent risks.",
     },
   },
-} as const
+} as const;
 
-type TranslationsType = typeof translations
+type TranslationsType = typeof translations;
 
 interface I18nContextType {
-  locale: Locale
-  toggleLocale: () => void
-  t: TranslationsType
+  locale: Locale;
+  toggleLocale: () => void;
+  t: TranslationsType;
 }
 
-const I18nContext = createContext<I18nContextType | null>(null)
+const I18nContext = createContext<I18nContextType | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocale] = useState<Locale>(() => {
-    if (typeof window === "undefined") return "ko"
-    const saved = window.localStorage.getItem("youandi-locale")
-    if (saved === "en" || saved === "ko") return saved
-    const browserLocale = window.navigator.language?.toLowerCase()
-    if (browserLocale.startsWith("en")) return "en"
-    return "ko"
-  })
+    if (typeof window === "undefined") return "ko";
+    const saved = window.localStorage.getItem("youandi-locale");
+    if (saved === "en" || saved === "ko") return saved;
+    const browserLocale = window.navigator.language?.toLowerCase();
+    if (browserLocale.startsWith("en")) return "en";
+    return "ko";
+  });
 
   const toggleLocale = useCallback(() => {
-    setLocale((prev) => (prev === "ko" ? "en" : "ko"))
-  }, [])
+    setLocale((prev) => (prev === "ko" ? "en" : "ko"));
+  }, []);
 
   useEffect(() => {
     try {
-      window.localStorage.setItem("youandi-locale", locale)
+      window.localStorage.setItem("youandi-locale", locale);
     } catch {
       // localStorage can be unavailable in some restricted environments.
     }
-  }, [locale])
+  }, [locale]);
 
   return (
     <I18nContext.Provider value={{ locale, toggleLocale, t: translations }}>
       {children}
     </I18nContext.Provider>
-  )
+  );
 }
 
 export function useI18n() {
-  const ctx = useContext(I18nContext)
-  if (!ctx) throw new Error("useI18n must be used within I18nProvider")
-  return ctx
+  const ctx = useContext(I18nContext);
+  if (!ctx) throw new Error("useI18n must be used within I18nProvider");
+  return ctx;
 }

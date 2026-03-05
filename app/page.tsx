@@ -10,8 +10,9 @@ import {
   useTransform,
   useInView,
   AnimatePresence,
+  type Variants,
 } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 
 /* ── Data ── */
 
@@ -40,7 +41,7 @@ const pageCopy = {
         { value: "12", label: "시장·지역" },
       ],
       trustStrip: "Connected Networks",
-      scroll: "스크롤",
+      scroll: "scroll",
     },
     trustStrip: {
       badgeLabel: "Connected Networks",
@@ -887,7 +888,7 @@ function useCountUp(target: number, duration: number, inView: boolean) {
 
 /* ── Dashboard/Performance ── */
 
-function DashboardSection({
+const DashboardSection = memo(function DashboardSection({
   copy,
 }: {
   copy: (typeof pageCopy)["ko"]["dashboard"];
@@ -1067,9 +1068,9 @@ function DashboardSection({
       </div>
     </section>
   );
-}
+});
 
-function PerformanceSection({
+const PerformanceSection = memo(function PerformanceSection({
   copy,
 }: {
   copy: (typeof pageCopy)["ko"]["performance"];
@@ -1179,9 +1180,9 @@ function PerformanceSection({
       </div>
     </section>
   );
-}
+});
 
-function SectionDivider({
+const SectionDivider = memo(function SectionDivider({
   delay = 0,
   duration = 3.2,
 }: {
@@ -1199,24 +1200,13 @@ function SectionDivider({
         <motion.div
           aria-hidden
           className="absolute inset-0 bg-linear-to-r from-transparent via-cyan-300/45 to-transparent"
-          variants={{
-            hidden: { x: "-120%" },
-            show: {
-              x: ["-120%", "120%"],
-              transition: {
-                duration,
-                delay,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "linear",
-              },
-            },
-          }}
+          custom={{ duration, delay }}
+          variants={sectionDividerVariants}
         />
       </div>
     </motion.div>
   );
-}
+});
 
 function AmbientSweep({
   angle,
@@ -1332,7 +1322,49 @@ const bodyReveal = {
   },
 };
 
-function HeadingChars({
+const sectionDividerVariants: Variants = {
+  hidden: { x: "-120%" },
+  show: ({ duration, delay }: { duration: number; delay: number }) => ({
+    x: ["-120%", "120%"],
+    transition: {
+      duration,
+      delay,
+      repeat: Infinity,
+      repeatType: "reverse" as const,
+      ease: "linear" as const,
+    },
+  }),
+};
+
+const createIndexedRevealVariants = ({
+  reduceMotion,
+  offsetY,
+  duration,
+  delayStep,
+  ease = "easeOut",
+}: {
+  reduceMotion: boolean;
+  offsetY: number;
+  duration: number;
+  delayStep: number;
+  ease?: string;
+}) => ({
+  hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: offsetY },
+  show: (index: number) =>
+    reduceMotion
+      ? { opacity: 1, y: 0 }
+      : {
+          opacity: 1,
+          y: 0,
+          transition: {
+            duration,
+            ease,
+            delay: index * delayStep,
+          },
+        },
+});
+
+const HeadingChars = memo(function HeadingChars({
   text,
   className = "",
 }: {
@@ -1360,9 +1392,9 @@ function HeadingChars({
       ))}
     </motion.span>
   );
-}
+});
 
-function BodyChars({
+const BodyChars = memo(function BodyChars({
   text,
   className = "",
 }: {
@@ -1390,9 +1422,9 @@ function BodyChars({
       ))}
     </motion.span>
   );
-}
+});
 
-function HeroChars({
+const HeroChars = memo(function HeroChars({
   text,
   className = "",
 }: {
@@ -1400,9 +1432,9 @@ function HeroChars({
   className?: string;
 }) {
   return <HeadingChars text={text} className={className} />;
-}
+});
 
-function TrustStrip({
+const TrustStrip = memo(function TrustStrip({
   reduceMotion,
   badges,
   label,
@@ -1412,34 +1444,34 @@ function TrustStrip({
   label: string;
 }) {
   const marqueeBadges = [...badges, ...badges];
+  const marqueeAnimation = reduceMotion ? undefined : { x: ["0%", "-50%"] };
+  const marqueeTransition = reduceMotion
+    ? undefined
+    : { duration: 60, repeat: Infinity, ease: "linear" };
+
   return (
-    <section className="relative z-10 overflow-hidden px-4 sm:px-10 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_18%_24%,#22d3ee1a,#0000_58%),radial-gradient(circle_at_86%_12%,#7dd3fc14,#0000_54%),linear-gradient(170deg,#070d1dc2,#0b111ed6)] before:opacity-100">
+    <section className="relative z-10 overflow-hidden px-4 sm:px-10 py-1.5 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:opacity-100">
       <div className="mx-auto max-w-7xl overflow-hidden rounded-2xl py-3">
-        <div className="px-4 pb-2 text-sm lg:text-[20px] uppercase tracking-[0.22em] text-slate-200">
+        <div className="px-4 pb-4 text-sm lg:text-base uppercase font-bold tracking-[0.15em] text-slate-200">
           {label}
         </div>
         <div className="relative">
           <div className="pointer-events-none absolute inset-y-0 -left-10 z-10 w-28 bg-[linear-gradient(to_right,#070d1d_0%,#070d1d_58%,rgba(7,13,29,0)_100%)] blur-[16px]" />
           <div className="pointer-events-none absolute inset-y-0 -right-10 z-10 w-28 bg-[linear-gradient(to_left,#070d1d_0%,#070d1d_58%,rgba(7,13,29,0)_100%)] blur-[16px]" />
           <motion.div
+            style={{ willChange: "transform" }}
             className="flex w-max items-center gap-3 px-2"
-            animate={reduceMotion ? undefined : { x: ["0%", "-50%"] }}
-            transition={
-              reduceMotion
-                ? undefined
-                : { duration: 60, repeat: Infinity, ease: "linear" }
-            }
+            animate={marqueeAnimation}
+            transition={marqueeTransition}
           >
             {marqueeBadges.map((badge, i) => (
               <div
                 key={`${badge.name}-${i}`}
-                className="flex items-center gap-2 rounded-xl border border-cyan-100/20 bg-white/8 px-4 py-2 text-sm lg:text-[20px] font-semibold text-slate-200"
+                className="flex items-center gap-2 rounded-lg bg-white/8 px-3 py-1 text-xs lg:text-sm font-semibold text-slate-200"
               >
-                <span>
-                  <BodyChars text={badge.name} />
-                </span>
-                <span className="text-sm lg:text-[20px] uppercase tracking-[0.16em] text-slate-200">
-                  <BodyChars text={badge.note} />
+                <span>{badge.name}</span>
+                <span className="text-xs lg:text-sm uppercase tracking-[0.16em] text-slate-200">
+                  {badge.note}
                 </span>
               </div>
             ))}
@@ -1448,7 +1480,7 @@ function TrustStrip({
       </div>
     </section>
   );
-}
+});
 
 /* ── Page ── */
 
@@ -1522,7 +1554,8 @@ function HomePageContent() {
               href="#contact"
               className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm sm:text-base lg:text-lg font-medium text-white transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
-              <BodyChars text={copy.header.cta} /> <ArrowIcon />
+              {copy.header.cta}
+              <ArrowIcon />
             </a>
           </div>
           <button
@@ -1582,16 +1615,16 @@ function HomePageContent() {
                     toggleLocale();
                     setMobileOpen(false);
                   }}
-                  className="w-fit rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm lg:text-lg font-medium uppercase tracking-[0.12em] text-slate-200 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+                  className="w-fit px-0 py-0 text-sm lg:text-lg font-medium uppercase tracking-[0.12em] text-slate-200 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
                 >
                   {locale === "ko" ? "EN" : "KO"}
                 </button>
                 <a
                   href="#contact"
                   onClick={() => setMobileOpen(false)}
-                  className="mt-2 inline-flex w-fit min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm sm:text-base lg:text-lg font-medium text-white"
+                  className="mt-0 inline-block text-sm sm:text-base lg:text-lg font-medium text-white transition-colors hover:text-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
                 >
-                  <BodyChars text={copy.header.cta} /> <ArrowIcon />
+                  {copy.header.cta}
                 </a>
               </div>
             </motion.nav>
@@ -1734,7 +1767,7 @@ function HomePageContent() {
               }
               className="inline-flex flex-col items-center gap-2 rounded-full px-1 py-1 text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
-              <span className="text-sm lg:text-[20px] uppercase tracking-[0.2em]">
+              <span className="text-sm lg:text-base uppercase tracking-[0.2em]">
                 <HeroChars text={copy.hero.scroll} />
               </span>
               <svg
@@ -1754,13 +1787,11 @@ function HomePageContent() {
         </div>
       </motion.section>
 
-      <div className="pt-8 sm:pt-10">
-        <TrustStrip
-          reduceMotion={reduceMotion}
-          badges={copy.trustStrip.badges}
-          label={copy.trustStrip.badgeLabel}
-        />
-      </div>
+      <TrustStrip
+        reduceMotion={reduceMotion}
+        badges={copy.trustStrip.badges}
+        label={copy.trustStrip.badgeLabel}
+      />
 
       {/* ═══ Features — visual product matrix ═══ */}
       <section
@@ -1926,23 +1957,13 @@ function HomePageContent() {
               initial={reduceMotion ? "show" : "hidden"}
               animate={reduceMotion ? "show" : launchInView ? "show" : "hidden"}
               custom={i}
-              variants={{
-                hidden: reduceMotion
-                  ? { opacity: 1, y: 0 }
-                  : { opacity: 0, y: 18 },
-                show: (index: number) =>
-                  reduceMotion
-                    ? { opacity: 1, y: 0 }
-                    : {
-                        opacity: 1,
-                        y: 0,
-                        transition: {
-                          duration: 0.7,
-                          ease: "easeOut",
-                          delay: index * 0.7,
-                        },
-                      },
-              }}
+              variants={createIndexedRevealVariants({
+                reduceMotion,
+                offsetY: 18,
+                duration: 0.7,
+                delayStep: 0.7,
+                ease: "easeOut",
+              })}
               className="relative overflow-hidden rounded-2xl border border-white/8 bg-[#070a12]/70 px-4 py-5 sm:px-6 sm:py-7 lg:px-8 transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005]"
             >
               <p className="text-sm lg:text-[20px] uppercase tracking-[0.18em] text-slate-200">
@@ -2026,23 +2047,13 @@ function HomePageContent() {
                 reduceMotion ? "show" : audienceInView ? "show" : "hidden"
               }
               custom={i}
-              variants={{
-                hidden: reduceMotion
-                  ? { opacity: 1, y: 0 }
-                  : { opacity: 0, y: 24 },
-                show: (index: number) =>
-                  reduceMotion
-                    ? { opacity: 1, y: 0 }
-                    : {
-                        opacity: 1,
-                        y: 0,
-                        transition: {
-                          duration: 0.45,
-                          ease: "easeOut",
-                          delay: index * 0.45,
-                        },
-                      },
-              }}
+              variants={createIndexedRevealVariants({
+                reduceMotion,
+                offsetY: 24,
+                duration: 0.45,
+                delayStep: 0.45,
+                ease: "easeOut",
+              })}
               className="group relative rounded-2xl border border-white/12 bg-white/8 p-4 sm:p-6 backdrop-blur-sm transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005] hover:border-cyan-300/35 hover:bg-white/12 hover:shadow-[0_0_24px_rgba(34,211,238,0.2)]"
             >
               <p className="text-sm lg:text-[20px] uppercase tracking-[0.2em] text-cyan-200/70">
@@ -2168,23 +2179,13 @@ function HomePageContent() {
                     reduceMotion ? "show" : roadmapInView ? "show" : "hidden"
                   }
                   custom={i}
-                  variants={{
-                    hidden: reduceMotion
-                      ? { opacity: 1, y: 0 }
-                      : { opacity: 0, y: 24 },
-                    show: (index: number) =>
-                      reduceMotion
-                        ? { opacity: 1, y: 0 }
-                        : {
-                            opacity: 1,
-                            y: 0,
-                            transition: {
-                              duration: 0.5,
-                              ease: "easeOut",
-                              delay: index * 0.15,
-                            },
-                          },
-                  }}
+                  variants={createIndexedRevealVariants({
+                    reduceMotion,
+                    offsetY: 24,
+                    duration: 0.5,
+                    delayStep: 0.15,
+                    ease: "easeOut",
+                  })}
                   className="relative rounded-2xl border border-white/6 bg-white/8 p-4 sm:p-6 transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005]"
                 >
                   {/* Dot on timeline */}
@@ -2238,13 +2239,13 @@ function HomePageContent() {
               href="mailto:contact@youandi.io"
               className="inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-5 py-2.5 sm:px-8 sm:py-3.5 text-sm sm:text-base lg:text-xl font-semibold text-[#070a12] transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
-              <BodyChars text={copy.ctaButtons.contact} /> <ArrowIcon />
+              {copy.ctaButtons.contact} <ArrowIcon />
             </a>
             <a
               href="#ecosystem"
               className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 sm:px-8 sm:py-3.5 text-sm sm:text-base lg:text-xl font-semibold text-slate-200 transition-all duration-300 hover:border-white/30 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
-              <BodyChars text={copy.ctaButtons.explore} /> <ArrowIcon />
+              {copy.ctaButtons.explore} <ArrowIcon />
             </a>
           </div>
         </motion.div>
