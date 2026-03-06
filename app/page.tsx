@@ -146,6 +146,8 @@ function HomePageContent() {
   const ecosystemRef = useRef<HTMLDivElement>(null);
   const launchRef = useRef<HTMLDivElement>(null);
   const roadmapRef = useRef<HTMLDivElement>(null);
+  const trustRef = useRef<HTMLDivElement>(null);
+  const tokenomicsRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const heroInView = useInView(heroRef, { once: true, amount: 0.25 });
@@ -153,8 +155,16 @@ function HomePageContent() {
   const ecosystemInView = useInView(ecosystemRef, { once: true, amount: 0.2 });
   const launchInView = useInView(launchRef, { once: true, amount: 0.25 });
   const roadmapInView = useInView(roadmapRef, { once: true, amount: 0.25 });
+  const trustInView = useInView(trustRef, { amount: 0.2 });
+  const tokenomicsInView = useInView(tokenomicsRef, { amount: 0.2 });
   const contactInView = useInView(contactRef, { once: true, amount: 0.15 });
+  const heroFxInView = useInView(heroRef, { amount: 0.25 });
   const heroCanvasActive = useInView(heroRef, { amount: 0.15 });
+  const ecosystemFxInView = useInView(ecosystemRef, { amount: 0.2 });
+  const audienceFxInView = useInView(audienceRef, { amount: 0.25 });
+  const launchFxInView = useInView(launchRef, { amount: 0.25 });
+  const roadmapFxInView = useInView(roadmapRef, { amount: 0.25 });
+  const contactFxInView = useInView(contactRef, { amount: 0.15 });
   const tokenomicsColors = [
     "rgba(34, 211, 238, 0.95)",
     "rgba(56, 189, 248, 0.9)",
@@ -178,9 +188,7 @@ function HomePageContent() {
   };
 
   return (
-    <main
-      className="relative isolate min-h-screen overflow-x-hidden bg-[#070a12] text-base sm:text-lg lg:text-2xl leading-[1.7] sm:leading-[1.8] lg:leading-[1.9] text-slate-100 font-semibold"
-    >
+    <main className="relative isolate min-h-screen overflow-x-hidden bg-[#070a12] text-base sm:text-lg lg:text-2xl leading-[1.7] sm:leading-[1.8] lg:leading-[1.9] text-slate-100 font-semibold">
       <div className="pointer-events-none fixed inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.08),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(139,92,246,0.08),transparent_50%)]" />
         <motion.div
@@ -359,7 +367,7 @@ function HomePageContent() {
           color="rgba(125,211,252,0.18)"
           duration={18}
           zIndex="-z-20"
-          active={!reduceMotion && heroInView}
+          active={!reduceMotion && heroFxInView}
         />
         <motion.div
           style={{ y: heroFloat }}
@@ -457,10 +465,10 @@ function HomePageContent() {
             <motion.a
               href="#ecosystem"
               animate={
-                reduceMotion || !heroInView ? undefined : { y: [0, 6, 0] }
+                reduceMotion || !heroFxInView ? undefined : { y: [0, 6, 0] }
               }
               transition={
-                reduceMotion || !heroInView
+                reduceMotion || !heroFxInView
                   ? undefined
                   : {
                       duration: 2,
@@ -490,12 +498,14 @@ function HomePageContent() {
         </div>
       </motion.section>
 
-      <TrustStrip
-        reduceMotion={reduceMotion}
-        active={!reduceMotion}
-        badges={copy.trustStrip.badges}
-        label={copy.trustStrip.badgeLabel}
-      />
+      <div ref={trustRef}>
+        <TrustStrip
+          reduceMotion={reduceMotion}
+          active={!reduceMotion && trustInView}
+          badges={copy.trustStrip.badges}
+          label={copy.trustStrip.badgeLabel}
+        />
+      </div>
 
       <SectionDivider reduceMotion={reduceMotion} />
 
@@ -510,14 +520,14 @@ function HomePageContent() {
           color="rgba(56,189,248,0.13)"
           duration={23}
           zIndex="-z-20"
-          active={!reduceMotion && ecosystemInView}
+          active={!reduceMotion && ecosystemFxInView}
         />
         <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(45,212,191,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(125,211,252,0.08)_1px,transparent_1px)] bg-[size:46px_46px] opacity-10" />
         <motion.div
           aria-hidden
           className="pointer-events-none absolute left-[-18%] top-1/3 h-64 w-64 rounded-full bg-sky-300/10 blur-[110px]"
           animate={
-            reduceMotion || !ecosystemInView
+            reduceMotion || !ecosystemFxInView
               ? undefined
               : {
                   x: [0, 28, 0],
@@ -526,7 +536,7 @@ function HomePageContent() {
                 }
           }
           transition={
-            reduceMotion || !ecosystemInView
+            reduceMotion || !ecosystemFxInView
               ? undefined
               : {
                   duration: 11,
@@ -539,7 +549,7 @@ function HomePageContent() {
           aria-hidden
           className="pointer-events-none absolute right-[-20%] top-20 h-72 w-72 rounded-full bg-cyan-200/8 blur-[120px]"
           animate={
-            reduceMotion || !ecosystemInView
+            reduceMotion || !ecosystemFxInView
               ? undefined
               : {
                   x: [0, -24, 0],
@@ -548,7 +558,7 @@ function HomePageContent() {
                 }
           }
           transition={
-            reduceMotion || !ecosystemInView
+            reduceMotion || !ecosystemFxInView
               ? undefined
               : {
                   duration: 12,
@@ -625,7 +635,7 @@ function HomePageContent() {
           color="rgba(56,189,248,0.14)"
           duration={25}
           zIndex="-z-20"
-          active={!reduceMotion && audienceInView}
+          active={!reduceMotion && audienceFxInView}
         />
         <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(14,165,233,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,165,233,0.08)_1px,transparent_1px)] bg-[size:56px_56px] opacity-15" />
         <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-[#070a12] via-[#070a12]/70 to-[#070a12]" />
@@ -693,14 +703,14 @@ function HomePageContent() {
           color="rgba(125,211,252,0.14)"
           duration={21}
           zIndex="-z-20"
-          active={!reduceMotion && launchInView}
+          active={!reduceMotion && launchFxInView}
         />
         <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(147,197,253,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(125,211,252,0.06)_1px,transparent_1px)] bg-[size:52px_38px] opacity-12" />
         <motion.div
           aria-hidden
           className="pointer-events-none absolute right-[-28%] top-8 h-56 w-56 rounded-full bg-cyan-200/12 blur-[100px]"
           animate={
-            reduceMotion || !launchInView
+            reduceMotion || !launchFxInView
               ? undefined
               : {
                   x: [0, -28, 6, 0],
@@ -708,7 +718,7 @@ function HomePageContent() {
                 }
           }
           transition={
-            reduceMotion || !launchInView
+            reduceMotion || !launchFxInView
               ? undefined
               : {
                   duration: 8,
@@ -777,6 +787,7 @@ function HomePageContent() {
       {/* ═══ Tokenomics ═══ */}
       <section
         id="tokenomics"
+        ref={tokenomicsRef}
         className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_22%_12%,rgba(34,211,238,0.14),transparent_52%),radial-gradient(circle_at_84%_86%,rgba(56,189,248,0.1),transparent_56%),linear-gradient(170deg,rgba(8,12,24,0.8),rgba(10,6,20,0.9))] before:opacity-50"
       >
         <AmbientSweep
@@ -784,7 +795,7 @@ function HomePageContent() {
           color="rgba(34,211,238,0.14)"
           duration={21}
           zIndex="-z-20"
-          active={!reduceMotion}
+          active={!reduceMotion && tokenomicsInView}
         />
         <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(56,189,248,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.06)_1px,transparent_1px)] bg-[size:52px_42px] opacity-10" />
 
@@ -843,12 +854,16 @@ function HomePageContent() {
                   style={{
                     background: `conic-gradient(from -90deg, ${tokenomicsGradient})`,
                   }}
-                  animate={{ rotate: 360 }}
-                  transition={{
-                    duration: 36,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
+                  animate={tokenomicsInView ? { rotate: 360 } : undefined}
+                  transition={
+                    tokenomicsInView
+                      ? {
+                          duration: 36,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }
+                      : undefined
+                  }
                 >
                   <div className="absolute inset-[14%] flex items-center justify-center rounded-full bg-[#070a12] ring-1 ring-white/8">
                     <div className="text-center">
@@ -901,7 +916,7 @@ function HomePageContent() {
           color="rgba(129,140,248,0.13)"
           duration={19}
           zIndex="-z-20"
-          active={!reduceMotion && roadmapInView}
+          active={!reduceMotion && roadmapFxInView}
         />
         <div className="mx-auto max-w-7xl">
           <motion.div
@@ -927,12 +942,12 @@ function HomePageContent() {
               <motion.div
                 className="absolute inset-0 w-full bg-linear-to-b from-transparent via-cyan-300/60 to-transparent"
                 animate={
-                  roadmapInView
+                  roadmapFxInView
                     ? { opacity: [0.3, 1, 0.3], scaleY: [0.92, 1, 0.92] }
                     : undefined
                 }
                 transition={
-                  roadmapInView
+                  roadmapFxInView
                     ? { duration: 3, repeat: Infinity, ease: "easeInOut" }
                     : undefined
                 }
@@ -963,12 +978,12 @@ function HomePageContent() {
                     <motion.div
                       className="absolute inset-0 rounded-full bg-cyan-400/40"
                       animate={
-                        roadmapInView
+                        roadmapFxInView
                           ? { scale: [1, 2.2, 1], opacity: [0.6, 0, 0.6] }
                           : undefined
                       }
                       transition={
-                        roadmapInView
+                        roadmapFxInView
                           ? {
                               duration: 2.5,
                               repeat: Infinity,
@@ -1012,7 +1027,7 @@ function HomePageContent() {
         <div className="pointer-events-none absolute inset-0 opacity-30">
           <NetworkBg
             reduceMotion={reduceMotion}
-            active={!reduceMotion && contactInView}
+            active={!reduceMotion && contactFxInView}
             convergeFactor={networkConverge}
           />
         </div>
@@ -1089,40 +1104,21 @@ function HomePageContent() {
       {/* ═══ Footer ═══ */}
       <footer className="relative z-10 border-t border-white/6 px-4 pt-14 pb-8 sm:px-10 sm:pt-20 sm:pb-10 lg:px-14">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="grid gap-10">
             <div className="lg:col-span-1">
               <span className="text-sm sm:text-base lg:text-xl font-semibold text-white">
                 YOU&I
               </span>
-              <p className="mt-4 text-sm lg:text-[20px] leading-relaxed text-slate-200">
+              <p className="mt-4 text-sm lg:text-lg leading-relaxed text-slate-200 font-medium">
                 {copy.footer.description}
               </p>
             </div>
-            {Object.entries(copy.footer.links).map(([cat, links]) => (
-              <div key={cat}>
-                <h4 className="text-sm lg:text-[20px] font-medium text-slate-200">
-                  {cat}
-                </h4>
-                <ul className="mt-4 flex flex-col gap-2.5">
-                  {links.map((l) => (
-                    <li key={l}>
-                      <a
-                        href="#"
-                        className="text-sm lg:text-[20px] font-medium text-slate-200 transition-colors duration-200 hover:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
-                      >
-                        {l}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
           </div>
-          <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/6 pt-8 sm:flex-row">
-            <p className="text-sm lg:text-[20px] text-slate-200">
+          <div className="font-normal mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/6 pt-8 sm:flex-row">
+            <p className="text-sm lg:text-base text-slate-200">
               {copy.footer.copyright}
             </p>
-            <p className="text-sm lg:text-[20px] text-slate-200">
+            <p className="text-sm lg:text-base text-slate-200">
               {copy.footer.legal}
             </p>
           </div>
