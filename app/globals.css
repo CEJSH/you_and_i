@@ -163,6 +163,76 @@
   100% { transform: translateY(-20vh) scale(1); opacity: 0; }
 }
 
+/* Glass card highlight — top & left edge only */
+.glass-highlight {
+  border: none;
+  box-shadow:
+    inset 1px 0 0 0 rgba(255, 255, 255, 0.12),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+    0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.glass-highlight:hover {
+  box-shadow:
+    inset 1px 0 0 0 rgba(56, 189, 248, 0.2),
+    inset 0 1px 0 0 rgba(56, 189, 248, 0.3),
+    0 0 24px 0 rgba(139, 92, 246, 0.1),
+    0 0 16px 0 rgba(34, 211, 238, 0.12);
+}
+
+/* Shimmering border — light sweeps around edges via pseudo-element */
+.shimmer-border {
+  position: relative;
+  border: none;
+}
+
+.shimmer-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--shimmer-angle, 0deg),
+    transparent 0%,
+    rgba(103, 232, 249, 0.3) 10%,
+    transparent 20%,
+    rgba(139, 92, 246, 0.15) 50%,
+    transparent 60%,
+    rgba(56, 189, 248, 0.25) 85%,
+    transparent 100%
+  );
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+  animation: shimmer-rotate 6s linear infinite;
+}
+
+.shimmer-border:hover::before {
+  background: conic-gradient(
+    from var(--shimmer-angle, 0deg),
+    transparent 0%,
+    rgba(103, 232, 249, 0.6) 10%,
+    transparent 20%,
+    rgba(139, 92, 246, 0.3) 50%,
+    transparent 60%,
+    rgba(56, 189, 248, 0.5) 85%,
+    transparent 100%
+  );
+}
+
+@keyframes shimmer-rotate {
+  to { --shimmer-angle: 360deg; }
+}
+
+@property --shimmer-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 html {
   scroll-behavior: smooth;
 }

@@ -28,6 +28,7 @@ import {
 } from "@/components/animation-utils";
 import { DashboardSection } from "@/components/dashboard-section";
 import { PerformanceSection } from "@/components/performance-section";
+import { MouseBacklight } from "@/components/mouse-backlight";
 
 /* ── Page ── */
 
@@ -38,6 +39,14 @@ function HomePageContent() {
   const reduceMotion = useReducedMotion() ?? false;
   const heroFloat = useTransform(scrollYProgress, [0, 1], [0, -80]);
   const ambientFloat = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const blobParallax1 = useTransform(scrollYProgress, [0, 1], [0, -160]);
+  const blobParallax2 = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const blobParallax3 = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const networkConverge = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.5, 0.7, 1],
+    [0, 0.6, 0.85, 0.5, 0],
+  );
   const heroRef = useRef<HTMLDivElement>(null);
   const audienceRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
@@ -66,7 +75,29 @@ function HomePageContent() {
     >
       <div className="pointer-events-none fixed inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.08),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(139,92,246,0.08),transparent_50%)]" />
+        <motion.div
+          aria-hidden
+          style={{ y: blobParallax1 }}
+          className="absolute left-[10%] top-[60%] h-105 w-105 rounded-full bg-indigo-500/6 blur-[130px]"
+          animate={{ x: [0, 15, -10, 0], opacity: [0.04, 0.1, 0.04] }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          aria-hidden
+          style={{ y: blobParallax2 }}
+          className="absolute right-[5%] top-[25%] h-90 w-90 rounded-full bg-cyan-400/5 blur-[120px]"
+          animate={{ opacity: [0.03, 0.09, 0.03] }}
+          transition={{ duration: 17, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        />
+        <motion.div
+          aria-hidden
+          style={{ y: blobParallax3 }}
+          className="absolute left-[45%] top-[40%] h-125 w-125 rounded-full bg-violet-500/4 blur-[150px]"
+          animate={{ x: [0, -25, 18, 0], opacity: [0.02, 0.07, 0.02] }}
+          transition={{ duration: 26, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+        />
       </div>
+      <MouseBacklight />
 
       {/* Header */}
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/6 bg-[#070a12]/70 backdrop-blur-xl">
@@ -423,7 +454,7 @@ function HomePageContent() {
             </p>
           </motion.div>
 
-          <div className="grid gap-px overflow-hidden rounded-[28px] border border-white/12 bg-white/6 shadow-[0_0_40px_rgba(139,92,246,0.04)] md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-px overflow-hidden rounded-[28px] shimmer-border bg-white/6 shadow-[0_0_40px_rgba(139,92,246,0.04)] md:grid-cols-2 lg:grid-cols-3">
             {copy.features.cards.map((f, i) => (
               <motion.div
                 key={f.title}
@@ -431,7 +462,7 @@ function HomePageContent() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.45, delay: 0.12 + i * 0.1 }}
-                className="group relative min-h-70 sm:min-h-90 bg-[linear-gradient(160deg,rgba(10,14,22,0.72),rgba(13,18,28,0.68))] backdrop-blur-md p-4 sm:p-7 transition-colors transition-transform duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:bg-[linear-gradient(160deg,rgba(14,18,30,0.78),rgba(13,18,28,0.72))]"
+                className="group relative min-h-70 sm:min-h-90 bg-[linear-gradient(160deg,rgba(10,14,22,0.72),rgba(13,18,28,0.68))] backdrop-blur-md p-4 sm:p-7 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:backdrop-blur-xl hover:bg-[linear-gradient(160deg,rgba(14,18,30,0.78),rgba(13,18,28,0.72))] hover:shadow-[inset_0_1px_1px_rgba(34,211,238,0.15),0_0_20px_rgba(34,211,238,0.08)]"
               >
                 <div
                   aria-hidden
@@ -461,6 +492,7 @@ function HomePageContent() {
           </div>
         </div>
       </section>
+
       <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Launch highlights (Galxe-style metric rail) ═══ */}
@@ -511,7 +543,7 @@ function HomePageContent() {
                 delayStep: 0.7,
                 ease: "easeOut",
               })}
-              className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg px-4 py-5 sm:px-6 sm:py-7 lg:px-8 transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005] hover:border-white/15 hover:shadow-[0_0_24px_rgba(139,92,246,0.08)]"
+              className="relative overflow-hidden rounded-2xl shimmer-border bg-white/5 backdrop-blur-lg px-4 py-5 sm:px-6 sm:py-7 lg:px-8 transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005] hover:backdrop-blur-2xl hover:bg-white/8 hover:shadow-[inset_0_1px_1px_rgba(34,211,238,0.15),0_0_20px_rgba(34,211,238,0.08)]"
             >
               <p className="text-sm lg:text-[20px] uppercase tracking-[0.16em] text-slate-200 font-medium">
                 {item.title}
@@ -549,14 +581,17 @@ function HomePageContent() {
           ))}
         </div>
       </section>
+
       <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Dashboard — full-width, text overlaid ═══ */}
       <DashboardSection copy={copy.dashboard} reduceMotion={reduceMotion} />
+
       <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Performance — unified card ═══ */}
       <PerformanceSection copy={copy.performance} reduceMotion={reduceMotion} />
+
       <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Built for teams & builders (inspired by Galxe audience split style) ═══ */}
@@ -610,7 +645,7 @@ function HomePageContent() {
                 delayStep: 0.45,
                 ease: "easeOut",
               })}
-              className="group relative rounded-2xl border border-white/12 bg-white/6 p-4 sm:p-6 backdrop-blur-xl transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005] hover:border-cyan-300/35 hover:bg-white/10 hover:shadow-[0_0_30px_rgba(139,92,246,0.12),0_0_24px_rgba(34,211,238,0.15)]"
+              className="group relative rounded-2xl shimmer-border bg-white/6 p-4 sm:p-6 backdrop-blur-xl transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005] hover:bg-white/10 hover:backdrop-blur-2xl hover:shadow-[inset_0_1px_1px_rgba(34,211,238,0.15),0_0_20px_rgba(34,211,238,0.08)]"
             >
               <p className="text-sm lg:text-[20px] uppercase tracking-[0.2em] text-cyan-200/70">
                 {`0${i + 1}`}
@@ -634,6 +669,7 @@ function HomePageContent() {
           ))}
         </div>
       </section>
+
       <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Ecosystem — network bg with floating cards ═══ */}
@@ -654,6 +690,7 @@ function HomePageContent() {
           <NetworkBg
             reduceMotion={reduceMotion}
             active={!reduceMotion && ecosystemInView}
+            convergeFactor={networkConverge}
           />
         </div>
         <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(14,165,233,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,165,233,0.08)_1px,transparent_1px)] bg-[size:56px_56px] opacity-15" />
@@ -677,7 +714,7 @@ function HomePageContent() {
               <BodyChars text={copy.ecosystem.desc} />
             </p>
           </motion.div>
-          <div className="mt-10 grid gap-3 sm:mt-16 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-16 sm:gap-4 lg:grid-cols-3 lg:grid-rows-3">
             {copy.ecosystem.items.map((item, i) => (
               <motion.div
                 key={item.name}
@@ -685,19 +722,33 @@ function HomePageContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: 0.05 + i * 0.06 }}
-                className="flex items-center gap-2.5 rounded-xl border border-white/8 bg-white/5 px-3 py-2.5 backdrop-blur-lg transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.01] hover:border-cyan-300/25 hover:shadow-[0_0_20px_rgba(34,211,238,0.18)] sm:px-6 sm:py-5"
+                className={`group/eco relative overflow-hidden flex items-center gap-3 rounded-xl shimmer-border bg-white/4 backdrop-blur-lg transition-all duration-500 will-change-transform hover:-translate-y-1 hover:bg-white/8 hover:backdrop-blur-2xl hover:shadow-[inset_0_1px_1px_rgba(34,211,238,0.15),0_0_20px_rgba(34,211,238,0.08)] ${
+                  i === 0
+                    ? "col-span-2 row-span-2 lg:col-span-2 lg:row-span-2 flex-col items-start px-5 py-6 sm:px-8 sm:py-8"
+                    : "px-3 py-3 sm:px-5 sm:py-4"
+                }`}
               >
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/6 bg-white/6 sm:h-10 sm:w-10">
+                <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-cyan-500/20 blur-[80px] transition-all duration-500 group-hover/eco:bg-cyan-500/40" />
+                <div className="pointer-events-none absolute inset-0 rounded-xl bg-[radial-gradient(circle_at_50%_0%,rgba(34,211,238,0.12),transparent_60%)] opacity-0 transition-opacity duration-500 group-hover/eco:opacity-100" />
+                <div className={`relative flex shrink-0 items-center justify-center rounded-lg bg-white/6 ${i === 0 ? "h-12 w-12 sm:h-14 sm:w-14" : "h-8 w-8 sm:h-10 sm:w-10"}`}>
                   <EcoIcon type={item.icon} />
                 </div>
-                <span className="text-sm lg:text-[20px] font-semibold text-slate-200">
-                  <BodyChars text={item.name} />
-                </span>
+                <div className="relative">
+                  <span className={`font-semibold text-slate-200 ${i === 0 ? "text-base sm:text-xl lg:text-2xl" : "text-sm lg:text-[20px]"}`}>
+                    <BodyChars text={item.name} />
+                  </span>
+                  {i === 0 && (
+                    <p className="mt-2 text-sm lg:text-base text-slate-200/60 font-normal">
+                      {copy.ecosystem.desc}
+                    </p>
+                  )}
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
+
       <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Roadmap ═══ */}
@@ -728,11 +779,19 @@ function HomePageContent() {
             </h2>
           </motion.div>
 
-          {/* Horizontal timeline */}
+          {/* Vertical glowing pulse timeline */}
           <div className="relative mt-14" ref={roadmapRef}>
-            {/* Connecting line */}
-            <div className="absolute left-0 right-0 top-8 hidden h-px bg-linear-to-r from-transparent via-cyan-400/20 to-transparent lg:block" />
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Glowing center line */}
+            <div className="absolute left-5 top-0 bottom-0 w-px sm:left-1/2 sm:-translate-x-px">
+              <div className="h-full w-full bg-linear-to-b from-transparent via-cyan-400/25 to-transparent" />
+              <motion.div
+                className="absolute inset-0 w-full bg-linear-to-b from-transparent via-cyan-300/60 to-transparent"
+                animate={roadmapInView ? { opacity: [0.3, 1, 0.3], scaleY: [0.92, 1, 0.92] } : undefined}
+                transition={roadmapInView ? { duration: 3, repeat: Infinity, ease: "easeInOut" } : undefined}
+              />
+            </div>
+
+            <div className="flex flex-col gap-12 sm:gap-16">
               {copy.roadmap.phases.map((node, i) => (
                 <motion.div
                   key={node.period}
@@ -743,30 +802,43 @@ function HomePageContent() {
                   custom={i}
                   variants={createIndexedRevealVariants({
                     reduceMotion,
-                    offsetY: 24,
-                    duration: 0.5,
-                    delayStep: 0.15,
+                    offsetY: 30,
+                    duration: 0.6,
+                    delayStep: 0.2,
                     ease: "easeOut",
                   })}
-                  className="relative rounded-2xl border border-white/10 bg-white/6 backdrop-blur-lg p-4 sm:p-6 transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005] hover:border-white/15 hover:shadow-[0_0_20px_rgba(139,92,246,0.08)]"
+                  className={`relative flex items-start gap-6 sm:gap-0 ${i % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse"}`}
                 >
-                  {/* Dot on timeline */}
-                  <div className="absolute -top-1.25 left-1/2 hidden h-2.5 w-2.5 -translate-x-1/2 rounded-full border-2 border-cyan-400/40 bg-[#070a12] lg:block" />
-                  <span className="inline-flex w-fit rounded-full bg-cyan-400/10 px-3 py-1 text-sm lg:text-[20px] font-semibold tracking-widest text-cyan-300">
-                    <BodyChars text={node.period} />
-                  </span>
-                  <h3 className="mt-4 text-sm sm:text-base lg:text-xl font-semibold text-white">
-                    <HeadingChars text={node.title} />
-                  </h3>
-                  <p className="mt-2 text-sm lg:text-[20px] leading-relaxed text-slate-200">
-                    <BodyChars text={node.detail} />
-                  </p>
+                  {/* Pulse dot on line */}
+                  <div className="absolute left-5 top-1 z-10 sm:left-1/2 sm:-translate-x-1/2">
+                    <div className="h-3 w-3 rounded-full border-2 border-cyan-400/60 bg-[#070a12]" />
+                    <motion.div
+                      className="absolute inset-0 rounded-full bg-cyan-400/40"
+                      animate={roadmapInView ? { scale: [1, 2.2, 1], opacity: [0.6, 0, 0.6] } : undefined}
+                      transition={roadmapInView ? { duration: 2.5, repeat: Infinity, delay: i * 0.4, ease: "easeInOut" } : undefined}
+                    />
+                  </div>
+
+                  {/* Content — alternates sides on sm+ */}
+                  <div className={`ml-12 sm:ml-0 sm:w-[calc(50%-2rem)] ${i % 2 === 0 ? "sm:pr-8 sm:text-right" : "sm:pl-8"}`}>
+                    <span className="inline-flex w-fit rounded-full bg-cyan-400/10 px-3 py-1 text-sm lg:text-base font-semibold tracking-widest text-cyan-300">
+                      <BodyChars text={node.period} />
+                    </span>
+                    <h3 className="mt-3 text-base sm:text-lg lg:text-xl font-semibold text-white">
+                      <HeadingChars text={node.title} />
+                    </h3>
+                    <p className="mt-2 text-sm lg:text-base leading-relaxed text-slate-200/80 font-normal">
+                      <BodyChars text={node.detail} />
+                    </p>
+                  </div>
                 </motion.div>
               ))}
             </div>
           </div>
         </div>
       </section>
+
+
       <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Contact CTA ═══ */}
@@ -779,6 +851,7 @@ function HomePageContent() {
           <NetworkBg
             reduceMotion={reduceMotion}
             active={!reduceMotion && contactInView}
+            convergeFactor={networkConverge}
           />
         </div>
         <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-[#070a12] via-transparent to-[#070a12]" />

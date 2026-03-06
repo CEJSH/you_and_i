@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type MotionValue, useMotionValue, useTransform } from "framer-motion";
 
 const networkBgNodes = [
   { x: 50, y: 15, r: 6, primary: true },
@@ -14,6 +14,9 @@ const networkBgNodes = [
   { x: 30, y: 55, r: 2.5 },
   { x: 65, y: 50, r: 2.5 },
 ];
+
+const CENTER_X = 50;
+const CENTER_Y = 50;
 
 const networkBgEdges = [
   [0, 1],
@@ -33,13 +36,81 @@ const networkBgEdges = [
   [6, 7],
 ];
 
+function useConvergedCoord(
+  original: number,
+  center: number,
+  convergeFactor: MotionValue<number>,
+) {
+  return useTransform(convergeFactor, (f: number) => original + (center - original) * f);
+}
+
+function ConvergedNode({
+  node,
+  index,
+  convergeFactor,
+}: {
+  node: (typeof networkBgNodes)[number];
+  index: number;
+  convergeFactor?: MotionValue<number>;
+}) {
+  const cx = useConvergedCoord(node.x, CENTER_X, convergeFactor);
+  const cy = useConvergedCoord(node.y, CENTER_Y, convergeFactor);
+
+  return (
+    <motion.circle
+      key={index}
+      cx={cx}
+      cy={cy}
+      r={node.r}
+      fill="#070a12"
+      stroke="#67e8f9"
+      strokeOpacity={node.primary ? "0.4" : "0.12"}
+      strokeWidth={node.primary ? "0.5" : "0.3"}
+    />
+  );
+}
+
+function ConvergedEdge({
+  edgeIndex,
+  a,
+  b,
+  convergeFactor,
+}: {
+  edgeIndex: number;
+  a: number;
+  b: number;
+  convergeFactor?: MotionValue<number>;
+}) {
+  const x1 = useConvergedCoord(networkBgNodes[a].x, CENTER_X, convergeFactor);
+  const y1 = useConvergedCoord(networkBgNodes[a].y, CENTER_Y, convergeFactor);
+  const x2 = useConvergedCoord(networkBgNodes[b].x, CENTER_X, convergeFactor);
+  const y2 = useConvergedCoord(networkBgNodes[b].y, CENTER_Y, convergeFactor);
+
+  return (
+    <motion.line
+      key={edgeIndex}
+      x1={x1}
+      y1={y1}
+      x2={x2}
+      y2={y2}
+      stroke="#67e8f9"
+      strokeOpacity="0.08"
+      strokeWidth="0.3"
+    />
+  );
+}
+
 export default function NetworkBg({
   reduceMotion,
   active = true,
+  convergeFactor: convergeFactorProp,
 }: {
   reduceMotion: boolean;
   active?: boolean;
+  convergeFactor?: MotionValue<number>;
 }) {
+  const defaultConverge = useMotionValue(0);
+  const convergeFactor = convergeFactorProp ?? defaultConverge;
   return (
     <svg
       viewBox="0 0 100 100"
@@ -48,15 +119,12 @@ export default function NetworkBg({
       fill="none"
     >
       {networkBgEdges.map(([a, b], i) => (
-        <line
+        <ConvergedEdge
           key={i}
-          x1={networkBgNodes[a].x}
-          y1={networkBgNodes[a].y}
-          x2={networkBgNodes[b].x}
-          y2={networkBgNodes[b].y}
-          stroke="#67e8f9"
-          strokeOpacity="0.08"
-          strokeWidth="0.3"
+          edgeIndex={i}
+          a={a}
+          b={b}
+          convergeFactor={convergeFactor}
         />
       ))}
       {[0, 2, 4, 7].map((ei) => (
@@ -93,15 +161,11 @@ export default function NetworkBg({
         />
       ))}
       {networkBgNodes.map((n, i) => (
-        <circle
+        <ConvergedNode
           key={i}
-          cx={n.x}
-          cy={n.y}
-          r={n.r}
-          fill="#070a12"
-          stroke="#67e8f9"
-          strokeOpacity={n.primary ? "0.4" : "0.12"}
-          strokeWidth={n.primary ? "0.5" : "0.3"}
+          node={n}
+          index={i}
+          convergeFactor={convergeFactor}
         />
       ))}
     </svg>

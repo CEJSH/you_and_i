@@ -78,7 +78,7 @@ export const DashboardSection = memo(function DashboardSection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="relative overflow-hidden rounded-2xl border border-white/6 bg-[#0a0c14]"
+          className="relative overflow-hidden rounded-2xl shimmer-border bg-[#0a0c14]"
         >
           <div className="grid grid-cols-4 gap-2 p-2 sm:p-4 lg:grid-cols-5">
             {bars.map((s) => (

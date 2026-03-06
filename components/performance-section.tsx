@@ -65,7 +65,7 @@ export const PerformanceSection = memo(function PerformanceSection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="relative mt-14 overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg p-4 sm:p-8 lg:p-10"
+          className="relative mt-14 overflow-hidden rounded-2xl shimmer-border bg-white/5 backdrop-blur-lg p-4 sm:p-8 lg:p-10"
         >
           <div className="mb-10 grid grid-cols-1 gap-6 border-b border-white/6 pb-8 sm:grid-cols-3">
             {copy.top.map((stat) => (

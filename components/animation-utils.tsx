@@ -360,7 +360,7 @@ export const TrustStrip = memo(function TrustStrip({
     : undefined;
 
   return (
-    <section className="relative z-10 overflow-hidden px-4 sm:px-10 py-1.5 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:opacity-100">
+    <section className="relative z-10 overflow-hidden px-4 sm:px-10 py-1.5 lg:px-14">
       <div className="mx-auto max-w-7xl overflow-hidden rounded-2xl py-3">
         <div className="px-0 md:px-4 pb-4 text-sm lg:text-base uppercase font-bold tracking-[0.15em] text-slate-200">
           {label}
