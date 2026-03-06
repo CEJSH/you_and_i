@@ -129,6 +129,11 @@ function EcosystemBadgeIcon({ type }: { type: string }) {
 function HomePageContent() {
   const { locale, toggleLocale } = useI18n();
   const copy = pageCopy[locale];
+  // Configure in `.env` with NEXT_PUBLIC_WHITEPAPER_FILE (default: /whitepaper.pdf).
+  const whitepaperFilePath =
+    process.env.NEXT_PUBLIC_WHITEPAPER_FILE ?? "/whitepaper.pdf";
+  const whitepaperFileName =
+    process.env.NEXT_PUBLIC_WHITEPAPER_FILE_NAME ?? "YOUANDI-Whitepaper.pdf";
   const { scrollYProgress } = useScroll();
   const reduceMotion = useReducedMotion() ?? false;
   const heroFloat = useTransform(scrollYProgress, [0, 1], [0, -80]);
@@ -247,16 +252,10 @@ function HomePageContent() {
             ))}
           </nav>
           <div className="hidden items-center gap-2 md:flex">
-            <button
-              type="button"
-              onClick={toggleLocale}
-              className="rounded-full border border-white/10 bg-white/5 px-3 py-2.5 text-sm lg:text-lg font-medium uppercase tracking-[0.12em] text-slate-200 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
-            >
-              {locale === "ko" ? "EN" : "KO"}
-            </button>
             <a
-              href="#contact"
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs sm:text-sm font-bold text-white transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              href={whitepaperFilePath}
+              download={whitepaperFileName}
+              className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-xs sm:text-sm font-bold text-[#070a12] transition-all duration-300 hover:bg-white/90 hover:shadow-[0_0_15px_rgba(255,255,255,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
               {copy.header.cta}
             </a>
@@ -264,10 +263,17 @@ function HomePageContent() {
               href="https://www.wmuex.com/en_US/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3.5 py-1.5 text-xs sm:text-sm font-bold text-cyan-300 transition-all duration-300 hover:border-cyan-300/40 hover:bg-cyan-400/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              className="inline-flex items-center gap-1.5 rounded-full bg-cyan-400 px-3.5 py-1.5 text-xs sm:text-sm font-bold text-[#070a12] transition-all duration-300 hover:bg-cyan-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
               {copy.header.ctaPrice}
             </a>
+            <button
+              type="button"
+              onClick={toggleLocale}
+              className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs font-medium uppercase tracking-[0.1em] text-slate-200 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+            >
+              {locale === "ko" ? "EN" : "KO"}
+            </button>
           </div>
           <button
             type="button"
@@ -331,7 +337,8 @@ function HomePageContent() {
                   {locale === "ko" ? "EN" : "KO"}
                 </button>
                 <a
-                  href="#contact"
+                  href={whitepaperFilePath}
+                  download={whitepaperFileName}
                   onClick={() => setMobileOpen(false)}
                   className="mt-0 inline-block text-sm sm:text-base lg:text-lg font-medium text-white transition-colors hover:text-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
                 >
@@ -415,7 +422,8 @@ function HomePageContent() {
             className="mt-10 flex flex-col items-center gap-3 sm:flex-row"
           >
             <motion.a
-              href="#contact"
+              href={whitepaperFilePath}
+              download={whitepaperFileName}
               variants={heroReveal.textBlock}
               className="inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-5 py-2.5 sm:px-7 sm:py-3 text-sm sm:text-base lg:text-xl font-semibold text-[#070a12] transition-all duration-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.4),0_0_30px_rgba(6,182,212,0.2)] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
@@ -1047,7 +1055,8 @@ function HomePageContent() {
           </p>
           <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row">
             <a
-              href="mailto:contact@youandi.io"
+              href={whitepaperFilePath}
+              download={whitepaperFileName}
               className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-5 py-2.5 sm:px-8 sm:py-3.5 text-sm sm:text-base lg:text-xl font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.4),0_0_30px_rgba(6,182,212,0.2)] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
               <span className="bg-[linear-gradient(120deg,#000_30%,#555_50%,#000_70%)] bg-[length:200%_auto] bg-clip-text text-transparent transition-[background-position] duration-500 group-hover:bg-[position:100%_center]">
@@ -1057,46 +1066,14 @@ function HomePageContent() {
                 <ArrowIcon />
               </span>
             </a>
-            <motion.a
-              href="https://x.com"
+            <a
+              href="https://www.wmuex.com/en_US/"
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.1 }}
-              className="relative flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
-              aria-label="X (Twitter)"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-cyan-400 px-5 py-2.5 sm:px-8 sm:py-3.5 text-sm sm:text-base lg:text-xl font-semibold text-[#070a12] transition-all duration-300 hover:bg-cyan-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.4),0_0_30px_rgba(6,182,212,0.2)] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
-              <div className="absolute inset-0 rounded-full bg-cyan-500/50 opacity-0 group-hover:animate-ping" />
-              <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 blur-md bg-cyan-400/30 transition-opacity" />
-              <svg
-                className="relative z-10 text-white group-hover:text-cyan-400 transition-colors"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
-            </motion.a>
-            <motion.a
-              href="https://discord.gg"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1 }}
-              className="relative flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
-              aria-label="Discord"
-            >
-              <div className="absolute inset-0 rounded-full bg-cyan-500/50 opacity-0 group-hover:animate-ping" />
-              <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 blur-md bg-cyan-400/30 transition-opacity" />
-              <svg
-                className="relative z-10 text-white group-hover:text-cyan-400 transition-colors"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
-              </svg>
-            </motion.a>
+              {copy.header.ctaPrice} <ArrowIcon />
+            </a>
           </div>
         </motion.div>
       </section>
@@ -1104,14 +1081,44 @@ function HomePageContent() {
       {/* ═══ Footer ═══ */}
       <footer className="relative z-10 border-t border-white/6 px-4 pt-14 pb-8 sm:px-10 sm:pt-20 sm:pb-10 lg:px-14">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-10">
-            <div className="lg:col-span-1">
+          <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+            <div className="max-w-xl">
               <span className="text-sm sm:text-base lg:text-xl font-semibold text-white">
                 YOU&I
               </span>
               <p className="mt-4 text-sm lg:text-lg leading-relaxed text-slate-200 font-medium">
                 {copy.footer.description}
               </p>
+            </div>
+            <div className="grid w-fit grid-cols-2 gap-2 sm:mt-1">
+              <a
+                href="https://x.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative flex h-30 w-34 items-center justify-center overflow-hidden border border-white/10 bg-slate-900/60 text-slate-100 transition-all duration-300 hover:border-cyan-300/45 hover:bg-cyan-400/22"
+                aria-label="X (Twitter)"
+              >
+                <span className="absolute left-3 top-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-300 transition-colors duration-300 group-hover:text-white">
+                  X
+                </span>
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              </a>
+              <a
+                href="https://t.me"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative flex h-30 w-34 items-center justify-center overflow-hidden border border-white/10 bg-slate-900/60 text-slate-100 transition-all duration-300 hover:border-cyan-300/45 hover:bg-cyan-400/22"
+                aria-label="Telegram"
+              >
+                <span className="absolute left-3 top-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-300 transition-colors duration-300 group-hover:text-white">
+                  Telegram
+                </span>
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+                </svg>
+              </a>
             </div>
           </div>
           <div className="font-normal mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/6 pt-8 sm:flex-row">
