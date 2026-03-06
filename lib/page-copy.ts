@@ -128,7 +128,7 @@ export const pageCopy = {
     },
     performance: {
       eyebrow: "Performance",
-      title: "Web Scale Performance",
+      title: "대규모 트래픽을 위한 성능",
       top: [
         { value: "10,000+", unit: "TPS", desc: "초당 트랜잭션 처리" },
         { value: "<1s", unit: "", desc: "트랜잭션 완결성" },

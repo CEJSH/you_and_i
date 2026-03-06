@@ -52,10 +52,10 @@ export const PerformanceSection = memo(function PerformanceSection({
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-sm lg:text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300/60">
             <HeadingChars text={copy.eyebrow} />
           </p>
-          <h2 className="mt-4 text-xl font-semibold text-white sm:text-5xl">
+          <h2 className="mt-4 text-4xl font-semibold tracking-tighter bg-[linear-gradient(135deg,#ffffff,#c0c8d8,#ffffff)] bg-clip-text text-transparent">
             <HeadingChars text={copy.title} />
           </h2>
         </motion.div>
@@ -65,44 +65,96 @@ export const PerformanceSection = memo(function PerformanceSection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="relative mt-14 overflow-hidden rounded-2xl shimmer-border bg-white/5 backdrop-blur-lg p-4 sm:p-8 lg:p-10"
+          className="relative mt-14 overflow-hidden rounded-2xl border-t border-l border-t-white/15 border-l-white/15 bg-slate-900/40 backdrop-blur-2xl p-5 sm:p-8 lg:p-10"
         >
+          {/* Noise texture */}
+          <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC44IiBudW1PY3RhdmVzPSI0IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbHRlcj0idXJsKCNuKSIvPjwvc3ZnPg==')] bg-repeat" />
+
+          {/* Atmospheric Cyan Glow — organic floating blob */}
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute -left-20 top-1/2 -z-1 h-64 w-64 rounded-full bg-cyan-500/8 blur-[100px]"
+            animate={
+              inView
+                ? {
+                    x: [0, 60, 20, 0],
+                    y: [-40, 20, -20, -40],
+                    scale: [1, 1.2, 0.9, 1],
+                    opacity: [0.06, 0.14, 0.08, 0.06],
+                  }
+                : undefined
+            }
+            transition={
+              inView
+                ? { duration: 14, repeat: Infinity, ease: "easeInOut" }
+                : undefined
+            }
+          />
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute -right-16 -bottom-10 -z-1 h-52 w-52 rounded-full bg-violet-500/6 blur-[90px]"
+            animate={
+              inView
+                ? {
+                    x: [0, -30, 10, 0],
+                    y: [0, -30, 10, 0],
+                    opacity: [0.04, 0.12, 0.06, 0.04],
+                  }
+                : undefined
+            }
+            transition={
+              inView
+                ? { duration: 10, repeat: Infinity, ease: "easeInOut" }
+                : undefined
+            }
+          />
+
+          {/* Top metrics row */}
           <div className="mb-10 grid grid-cols-1 gap-6 border-b border-white/6 pb-8 sm:grid-cols-3">
-            {copy.top.map((stat) => (
-              <div key={stat.desc}>
-                <p className="text-2xl font-semibold text-white sm:text-4xl">
+            {copy.top.map((stat, i) => (
+              <motion.div
+                key={stat.desc}
+                className="group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 + i * 0.15 }}
+              >
+                <p className="font-mono font-bold text-4xl tracking-tighter text-cyan-400 transition-transform duration-300 group-hover:-translate-y-1">
                   <BodyChars text={stat.value} />
                   {stat.unit && (
-                    <span className="ml-1 text-sm sm:text-base lg:text-xl font-normal text-slate-200">
+                    <span className="ml-1.5 text-lg font-bold tracking-normal text-cyan-400/70">
                       <BodyChars text={stat.unit} />
                     </span>
                   )}
                 </p>
-                <p className="mt-1 text-sm lg:text-[20px] tracking-wider text-slate-200">
+                <p className="mt-2 text-sm leading-relaxed text-slate-400">
                   <BodyChars text={stat.desc} />
                 </p>
-              </div>
+              </motion.div>
             ))}
           </div>
 
-          <div className="space-y-6">
+          {/* Progress bars */}
+          <div className="space-y-7">
             {copy.bars.map((bar, i) => {
               return (
-                <div key={bar.label} className="space-y-2">
+                <div key={bar.label} className="space-y-2.5">
                   <div className="flex items-baseline justify-between">
-                    <span className="text-sm lg:text-[20px] font-semibold text-slate-200">
+                    <span className="text-sm font-medium text-slate-400">
                       <BodyChars text={bar.label} />
                     </span>
-                    <span className="text-lg font-semibold tabular-nums text-white sm:text-xl lg:text-3xl">
+                    <span className="font-mono font-bold text-xl tabular-nums tracking-tight text-cyan-400">
                       <CountValue target={bar.value} inView={inView} />
-                      <span className="ml-1 text-sm lg:text-[20px] font-normal text-slate-200">
+                      <span className="ml-1 text-xs font-medium tracking-normal text-slate-500">
                         <BodyChars text="TPS" />
                       </span>
                     </span>
                   </div>
-                  <div className="h-3 overflow-hidden rounded-full bg-white/5">
+                  <div className="relative h-1.5 w-full rounded-full bg-white/5">
+                    {/* Glow trail behind bar */}
                     <motion.div
-                      className={`h-full rounded-full bg-linear-to-r ${bar.color}`}
+                      className="absolute inset-y-0 left-0 rounded-full bg-cyan-500/15 blur-[6px]"
                       initial={{ width: 0 }}
                       animate={inView ? { width: `${bar.pct}%` } : { width: 0 }}
                       transition={{
@@ -111,12 +163,39 @@ export const PerformanceSection = memo(function PerformanceSection({
                         ease: [0.25, 0.46, 0.45, 0.94],
                       }}
                     />
+                    {/* Main neon bar */}
+                    <motion.div
+                      className={`relative h-full rounded-full bg-linear-to-r ${bar.color}`}
+                      style={{
+                        boxShadow:
+                          i === 0
+                            ? "0 0 14px rgba(6, 182, 212, 0.5), 0 0 4px rgba(6, 182, 212, 0.3)"
+                            : "0 0 8px rgba(100, 116, 139, 0.3)",
+                      }}
+                      initial={{ width: 0 }}
+                      animate={inView ? { width: `${bar.pct}%` } : { width: 0 }}
+                      transition={{
+                        duration: 1.4,
+                        delay: 0.15 + i * 0.2,
+                        ease: [0.25, 0.46, 0.45, 0.94],
+                      }}
+                    >
+                      {/* Bright endpoint indicator */}
+                      <span
+                        className={`absolute right-0 top-1/2 -translate-y-1/2 h-2.5 w-2.5 rounded-full animate-pulse ${
+                          i === 0
+                            ? "bg-white shadow-[0_0_8px_rgba(6,182,212,0.9),0_0_20px_rgba(6,182,212,0.5)]"
+                            : "bg-slate-300/80 shadow-[0_0_6px_rgba(148,163,184,0.5)]"
+                        }`}
+                      />
+                    </motion.div>
                   </div>
                 </div>
               );
             })}
           </div>
 
+          {/* Static ambient glow */}
           <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-cyan-500/5 blur-[80px]" />
         </motion.div>
       </div>
