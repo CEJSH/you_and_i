@@ -106,6 +106,7 @@ function HomePageContent() {
   const launchInView = useInView(launchRef, { once: true, amount: 0.25 });
   const roadmapInView = useInView(roadmapRef, { once: true, amount: 0.25 });
   const contactInView = useInView(contactRef, { once: true, amount: 0.15 });
+  const heroCanvasActive = useInView(heroRef, { amount: 0.15 });
 
   const handleLogoClick = () => {
     if (typeof window === "undefined") return;
@@ -289,7 +290,7 @@ function HomePageContent() {
           <motion.div style={{ y: ambientFloat }} className="absolute inset-0">
             <div className="absolute left-1/2 top-[-18%] h-[140vh] w-[140vw] -translate-x-1/2 overflow-hidden">
               <div className="h-full w-full origin-center scale-105">
-                <HeroFluidCanvas reducedMotion={reduceMotion} />
+                <HeroFluidCanvas reducedMotion={reduceMotion} active={heroCanvasActive} />
               </div>
             </div>
           </motion.div>

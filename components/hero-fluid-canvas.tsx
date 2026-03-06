@@ -2,7 +2,7 @@
 
 import { Canvas, useFrame } from "@react-three/fiber"
 import * as THREE from "three"
-import { useMemo, useRef } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 
 type NodeSeed = {
   axis: THREE.Vector3
@@ -33,7 +33,15 @@ function buildNodeSeeds(count: number): NodeSeed[] {
   })
 }
 
-function FluidNucleus({ seeds, reducedMotion }: { seeds: NodeSeed[]; reducedMotion: boolean }) {
+function FluidNucleus({
+  seeds,
+  reducedMotion,
+  active,
+}: {
+  seeds: NodeSeed[]
+  reducedMotion: boolean
+  active: boolean
+}) {
   const nodesRef = useRef<THREE.InstancedMesh>(null)
 
   const matrix = useMemo(() => new THREE.Matrix4(), [])
@@ -46,7 +54,7 @@ function FluidNucleus({ seeds, reducedMotion }: { seeds: NodeSeed[]; reducedMoti
   useFrame(({ clock }) => {
     const time = clock.getElapsedTime()
 
-    if (reducedMotion || !nodesRef.current) {
+    if (reducedMotion || !active || !nodesRef.current) {
       return
     }
 
@@ -101,9 +109,30 @@ function FluidNucleus({ seeds, reducedMotion }: { seeds: NodeSeed[]; reducedMoti
   )
 }
 
-export default function HeroFluidCanvas({ reducedMotion }: { reducedMotion: boolean }) {
+export default function HeroFluidCanvas({
+  reducedMotion,
+  active = true,
+}: {
+  reducedMotion: boolean
+  active?: boolean
+}) {
   const seedCount = reducedMotion ? 26 : 76
   const seeds = useMemo(() => buildNodeSeeds(seedCount), [seedCount, reducedMotion])
+  const [documentVisible, setDocumentVisible] = useState(true)
+
+  useEffect(() => {
+    const handleVisibility = () => {
+      setDocumentVisible(!document.hidden)
+    }
+
+    handleVisibility()
+    document.addEventListener("visibilitychange", handleVisibility)
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibility)
+    }
+  }, [])
+
+  const shouldAnimate = active && documentVisible
 
   return (
     <Canvas
@@ -118,7 +147,7 @@ export default function HeroFluidCanvas({ reducedMotion }: { reducedMotion: bool
       <directionalLight intensity={1} position={[2, 2.5, 5]} color="#67e8f9" />
       <pointLight intensity={1.8} position={[-3, -2, 3]} color="#22d3ee" />
       <pointLight intensity={1.2} position={[3, 1.5, -2]} color="#06b6d4" />
-      <FluidNucleus seeds={seeds} reducedMotion={reducedMotion} />
+      <FluidNucleus seeds={seeds} reducedMotion={reducedMotion} active={shouldAnimate} />
     </Canvas>
   )
 }

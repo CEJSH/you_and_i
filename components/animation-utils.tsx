@@ -1,8 +1,8 @@
 "use client";
 
 import { useI18n } from "@/lib/i18n";
-import { motion, type Variants } from "framer-motion";
-import { useState, useEffect, useRef, memo } from "react";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { useState, useEffect, useRef, useMemo, memo } from "react";
 
 /* ── Animation variants ── */
 
@@ -201,6 +201,13 @@ export const HeadingChars = memo(function HeadingChars({
   className?: string;
 }) {
   const { locale } = useI18n();
+  const reduceMotion = useReducedMotion() ?? false;
+  const chars = useMemo(() => Array.from(text), [text]);
+
+  if (reduceMotion) {
+    return <span className={className}>{text}</span>;
+  }
+
   return (
     <motion.span
       key={`${text}-${locale}`}
@@ -210,7 +217,7 @@ export const HeadingChars = memo(function HeadingChars({
       viewport={{ once: true, amount: 0.2 }}
       className={className}
     >
-      {Array.from(text).map((char, index) => (
+      {chars.map((char, index) => (
         <motion.span
           key={`${text}-${index}`}
           variants={headingReveal.char}
@@ -231,6 +238,13 @@ export const BodyChars = memo(function BodyChars({
   className?: string;
 }) {
   const { locale } = useI18n();
+  const reduceMotion = useReducedMotion() ?? false;
+  const chars = useMemo(() => Array.from(text), [text]);
+
+  if (reduceMotion) {
+    return <span className={className}>{text}</span>;
+  }
+
   return (
     <motion.span
       key={`${text}-${locale}`}
@@ -240,7 +254,7 @@ export const BodyChars = memo(function BodyChars({
       viewport={{ once: true, amount: 0.2 }}
       className={className}
     >
-      {Array.from(text).map((char, index) => (
+      {chars.map((char, index) => (
         <motion.span
           key={`${text}-${index}`}
           variants={bodyReveal.char}

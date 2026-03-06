@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export function MouseBacklight() {
   const mouseX = useMotionValue(-200);
@@ -9,14 +9,39 @@ export function MouseBacklight() {
 
   const springX = useSpring(mouseX, { damping: 25, stiffness: 120 });
   const springY = useSpring(mouseY, { damping: 25, stiffness: 120 });
+  const rafId = useRef<number | null>(null);
+  const pendingPoint = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
+    const shouldTrack = window.matchMedia("(pointer: fine)").matches;
+    if (!shouldTrack) {
+      return;
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+      pendingPoint.current = { x: e.clientX, y: e.clientY };
+
+      if (rafId.current !== null) {
+        return;
+      }
+
+      rafId.current = window.requestAnimationFrame(() => {
+        rafId.current = null;
+        const point = pendingPoint.current;
+        if (!point) return;
+
+        mouseX.set(point.x);
+        mouseY.set(point.y);
+      });
     };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (rafId.current !== null) {
+        window.cancelAnimationFrame(rafId.current);
+        rafId.current = null;
+      }
+    };
   }, [mouseX, mouseY]);
 
   return (
