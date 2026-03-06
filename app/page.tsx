@@ -77,8 +77,8 @@ function EcosystemBadgeIcon({ type }: { type: string }) {
   if (type === "sto") {
     return (
       <svg
-        width="18"
-        height="18"
+        width="24"
+        height="24"
         viewBox="0 0 18 18"
         fill="none"
         stroke="currentColor"
@@ -93,8 +93,8 @@ function EcosystemBadgeIcon({ type }: { type: string }) {
   if (type === "commerce") {
     return (
       <svg
-        width="18"
-        height="18"
+        width="24"
+        height="24"
         viewBox="0 0 18 18"
         fill="none"
         stroke="currentColor"
@@ -577,7 +577,7 @@ function HomePageContent() {
             </p>
           </motion.div>
 
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-5 sm:gap-6 md:grid-cols-3">
             {copy.ecosystem.cards.map((item, i) => (
               <motion.div
                 key={item.title}
@@ -593,17 +593,17 @@ function HomePageContent() {
                   delayStep: 0.1,
                   ease: "easeOut",
                 })}
-                className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0A0B10]/80 backdrop-blur-[10px] p-5 sm:p-8 transition-all duration-500 will-change-transform hover:-translate-y-2 hover:border-cyan-400/25 hover:shadow-[0_0_40px_rgba(6,182,212,0.12),0_8px_32px_rgba(0,0,0,0.6)]"
+                className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-slate-800/40 backdrop-blur-[10px] px-6 py-7 sm:px-10 sm:py-10 transition-all duration-500 will-change-transform hover:-translate-y-2 hover:border-cyan-400/25 hover:shadow-[0_0_40px_rgba(6,182,212,0.12),0_8px_32px_rgba(0,0,0,0.6)]"
               >
-                <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.04] to-transparent" />
-                <div className="pointer-events-none absolute -right-8 -top-10 h-44 w-44 rounded-full bg-cyan-500/[0.06] blur-[100px] transition-all duration-500 group-hover:bg-cyan-500/20" />
-                <div className="relative flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04] text-cyan-200 backdrop-blur-sm">
+                <div className="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-br from-white/[0.06] to-transparent" />
+                <div className="pointer-events-none absolute -right-8 -top-10 h-44 w-44 rounded-full bg-cyan-500/10 blur-[100px] transition-all duration-500 group-hover:bg-cyan-500/20" />
+                <div className="relative flex h-14 w-14 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04] text-cyan-200 backdrop-blur-sm">
                   <EcosystemBadgeIcon type={item.icon} />
                 </div>
-                <h3 className="relative mt-4 sm:mt-6 text-lg sm:text-2xl font-semibold tracking-tight text-white/90">
+                <h3 className="relative mt-5 sm:mt-7 text-lg sm:text-2xl font-bold tracking-tight text-white">
                   <HeadingChars text={item.title} />
                 </h3>
-                <p className="relative mt-4 text-sm leading-relaxed text-slate-400/80">
+                <p className="relative mt-4 text-sm font-normal leading-[1.8] tracking-[-0.02em] text-white/60">
                   <BodyChars text={item.desc} />
                 </p>
               </motion.div>
@@ -649,7 +649,7 @@ function HomePageContent() {
             </p>
           </motion.div>
 
-          <div className="mt-10 grid gap-4 sm:mt-14 md:grid-cols-2">
+          <div className="mt-10 grid gap-5 sm:mt-14 sm:gap-6 md:grid-cols-2">
             {copy.differentiators.items.map((item, i) => (
               <motion.div
                 key={item.number}
@@ -665,18 +665,19 @@ function HomePageContent() {
                   delayStep: 0.1,
                   ease: "easeOut",
                 })}
-                className="group relative overflow-hidden rounded-2xl border-t border-l border-t-white/15 border-l-white/10 bg-slate-900/45 backdrop-blur-2xl px-5 py-5 sm:px-8 sm:py-8 transition-all duration-400 will-change-transform hover:-translate-y-1.5 hover:shadow-[0_0_24px_rgba(34,211,238,0.1),0_10px_34px_rgba(0,0,0,0.45)]"
+                className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-slate-800/40 backdrop-blur-[10px] px-6 py-7 sm:px-10 sm:py-10 transition-all duration-500 will-change-transform hover:-translate-y-2 hover:border-cyan-400/25 hover:shadow-[0_0_40px_rgba(6,182,212,0.12),0_8px_32px_rgba(0,0,0,0.6)]"
               >
-                <div className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 rounded-full bg-cyan-500/10 blur-[90px] transition-all duration-500 group-hover:bg-cyan-500/22" />
-                <div className="relative flex items-baseline gap-3 sm:gap-5">
-                  <span className="font-mono text-3xl sm:text-5xl font-bold leading-none tracking-tighter text-cyan-300/95">
+                <div className="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-br from-white/[0.06] to-transparent" />
+                <div className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 rounded-full bg-cyan-500/10 blur-[100px] transition-all duration-500 group-hover:bg-cyan-500/20" />
+                <div className="relative flex items-baseline gap-4 sm:gap-5">
+                  <span className="font-mono text-2xl sm:text-3xl font-medium leading-none tracking-wide text-cyan-400/40">
                     {item.number}
                   </span>
-                  <h3 className="text-lg sm:text-2xl font-semibold tracking-tight text-slate-100">
+                  <h3 className="text-lg sm:text-2xl font-bold tracking-tight text-white">
                     <HeadingChars text={item.title} />
                   </h3>
                 </div>
-                <p className="relative mt-4 text-sm leading-relaxed text-slate-400">
+                <p className="relative mt-5 text-sm font-normal leading-[1.8] tracking-[-0.02em] text-white/60">
                   <BodyChars text={item.desc} />
                 </p>
               </motion.div>
