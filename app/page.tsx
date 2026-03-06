@@ -65,7 +65,7 @@ function HomePageContent() {
       className="relative isolate min-h-screen overflow-x-hidden bg-[#070a12] text-base sm:text-lg lg:text-2xl leading-[1.7] sm:leading-[1.8] lg:leading-[1.9] text-slate-100 font-semibold"
     >
       <div className="pointer-events-none fixed inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.08),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(14,165,233,0.06),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.08),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(139,92,246,0.08),transparent_50%)]" />
       </div>
 
       {/* Header */}
@@ -187,7 +187,7 @@ function HomePageContent() {
         whileInView="show"
         variants={heroReveal.container}
         viewport={{ once: true, amount: 0.2 }}
-        className="relative z-10 flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 pb-12 pt-24 sm:px-10 sm:pb-20 sm:pt-32 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-20 before:bg-[radial-gradient(circle_at_72%_18%,rgba(56,189,248,0.16),transparent_60%),radial-gradient(circle_at_20%_80%,rgba(14,165,233,0.1),transparent_56%),linear-gradient(165deg,rgba(4,8,18,0.58),rgba(5,12,28,0.78))] before:opacity-44"
+        className="relative z-10 flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 pb-12 pt-24 sm:px-10 sm:pb-20 sm:pt-32 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-20 before:bg-[radial-gradient(circle_at_72%_18%,rgba(56,189,248,0.16),transparent_60%),radial-gradient(circle_at_20%_80%,rgba(139,92,246,0.12),transparent_56%),linear-gradient(165deg,rgba(4,8,18,0.58),rgba(15,5,30,0.78))] before:opacity-44"
       >
         <AmbientSweep
           angle="130deg"
@@ -256,7 +256,7 @@ function HomePageContent() {
           </motion.div>
           <motion.div
             variants={heroReveal.textBlock}
-            className="mt-10 sm:mt-20 grid w-full max-w-3xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/6 bg-white/6 sm:grid-cols-4"
+            className="mt-14 sm:mt-24 grid w-full max-w-3xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/6 bg-white/6 sm:grid-cols-4"
           >
             {copy.hero.stats.map((stat, i) => (
               <motion.div
@@ -345,7 +345,7 @@ function HomePageContent() {
       {/* ═══ Features — visual product matrix ═══ */}
       <section
         id="features"
-        className="relative z-10 overflow-hidden px-4 py-18 sm:px-10 sm:py-28 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_20%_10%,rgba(45,212,191,0.18),transparent_45%),radial-gradient(circle_at_82%_76%,rgba(125,211,252,0.14),transparent_45%),linear-gradient(to_bottom,rgba(10,12,24,0.8),rgba(6,10,20,0.9))] before:opacity-44"
+        className="relative z-10 overflow-hidden px-4 py-18 sm:px-10 sm:py-28 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_20%_10%,rgba(45,212,191,0.18),transparent_45%),radial-gradient(circle_at_82%_76%,rgba(139,92,246,0.12),transparent_45%),linear-gradient(to_bottom,rgba(10,12,24,0.8),rgba(12,8,24,0.9))] before:opacity-44"
       >
         <AmbientSweep
           angle="20deg"
@@ -405,7 +405,7 @@ function HomePageContent() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mb-12 text-left"
+            className="mb-16 text-left"
           >
             <p className="text-sm lg:text-[20px] font-semibold uppercase tracking-[0.2em] text-cyan-300/60">
               <HeadingChars text={copy.features.eyebrow} />
@@ -423,7 +423,7 @@ function HomePageContent() {
             </p>
           </motion.div>
 
-          <div className="grid gap-px overflow-hidden rounded-[28px] border border-white/10 bg-white/10 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-px overflow-hidden rounded-[28px] border border-white/12 bg-white/6 shadow-[0_0_40px_rgba(139,92,246,0.04)] md:grid-cols-2 lg:grid-cols-3">
             {copy.features.cards.map((f, i) => (
               <motion.div
                 key={f.title}
@@ -431,7 +431,7 @@ function HomePageContent() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.45, delay: 0.12 + i * 0.1 }}
-                className="group relative min-h-70 sm:min-h-90 bg-[linear-gradient(160deg,rgba(10,14,22,0.88),rgba(13,18,28,0.84))] p-4 sm:p-7 transition-colors transition-transform duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:bg-[linear-gradient(160deg,rgba(14,18,30,0.92),rgba(13,18,28,0.84))]"
+                className="group relative min-h-70 sm:min-h-90 bg-[linear-gradient(160deg,rgba(10,14,22,0.72),rgba(13,18,28,0.68))] backdrop-blur-md p-4 sm:p-7 transition-colors transition-transform duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:bg-[linear-gradient(160deg,rgba(14,18,30,0.78),rgba(13,18,28,0.72))]"
               >
                 <div
                   aria-hidden
@@ -464,7 +464,7 @@ function HomePageContent() {
       <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Launch highlights (Galxe-style metric rail) ═══ */}
-      <section className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_8%,rgba(147,197,253,0.14),transparent_54%),radial-gradient(circle_at_90%_90%,rgba(103,232,249,0.1),transparent_50%),linear-gradient(170deg,rgba(9,14,30,0.82),rgba(6,12,20,0.9))] before:opacity-50">
+      <section className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_8%,rgba(147,197,253,0.14),transparent_54%),radial-gradient(circle_at_90%_90%,rgba(139,92,246,0.1),transparent_50%),linear-gradient(170deg,rgba(9,14,30,0.82),rgba(12,8,26,0.9))] before:opacity-50">
         <AmbientSweep
           angle="75deg"
           color="rgba(125,211,252,0.14)"
@@ -511,7 +511,7 @@ function HomePageContent() {
                 delayStep: 0.7,
                 ease: "easeOut",
               })}
-              className="relative overflow-hidden rounded-2xl border border-white/8 bg-[#070a12]/70 px-4 py-5 sm:px-6 sm:py-7 lg:px-8 transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005]"
+              className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg px-4 py-5 sm:px-6 sm:py-7 lg:px-8 transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005] hover:border-white/15 hover:shadow-[0_0_24px_rgba(139,92,246,0.08)]"
             >
               <p className="text-sm lg:text-[20px] uppercase tracking-[0.16em] text-slate-200 font-medium">
                 {item.title}
@@ -560,7 +560,7 @@ function HomePageContent() {
       <SectionDivider reduceMotion={reduceMotion} />
 
       {/* ═══ Built for teams & builders (inspired by Galxe audience split style) ═══ */}
-      <section className="relative z-10 overflow-hidden px-4 py-18 sm:px-10 sm:py-28 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_90%_14%,rgba(45,212,191,0.14),transparent_56%),radial-gradient(circle_at_10%_86%,rgba(125,211,252,0.08),transparent_52%),linear-gradient(168deg,rgba(7,14,22,0.82),rgba(5,8,16,0.9))] before:opacity-50">
+      <section className="relative z-10 overflow-hidden px-4 py-18 sm:px-10 sm:py-28 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_90%_14%,rgba(45,212,191,0.14),transparent_56%),radial-gradient(circle_at_10%_86%,rgba(139,92,246,0.1),transparent_52%),linear-gradient(168deg,rgba(7,14,22,0.82),rgba(10,5,20,0.9))] before:opacity-50">
         <AmbientSweep
           angle="145deg"
           color="rgba(56,189,248,0.13)"
@@ -610,7 +610,7 @@ function HomePageContent() {
                 delayStep: 0.45,
                 ease: "easeOut",
               })}
-              className="group relative rounded-2xl border border-white/12 bg-white/8 p-4 sm:p-6 backdrop-blur-sm transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005] hover:border-cyan-300/35 hover:bg-white/12 hover:shadow-[0_0_24px_rgba(34,211,238,0.2)]"
+              className="group relative rounded-2xl border border-white/12 bg-white/6 p-4 sm:p-6 backdrop-blur-xl transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005] hover:border-cyan-300/35 hover:bg-white/10 hover:shadow-[0_0_30px_rgba(139,92,246,0.12),0_0_24px_rgba(34,211,238,0.15)]"
             >
               <p className="text-sm lg:text-[20px] uppercase tracking-[0.2em] text-cyan-200/70">
                 {`0${i + 1}`}
@@ -640,7 +640,7 @@ function HomePageContent() {
       <section
         ref={ecosystemRef}
         id="ecosystem"
-        className="relative z-10 overflow-hidden px-4 py-18 sm:px-10 sm:py-36 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_20%,rgba(14,165,233,0.12),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(56,189,248,0.08),transparent_50%),linear-gradient(170deg,rgba(8,12,24,0.76),rgba(6,10,20,0.86))] before:opacity-50"
+        className="relative z-10 overflow-hidden px-4 py-18 sm:px-10 sm:py-36 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_20%,rgba(14,165,233,0.12),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(139,92,246,0.1),transparent_50%),linear-gradient(170deg,rgba(8,12,24,0.76),rgba(12,6,24,0.86))] before:opacity-50"
       >
         <AmbientSweep
           angle="-20deg"
@@ -677,7 +677,7 @@ function HomePageContent() {
               <BodyChars text={copy.ecosystem.desc} />
             </p>
           </motion.div>
-          <div className="mt-6 grid gap-2.5 sm:mt-14 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-3 sm:mt-16 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {copy.ecosystem.items.map((item, i) => (
               <motion.div
                 key={item.name}
@@ -685,7 +685,7 @@ function HomePageContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: 0.05 + i * 0.06 }}
-                className="flex items-center gap-2.5 rounded-xl border border-white/6 bg-[#070a12]/60 px-3 py-2.5 backdrop-blur-sm transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.01] hover:border-cyan-300/25 hover:shadow-[0_0_20px_rgba(34,211,238,0.18)] sm:px-6 sm:py-5"
+                className="flex items-center gap-2.5 rounded-xl border border-white/8 bg-white/5 px-3 py-2.5 backdrop-blur-lg transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.01] hover:border-cyan-300/25 hover:shadow-[0_0_20px_rgba(34,211,238,0.18)] sm:px-6 sm:py-5"
               >
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/6 bg-white/6 sm:h-10 sm:w-10">
                   <EcoIcon type={item.icon} />
@@ -703,7 +703,7 @@ function HomePageContent() {
       {/* ═══ Roadmap ═══ */}
       <section
         id="roadmap"
-        className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_70%_20%,rgba(56,189,248,0.13),transparent_52%),radial-gradient(circle_at_26%_84%,rgba(129,140,248,0.08),transparent_56%),linear-gradient(172deg,rgba(7,12,24,0.78),rgba(9,15,26,0.9))] before:opacity-50"
+        className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_70%_20%,rgba(56,189,248,0.13),transparent_52%),radial-gradient(circle_at_26%_84%,rgba(139,92,246,0.12),transparent_56%),linear-gradient(172deg,rgba(7,12,24,0.78),rgba(14,8,28,0.9))] before:opacity-50"
       >
         <AmbientSweep
           angle="45deg"
@@ -748,7 +748,7 @@ function HomePageContent() {
                     delayStep: 0.15,
                     ease: "easeOut",
                   })}
-                  className="relative rounded-2xl border border-white/6 bg-white/8 p-4 sm:p-6 transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005]"
+                  className="relative rounded-2xl border border-white/10 bg-white/6 backdrop-blur-lg p-4 sm:p-6 transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.005] hover:border-white/15 hover:shadow-[0_0_20px_rgba(139,92,246,0.08)]"
                 >
                   {/* Dot on timeline */}
                   <div className="absolute -top-1.25 left-1/2 hidden h-2.5 w-2.5 -translate-x-1/2 rounded-full border-2 border-cyan-400/40 bg-[#070a12] lg:block" />
@@ -773,7 +773,7 @@ function HomePageContent() {
       <section
         ref={contactRef}
         id="contact"
-        className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_24%_20%,rgba(125,211,252,0.12),transparent_50%),radial-gradient(circle_at_84%_82%,rgba(56,189,248,0.08),transparent_50%),linear-gradient(175deg,rgba(5,9,18,0.8),rgba(8,12,22,0.9))] before:opacity-44"
+        className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_24%_20%,rgba(125,211,252,0.12),transparent_50%),radial-gradient(circle_at_84%_82%,rgba(139,92,246,0.1),transparent_50%),linear-gradient(175deg,rgba(5,9,18,0.8),rgba(12,6,24,0.9))] before:opacity-44"
       >
         <div className="pointer-events-none absolute inset-0 opacity-30">
           <NetworkBg
@@ -818,7 +818,7 @@ function HomePageContent() {
       </section>
 
       {/* ═══ Footer ═══ */}
-      <footer className="relative z-10 border-t border-white/6 px-4 pt-10 pb-6 sm:px-10 sm:pt-16 sm:pb-8 lg:px-14">
+      <footer className="relative z-10 border-t border-white/6 px-4 pt-14 pb-8 sm:px-10 sm:pt-20 sm:pb-10 lg:px-14">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
             <div className="lg:col-span-1">
@@ -831,7 +831,7 @@ function HomePageContent() {
             </div>
             {Object.entries(copy.footer.links).map(([cat, links]) => (
               <div key={cat}>
-                <h4 className="text-sm lg:text-[20px] font-semibold text-slate-200">
+                <h4 className="text-sm lg:text-[20px] font-medium text-slate-200">
                   {cat}
                 </h4>
                 <ul className="mt-4 flex flex-col gap-2.5">
@@ -839,7 +839,7 @@ function HomePageContent() {
                     <li key={l}>
                       <a
                         href="#"
-                        className="text-sm lg:text-[20px] text-slate-200 transition-colors duration-200 hover:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+                        className="text-sm lg:text-[20px] font-medium text-slate-200 transition-colors duration-200 hover:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
                       >
                         {l}
                       </a>

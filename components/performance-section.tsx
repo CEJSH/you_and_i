@@ -17,7 +17,7 @@ export const PerformanceSection = memo(function PerformanceSection({
   return (
     <section
       ref={ref}
-      className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_88%_10%,rgba(45,212,191,0.16),transparent_52%),radial-gradient(circle_at_24%_86%,rgba(125,211,252,0.09),transparent_56%),linear-gradient(172deg,rgba(10,14,34,0.84),rgba(6,14,28,0.9))] before:opacity-44"
+      className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_88%_10%,rgba(45,212,191,0.16),transparent_52%),radial-gradient(circle_at_24%_86%,rgba(139,92,246,0.1),transparent_56%),linear-gradient(172deg,rgba(10,14,34,0.84),rgba(10,6,28,0.9))] before:opacity-44"
     >
       <AmbientSweep
         angle="160deg"
@@ -65,7 +65,7 @@ export const PerformanceSection = memo(function PerformanceSection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="relative mt-14 overflow-hidden rounded-2xl border border-white/6 bg-white/8 p-4 sm:p-8 lg:p-10"
+          className="relative mt-14 overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg p-4 sm:p-8 lg:p-10"
         >
           <div className="mb-10 grid grid-cols-1 gap-6 border-b border-white/6 pb-8 sm:grid-cols-3">
             {copy.top.map((stat) => (

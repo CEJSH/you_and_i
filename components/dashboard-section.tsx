@@ -27,7 +27,7 @@ export const DashboardSection = memo(function DashboardSection({
   const label = copy.chartTitle;
 
   return (
-    <section className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_15%_12%,rgba(56,189,248,0.16),transparent_56%),radial-gradient(circle_at_88%_86%,rgba(129,140,248,0.08),transparent_60%),linear-gradient(175deg,rgba(8,14,32,0.84),rgba(5,18,36,0.94))] before:opacity-50">
+    <section className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_15%_12%,rgba(56,189,248,0.16),transparent_56%),radial-gradient(circle_at_88%_86%,rgba(139,92,246,0.12),transparent_60%),linear-gradient(175deg,rgba(8,14,32,0.84),rgba(12,6,30,0.94))] before:opacity-50">
       <AmbientSweep
         angle="35deg"
         color="rgba(125,211,252,0.12)"
