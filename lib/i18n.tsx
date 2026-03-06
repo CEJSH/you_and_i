@@ -18,7 +18,7 @@ const translations = {
     technology: { ko: "기술", en: "Technology" },
     roadmap: { ko: "로드맵", en: "Roadmap" },
     security: { ko: "보안", en: "Security" },
-    getStarted: { ko: "시작하기", en: "Get Started" },
+    getStarted: { ko: "백서읽기", en: "Get Started" },
   },
   hero: {
     badge: {
@@ -308,7 +308,7 @@ const translations = {
       ko: "YOU&I 생태계에 참여하여 차세대 디지털 자산 혁신의 일원이 되세요. 파트너십 기회를 탐색하려면 연락주세요.",
       en: "Join the YOU&I ecosystem and be part of the next generation of digital asset innovation. Connect with us to explore partnership opportunities.",
     },
-    contactBtn: { ko: "문의하기", en: "Contact Us" },
+    contactBtn: { ko: "백서읽기", en: "Contact Us" },
     exploreBtn: { ko: "생태계 살펴보기", en: "Explore Ecosystem" },
   },
   footer: {
@@ -352,14 +352,17 @@ interface I18nContextType {
 const I18nContext = createContext<I18nContextType | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocale] = useState<Locale>(() => {
-    if (typeof window === "undefined") return "ko";
+  const [locale, setLocale] = useState<Locale>("ko");
+
+  useEffect(() => {
     const saved = window.localStorage.getItem("youandi-locale");
-    if (saved === "en" || saved === "ko") return saved;
-    const browserLocale = window.navigator.language?.toLowerCase();
-    if (browserLocale.startsWith("en")) return "en";
-    return "ko";
-  });
+    if (saved === "en" || saved === "ko") {
+      setLocale(saved);
+    } else {
+      const browserLocale = window.navigator.language?.toLowerCase();
+      if (browserLocale.startsWith("en")) setLocale("en");
+    }
+  }, []);
 
   const toggleLocale = useCallback(() => {
     setLocale((prev) => (prev === "ko" ? "en" : "ko"));

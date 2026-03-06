@@ -16,7 +16,7 @@ import {
 import { useState, useRef, useEffect } from "react";
 
 import { pageCopy } from "@/lib/page-copy";
-import { ArrowIcon, EcoIcon, FeatureGraphic } from "@/components/icons";
+import { ArrowIcon } from "@/components/icons";
 import NetworkBg from "@/components/network-bg";
 import {
   heroReveal,
@@ -28,8 +28,7 @@ import {
   AmbientSweep,
   TrustStrip,
 } from "@/components/animation-utils";
-import { DashboardSection } from "@/components/dashboard-section";
-import { PerformanceSection } from "@/components/performance-section";
+// import { PerformanceSection } from "@/components/performance-section";
 import { MouseBacklight } from "@/components/mouse-backlight";
 
 /* ── CountUp ── */
@@ -74,6 +73,57 @@ function CountUp({
   );
 }
 
+function EcosystemBadgeIcon({ type }: { type: string }) {
+  if (type === "sto") {
+    return (
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 18 18"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M9 2.7l5.3 5.3L9 13.3 3.7 8 9 2.7z" />
+      </svg>
+    );
+  }
+  if (type === "commerce") {
+    return (
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 18 18"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <circle cx="9" cy="9" r="5.4" />
+        <path d="M9 3.6v10.8M3.6 9h10.8" />
+      </svg>
+    );
+  }
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="4" y="4" width="10" height="10" rx="2.2" />
+      <path d="M6.6 9h4.8M9 6.6v4.8" />
+    </svg>
+  );
+}
+
 /* ── Page ── */
 
 function HomePageContent() {
@@ -93,7 +143,6 @@ function HomePageContent() {
   );
   const heroRef = useRef<HTMLDivElement>(null);
   const audienceRef = useRef<HTMLDivElement>(null);
-  const featuresRef = useRef<HTMLDivElement>(null);
   const ecosystemRef = useRef<HTMLDivElement>(null);
   const launchRef = useRef<HTMLDivElement>(null);
   const roadmapRef = useRef<HTMLDivElement>(null);
@@ -101,12 +150,27 @@ function HomePageContent() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const heroInView = useInView(heroRef, { once: true, amount: 0.25 });
   const audienceInView = useInView(audienceRef, { once: true, amount: 0.25 });
-  const featuresInView = useInView(featuresRef, { once: true, amount: 0.18 });
   const ecosystemInView = useInView(ecosystemRef, { once: true, amount: 0.2 });
   const launchInView = useInView(launchRef, { once: true, amount: 0.25 });
   const roadmapInView = useInView(roadmapRef, { once: true, amount: 0.25 });
   const contactInView = useInView(contactRef, { once: true, amount: 0.15 });
   const heroCanvasActive = useInView(heroRef, { amount: 0.15 });
+  const tokenomicsColors = [
+    "rgba(34, 211, 238, 0.95)",
+    "rgba(56, 189, 248, 0.9)",
+    "rgba(125, 211, 252, 0.85)",
+    "rgba(14, 165, 233, 0.75)",
+    "rgba(103, 232, 249, 0.7)",
+  ];
+  let tokenomicsStart = 0;
+  const tokenomicsGradient = copy.tokenomics.allocations
+    .map((item, index) => {
+      const tokenomicsEnd = tokenomicsStart + item.value;
+      const segment = `${tokenomicsColors[index % tokenomicsColors.length]} ${tokenomicsStart}% ${tokenomicsEnd}%`;
+      tokenomicsStart = tokenomicsEnd;
+      return segment;
+    })
+    .join(", ");
 
   const handleLogoClick = () => {
     if (typeof window === "undefined") return;
@@ -115,7 +179,6 @@ function HomePageContent() {
 
   return (
     <main
-      key={locale}
       className="relative isolate min-h-screen overflow-x-hidden bg-[#070a12] text-base sm:text-lg lg:text-2xl leading-[1.7] sm:leading-[1.8] lg:leading-[1.9] text-slate-100 font-semibold"
     >
       <div className="pointer-events-none fixed inset-0">
@@ -169,7 +232,7 @@ function HomePageContent() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm lg:text-lg text-slate-100 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+                className="text-sm lg:text-lg text-slate-300 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
               >
                 <BodyChars text={link.label} />
               </a>
@@ -185,10 +248,17 @@ function HomePageContent() {
             </button>
             <a
               href="#contact"
-              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm sm:text-base lg:text-lg font-medium text-white transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs sm:text-sm font-bold text-white transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
               {copy.header.cta}
-              <ArrowIcon />
+            </a>
+            <a
+              href="https://www.wmuex.com/en_US/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3.5 py-1.5 text-xs sm:text-sm font-bold text-cyan-300 transition-all duration-300 hover:border-cyan-300/40 hover:bg-cyan-400/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+            >
+              {copy.header.ctaPrice}
             </a>
           </div>
           <button
@@ -237,7 +307,7 @@ function HomePageContent() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
-                    className="text-sm lg:text-[20px] text-slate-100 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+                    className="text-sm lg:text-base text-slate-100 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
                   >
                     <BodyChars text={link.label} />
                   </a>
@@ -258,6 +328,15 @@ function HomePageContent() {
                   className="mt-0 inline-block text-sm sm:text-base lg:text-lg font-medium text-white transition-colors hover:text-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
                 >
                   {copy.header.cta}
+                </a>
+                <a
+                  href="https://www.wmuex.com/en_US/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileOpen(false)}
+                  className="mt-0 inline-block text-sm sm:text-base lg:text-lg font-medium text-cyan-300 transition-colors hover:text-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+                >
+                  {copy.header.ctaPrice}
                 </a>
               </div>
             </motion.nav>
@@ -290,19 +369,16 @@ function HomePageContent() {
           <motion.div style={{ y: ambientFloat }} className="absolute inset-0">
             <div className="absolute left-1/2 top-[-18%] h-[140vh] w-[140vw] -translate-x-1/2 overflow-hidden">
               <div className="h-full w-full origin-center scale-105">
-                <HeroFluidCanvas reducedMotion={reduceMotion} active={heroCanvasActive} />
+                <HeroFluidCanvas
+                  reducedMotion={reduceMotion}
+                  active={heroCanvasActive}
+                />
               </div>
             </div>
           </motion.div>
         </motion.div>
 
         <div className="relative z-20 mx-auto flex max-w-5xl flex-col items-center text-center">
-          <motion.div variants={heroReveal.textBlock} className="flex">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm lg:text-[20px] font-semibold uppercase tracking-widest text-slate-200">
-              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
-              <HeroChars text={copy.hero.label} />
-            </span>
-          </motion.div>
           <motion.h1
             variants={heroReveal.textBlock}
             className="mt-8 max-w-4xl text-4xl font-semibold leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl"
@@ -319,6 +395,13 @@ function HomePageContent() {
           >
             <HeroChars text={copy.hero.desc} />
           </motion.p>
+          <motion.p
+            variants={heroReveal.textBlock}
+            className="mt-4 inline-flex items-center gap-2 rounded-full border border-cyan-400/15 bg-cyan-400/5 px-4 py-1.5 text-xs sm:text-sm font-semibold tracking-wide text-cyan-300/90"
+          >
+            <span className="hidden md:block h-1.5 w-1.5 rounded-full bg-cyan-400/80" />
+            <HeroChars text={copy.hero.credibility} />
+          </motion.p>
           <motion.div
             variants={heroReveal.textBlock}
             className="mt-10 flex flex-col items-center gap-3 sm:flex-row"
@@ -326,23 +409,31 @@ function HomePageContent() {
             <motion.a
               href="#contact"
               variants={heroReveal.textBlock}
-              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-5 py-2.5 sm:px-7 sm:py-3 text-sm sm:text-base lg:text-xl font-semibold text-[#070a12] transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-5 py-2.5 sm:px-7 sm:py-3 text-sm sm:text-base lg:text-xl font-semibold text-[#070a12] transition-all duration-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.4),0_0_30px_rgba(6,182,212,0.2)] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
               <HeroChars text={copy.hero.ctaPrimary} />
               <ArrowIcon />
             </motion.a>
             <motion.a
-              href="#features"
+              href="https://www.wmuex.com/en_US/"
+              target="_blank"
+              rel="noopener noreferrer"
               variants={heroReveal.textBlock}
-              className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 sm:px-7 sm:py-3 text-sm sm:text-base lg:text-xl font-semibold text-slate-200 transition-all duration-300 hover:border-white/30 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              className="group relative inline-flex min-h-12 items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 sm:px-7 sm:py-3 text-sm sm:text-base lg:text-xl font-semibold text-slate-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
-              <HeroChars text={copy.hero.ctaSecondary} />
-              <ArrowIcon />
+              <div className="absolute inset-0 rounded-full bg-cyan-500/50 opacity-0 group-hover:animate-ping" />
+              <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 blur-md bg-cyan-400/30 transition-opacity" />
+              <span className="relative z-10 group-hover:text-cyan-400 transition-colors">
+                <HeroChars text={copy.hero.ctaSecondary} />
+              </span>
+              <span className="relative z-10 group-hover:text-cyan-400 transition-colors">
+                <ArrowIcon />
+              </span>
             </motion.a>
           </motion.div>
           <motion.div
             variants={heroReveal.textBlock}
-            className="mt-14 sm:mt-24 grid w-full max-w-3xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/6 bg-white/6 sm:grid-cols-4"
+            className="mt-14 sm:mt-24 grid w-full max-w-3xl grid-cols-2 items-center gap-px overflow-hidden rounded-2xl border border-white/6 bg-white/6 sm:grid-cols-4"
           >
             {copy.hero.stats.map((stat, i) => (
               <motion.div
@@ -351,34 +442,12 @@ function HomePageContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.45, delay: i * 0.08 }}
-                className="group relative overflow-hidden bg-[#070a12] px-4 py-3 sm:px-6 sm:py-5 text-center transition-transform duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.015]"
+                className="group relative overflow-hidden px-4 py-3 sm:px-5 sm:py-7 text-center transition-transform duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.015]"
               >
-                <motion.div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-linear-to-r from-transparent via-cyan-200/45 to-transparent"
-                  animate={
-                    reduceMotion || !heroInView
-                      ? undefined
-                      : {
-                          x: ["-100%", "150%"],
-                          opacity: [0, 0.6, 0],
-                        }
-                  }
-                  transition={
-                    reduceMotion || !heroInView
-                      ? undefined
-                      : {
-                          duration: 4.2,
-                          repeat: Infinity,
-                          repeatDelay: 2.4,
-                          ease: "linear",
-                        }
-                  }
-                />
-                <p className="text-2xl font-semibold text-white sm:text-3xl">
+                <p className="text-lg font-semibold text-white sm:text-3xl">
                   <BodyChars text={stat.value} />
                 </p>
-                <p className="mt-1 text-sm lg:text-[20px] tracking-wider text-slate-200">
+                <p className="mt-1 text-sm tracking-wider text-slate-200">
                   <HeroChars text={stat.label} />
                 </p>
               </motion.div>
@@ -386,7 +455,7 @@ function HomePageContent() {
           </motion.div>
           <motion.div variants={heroReveal.textBlock} className="mt-16">
             <motion.a
-              href="#features"
+              href="#ecosystem"
               animate={
                 reduceMotion || !heroInView ? undefined : { y: [0, 6, 0] }
               }
@@ -428,194 +497,195 @@ function HomePageContent() {
         label={copy.trustStrip.badgeLabel}
       />
 
-      {/* ═══ Features — visual product matrix ═══ */}
+      <SectionDivider reduceMotion={reduceMotion} />
+
+      {/* ═══ Ecosystem ═══ */}
       <section
-        id="features"
-        className="relative z-10 overflow-hidden px-4 py-18 sm:px-10 sm:py-28 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_20%_10%,rgba(45,212,191,0.18),transparent_45%),radial-gradient(circle_at_82%_76%,rgba(139,92,246,0.12),transparent_45%),linear-gradient(to_bottom,rgba(10,12,24,0.8),rgba(12,8,24,0.9))] before:opacity-44"
+        ref={ecosystemRef}
+        id="ecosystem"
+        className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-30 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_18%_12%,rgba(45,212,191,0.16),transparent_52%),radial-gradient(circle_at_82%_76%,rgba(139,92,246,0.12),transparent_48%),linear-gradient(168deg,rgba(7,14,22,0.82),rgba(10,5,20,0.92))] before:opacity-50"
       >
         <AmbientSweep
-          angle="20deg"
-          color="rgba(103,232,249,0.13)"
-          duration={24}
+          angle="145deg"
+          color="rgba(56,189,248,0.13)"
+          duration={23}
           zIndex="-z-20"
-          active={!reduceMotion && featuresInView}
+          active={!reduceMotion && ecosystemInView}
         />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(34,211,238,0.14),transparent_45%),radial-gradient(circle_at_80%_80%,rgba(56,189,248,0.1),transparent_40%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(59,130,246,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(59,130,246,0.06)_1px,transparent_1px)] bg-[size:44px_27px] opacity-12" />
-        <div className="pointer-events-none absolute inset-0 -z-5 bg-[radial-gradient(circle_at_18%_70%,rgba(56,189,248,0.08),transparent_60%),radial-gradient(circle_at_82%_20%,rgba(125,211,252,0.08),transparent_65%)]" />
+        <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(45,212,191,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(125,211,252,0.08)_1px,transparent_1px)] bg-[size:46px_46px] opacity-10" />
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute -left-24 top-16 h-72 w-72 rounded-full bg-cyan-300/14 blur-[95px]"
+          className="pointer-events-none absolute left-[-18%] top-1/3 h-64 w-64 rounded-full bg-sky-300/10 blur-[110px]"
           animate={
-            reduceMotion || !featuresInView
+            reduceMotion || !ecosystemInView
               ? undefined
               : {
-                  x: [0, 52, 8, 0],
-                  y: [0, 18, -9, 0],
-                  opacity: [0.12, 0.2, 0.12],
+                  x: [0, 28, 0],
+                  y: [0, -18, 0],
+                  opacity: [0.08, 0.18, 0.08],
                 }
           }
           transition={
-            reduceMotion || !featuresInView
-              ? undefined
-              : { duration: 14, repeat: Infinity, ease: "easeInOut" }
-          }
-        />
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-sky-300/12 blur-[110px]"
-          animate={
-            reduceMotion || !featuresInView
+            reduceMotion || !ecosystemInView
               ? undefined
               : {
-                  x: [0, -40, -8, 0],
-                  y: [0, -12, 8, 0],
-                  opacity: [0.1, 0.18, 0.1],
-                }
-          }
-          transition={
-            reduceMotion || !featuresInView
-              ? undefined
-              : {
-                  duration: 16,
+                  duration: 11,
                   repeat: Infinity,
                   ease: "easeInOut",
-                  delay: 0.4,
+                }
+          }
+        />
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute right-[-20%] top-20 h-72 w-72 rounded-full bg-cyan-200/8 blur-[120px]"
+          animate={
+            reduceMotion || !ecosystemInView
+              ? undefined
+              : {
+                  x: [0, -24, 0],
+                  y: [0, 16, 0],
+                  opacity: [0.06, 0.14, 0.06],
+                }
+          }
+          transition={
+            reduceMotion || !ecosystemInView
+              ? undefined
+              : {
+                  duration: 12,
+                  repeat: Infinity,
+                  ease: "easeInOut",
                 }
           }
         />
 
-        <div ref={featuresRef} className="relative mx-auto max-w-7xl">
+        <div className="mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mb-16 text-left"
+            className="mb-14"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300/60">
-              <HeadingChars text={copy.features.eyebrow} />
+              <HeadingChars text={copy.ecosystem.eyebrow} />
             </p>
-            <h2 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tighter bg-[linear-gradient(135deg,#ffffff,#c0c8d8,#ffffff)] bg-clip-text text-transparent">
-              <span className="block">
-                <HeadingChars text={copy.features.title1} />
-              </span>
-              <span className="mt-2 block bg-linear-to-r from-cyan-200 via-sky-300 to-cyan-400 bg-clip-text text-transparent">
-                <HeadingChars text={copy.features.title2} />
-              </span>
+            <h2 className="mt-4 max-w-4xl text-2xl sm:text-4xl font-semibold tracking-tighter bg-[linear-gradient(135deg,#ffffff,#c0c8d8,#ffffff)] bg-clip-text text-transparent">
+              <HeadingChars text={copy.ecosystem.title} />
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-400">
-              <BodyChars text={copy.features.desc} />
+              <BodyChars text={copy.ecosystem.desc} />
             </p>
           </motion.div>
 
-          {/* Bento Grid — asymmetric layout */}
-          <div className="grid gap-3 md:grid-cols-4 md:grid-rows-[auto_auto_auto] md:auto-rows-fr">
-            {copy.features.cards.map((f, i) => {
-              // Bento spans: 0=wide, 1=normal, 2=normal, 3=normal, 4=normal, 5=wide
-              const spanClass =
-                i === 0 || i === 5
-                  ? "md:col-span-2"
-                  : "md:col-span-2 lg:col-span-1";
-              // Overlap effect: alternate cards get slight negative margin on large screens
-              const overlapClass = i === 1 || i === 3 ? "lg:-mt-4" : "";
-
-              return (
-                <motion.div
-                  key={f.title}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.15 }}
-                  transition={{ duration: 0.5, delay: 0.08 + i * 0.08 }}
-                  className={`group relative overflow-hidden rounded-2xl border border-white/4 bg-slate-900/50 backdrop-blur-2xl p-5 sm:p-7 lg:p-8 transition-all duration-500 will-change-transform hover:-translate-y-2 hover:shadow-[0_0_40px_rgba(34,211,238,0.1),0_12px_40px_rgba(0,0,0,0.5)] ${spanClass} ${overlapClass}`}
-                >
-                  {/* Noise texture */}
-                  <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-[0.025] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC44IiBudW1PY3RhdmVzPSI0IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbHRlcj0idXJsKCNuKSIvPjwvc3ZnPg==')] bg-repeat" />
-
-                  {/* Ambient mesh gradient — organic floating glow */}
-                  <motion.div
-                    aria-hidden
-                    className="pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full bg-cyan-500/8 blur-[80px] transition-all duration-700 group-hover:bg-cyan-400/20"
-                    animate={
-                      featuresInView && !reduceMotion
-                        ? {
-                            x: [0, 15, -10, 0],
-                            y: [0, 10, -5, 0],
-                            opacity: [0.06, 0.12, 0.06],
-                          }
-                        : undefined
-                    }
-                    transition={
-                      featuresInView && !reduceMotion
-                        ? {
-                            duration: 8 + i * 2,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }
-                        : undefined
-                    }
-                  />
-                  <motion.div
-                    aria-hidden
-                    className="pointer-events-none absolute -bottom-8 -left-8 h-36 w-36 rounded-full bg-violet-500/5 blur-[70px]"
-                    animate={
-                      featuresInView && !reduceMotion
-                        ? {
-                            x: [0, -10, 8, 0],
-                            y: [0, -8, 4, 0],
-                            opacity: [0.04, 0.1, 0.04],
-                          }
-                        : undefined
-                    }
-                    transition={
-                      featuresInView && !reduceMotion
-                        ? {
-                            duration: 10 + i * 1.5,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }
-                        : undefined
-                    }
-                  />
-
-                  {/* Hover top-edge light */}
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-cyan-400/30 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                  />
-
-                  {/* Icon with neon glow backdrop */}
-                  <div className="relative mb-5 md:mb-7 pb-4 md:pb-5 border-b border-white/4">
-                    <div className="pointer-events-none absolute -left-4 -top-2 h-24 w-24 rounded-full bg-cyan-400/10 blur-2xl transition-all duration-500 group-hover:bg-cyan-400/20 group-hover:blur-3xl" />
-                    <div className="relative">
-                      <FeatureGraphic type={f.icon} />
-                    </div>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="relative text-lg font-semibold text-white/90 tracking-tighter">
-                    <HeadingChars text={f.title} />
-                  </h3>
-
-                  {/* Description — smaller for contrast */}
-                  <p className="relative mt-2.5 text-sm leading-relaxed text-slate-400">
-                    <BodyChars text={f.text} />
-                  </p>
-
-                  {/* Metric — giant, bold emphasis */}
-                  <p className="relative mt-6 font-mono font-bold text-xl tracking-tight text-cyan-400">
-                    <BodyChars text={f.metric} />
-                  </p>
-                </motion.div>
-              );
-            })}
+          <div className="grid gap-4 md:grid-cols-3">
+            {copy.ecosystem.cards.map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={reduceMotion ? "show" : "hidden"}
+                animate={
+                  reduceMotion ? "show" : ecosystemInView ? "show" : "hidden"
+                }
+                custom={i}
+                variants={createIndexedRevealVariants({
+                  reduceMotion,
+                  offsetY: 24,
+                  duration: 0.45,
+                  delayStep: 0.1,
+                  ease: "easeOut",
+                })}
+                className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0A0B10]/80 backdrop-blur-[10px] p-5 sm:p-8 transition-all duration-500 will-change-transform hover:-translate-y-2 hover:border-cyan-400/25 hover:shadow-[0_0_40px_rgba(6,182,212,0.12),0_8px_32px_rgba(0,0,0,0.6)]"
+              >
+                <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.04] to-transparent" />
+                <div className="pointer-events-none absolute -right-8 -top-10 h-44 w-44 rounded-full bg-cyan-500/[0.06] blur-[100px] transition-all duration-500 group-hover:bg-cyan-500/20" />
+                <div className="relative flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04] text-cyan-200 backdrop-blur-sm">
+                  <EcosystemBadgeIcon type={item.icon} />
+                </div>
+                <h3 className="relative mt-4 sm:mt-6 text-lg sm:text-2xl font-semibold tracking-tight text-white/90">
+                  <HeadingChars text={item.title} />
+                </h3>
+                <p className="relative mt-4 text-sm leading-relaxed text-slate-400/80">
+                  <BodyChars text={item.desc} />
+                </p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       <SectionDivider reduceMotion={reduceMotion} />
 
-      {/* ═══ Launch highlights (Galxe-style metric rail) ═══ */}
+      {/* ═══ Differentiators ═══ */}
+      <section
+        id="differentiators"
+        ref={audienceRef}
+        className="relative z-10 overflow-hidden px-4 py-18 sm:px-10 sm:py-36 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_20%,rgba(14,165,233,0.12),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(139,92,246,0.1),transparent_50%),linear-gradient(170deg,rgba(8,12,24,0.76),rgba(12,6,24,0.86))] before:opacity-50"
+      >
+        <AmbientSweep
+          angle="-20deg"
+          color="rgba(56,189,248,0.14)"
+          duration={25}
+          zIndex="-z-20"
+          active={!reduceMotion && audienceInView}
+        />
+        <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(14,165,233,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,165,233,0.08)_1px,transparent_1px)] bg-[size:56px_56px] opacity-15" />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-[#070a12] via-[#070a12]/70 to-[#070a12]" />
+
+        <div className="relative mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="max-w-3xl"
+          >
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300/60">
+              <HeadingChars text={copy.differentiators.eyebrow} />
+            </p>
+            <h2 className="mt-4 text-2xl sm:text-4xl font-semibold tracking-tighter bg-[linear-gradient(135deg,#ffffff,#c0c8d8,#ffffff)] bg-clip-text text-transparent">
+              <HeadingChars text={copy.differentiators.title} />
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-slate-400">
+              <BodyChars text={copy.differentiators.desc} />
+            </p>
+          </motion.div>
+
+          <div className="mt-10 grid gap-4 sm:mt-14 md:grid-cols-2">
+            {copy.differentiators.items.map((item, i) => (
+              <motion.div
+                key={item.number}
+                initial={reduceMotion ? "show" : "hidden"}
+                animate={
+                  reduceMotion ? "show" : audienceInView ? "show" : "hidden"
+                }
+                custom={i}
+                variants={createIndexedRevealVariants({
+                  reduceMotion,
+                  offsetY: 22,
+                  duration: 0.45,
+                  delayStep: 0.1,
+                  ease: "easeOut",
+                })}
+                className="group relative overflow-hidden rounded-2xl border-t border-l border-t-white/15 border-l-white/10 bg-slate-900/45 backdrop-blur-2xl px-5 py-5 sm:px-8 sm:py-8 transition-all duration-400 will-change-transform hover:-translate-y-1.5 hover:shadow-[0_0_24px_rgba(34,211,238,0.1),0_10px_34px_rgba(0,0,0,0.45)]"
+              >
+                <div className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 rounded-full bg-cyan-500/10 blur-[90px] transition-all duration-500 group-hover:bg-cyan-500/22" />
+                <div className="relative flex items-baseline gap-3 sm:gap-5">
+                  <span className="font-mono text-3xl sm:text-5xl font-bold leading-none tracking-tighter text-cyan-300/95">
+                    {item.number}
+                  </span>
+                  <h3 className="text-lg sm:text-2xl font-semibold tracking-tight text-slate-100">
+                    <HeadingChars text={item.title} />
+                  </h3>
+                </div>
+                <p className="relative mt-4 text-sm leading-relaxed text-slate-400">
+                  <BodyChars text={item.desc} />
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ Global Network Metrics ═══ */}
       <section className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_8%,rgba(147,197,253,0.14),transparent_54%),radial-gradient(circle_at_90%_90%,rgba(139,92,246,0.1),transparent_50%),linear-gradient(170deg,rgba(9,14,30,0.82),rgba(12,8,26,0.9))] before:opacity-50">
         <AmbientSweep
           angle="75deg"
@@ -652,14 +722,17 @@ function HomePageContent() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mb-14 max-w-lg"
+            className="mb-14 max-w-3xl"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300/60">
-              <HeadingChars text="Live Metrics" />
+              <HeadingChars text={copy.globalNetwork.eyebrow} />
             </p>
-            <h2 className="mt-4 text-4xl font-semibold tracking-tighter bg-[linear-gradient(135deg,#ffffff,#c0c8d8,#ffffff)] bg-clip-text text-transparent">
-              <HeadingChars text="실시간 퍼포먼스 지표" />
+            <h2 className="mt-4 text-2xl sm:text-4xl font-semibold tracking-tighter bg-[linear-gradient(135deg,#ffffff,#c0c8d8,#ffffff)] bg-clip-text text-transparent">
+              <HeadingChars text={copy.globalNetwork.title} />
             </h2>
+            <p className="mt-4 text-sm leading-relaxed text-slate-400">
+              <BodyChars text={copy.globalNetwork.desc} />
+            </p>
           </motion.div>
 
           <div className="grid gap-4 md:grid-cols-3">
@@ -678,85 +751,20 @@ function HomePageContent() {
                   delayStep: 0.7,
                   ease: "easeOut",
                 })}
-                className="group relative overflow-hidden rounded-2xl border-t border-l border-t-white/15 border-l-white/15 bg-slate-900/40 backdrop-blur-2xl px-5 py-6 sm:px-7 sm:py-8 lg:px-9 transition-all duration-300 will-change-transform hover:-translate-y-1.5 hover:shadow-[0_0_30px_rgba(6,182,212,0.12),0_8px_32px_rgba(0,0,0,0.4)]"
+                className="group relative flex min-h-36 sm:min-h-48 flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 backdrop-blur-3xl px-5 py-6 text-center sm:px-7 sm:py-8 lg:px-9 transition-all duration-300 will-change-transform hover:-translate-y-5 hover:border-cyan-400/40 hover:shadow-[0_0_20px_rgba(6,182,212,0.3),0_0_50px_rgba(6,182,212,0.15),0_20px_40px_rgba(0,0,0,0.5)]"
               >
-                {/* Noise texture */}
                 <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC44IiBudW1PY3RhdmVzPSI0IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbHRlcj0idXJsKCNuKSIvPjwvc3ZnPg==')] bg-repeat" />
-
-                {/* Ambient glow blob — brightens on hover */}
                 <div className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 rounded-full bg-cyan-500/10 blur-[90px] transition-all duration-500 group-hover:bg-cyan-500/25 group-hover:blur-[110px]" />
-
-                {/* Label */}
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 font-medium">
-                  {item.title}
-                </p>
-
-                {/* Big number — Space Grotesk, gradient, bounces on hover */}
-                <p className="mt-3 font-mono font-bold text-4xl tracking-tighter text-cyan-400 transition-transform duration-300 group-hover:-translate-y-1">
+                <p className="font-semibold text-4xl sm:text-5xl tracking-tight text-cyan-300 transition-transform duration-300 group-hover:-translate-y-1">
                   <CountUp
                     value={item.value}
                     active={launchInView}
                     delay={i * 0.7 + 0.2}
                   />
                 </p>
-
-                {/* Description */}
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                <p className="mt-5 text-sm sm:text-base leading-relaxed text-slate-400">
                   {item.desc}
                 </p>
-
-                {/* Glowing Neon Path progress bar */}
-                <div className="relative mt-6 h-1 w-full rounded-full bg-white/5">
-                  {/* Background glow trail */}
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={reduceMotion || launchInView ? "filled" : "empty"}
-                    variants={{
-                      empty: { width: 0 },
-                      filled: (index: number) =>
-                        reduceMotion
-                          ? { width: "88%" }
-                          : {
-                              width: "88%",
-                              transition: {
-                                duration: 1,
-                                delay: index * 0.7 + 0.18,
-                                ease: "easeOut",
-                              },
-                            },
-                    }}
-                    custom={i}
-                    className="absolute inset-y-0 left-0 rounded-full bg-cyan-500/20 blur-[6px]"
-                  />
-                  {/* Main bar */}
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={reduceMotion || launchInView ? "filled" : "empty"}
-                    variants={{
-                      empty: { width: 0 },
-                      filled: (index: number) =>
-                        reduceMotion
-                          ? { width: "88%" }
-                          : {
-                              width: "88%",
-                              transition: {
-                                duration: 1,
-                                delay: index * 0.7 + 0.18,
-                                ease: "easeOut",
-                              },
-                            },
-                    }}
-                    custom={i}
-                    className="relative h-full rounded-full bg-linear-to-r from-cyan-500/60 via-cyan-400 to-cyan-300"
-                    style={{
-                      boxShadow:
-                        "0 0 12px rgba(6, 182, 212, 0.5), 0 0 4px rgba(6, 182, 212, 0.3)",
-                    }}
-                  >
-                    {/* Bright endpoint indicator */}
-                    <span className="absolute right-0 top-1/2 -translate-y-1/2 h-2.5 w-2.5 rounded-full bg-white shadow-[0_0_8px_rgba(6,182,212,0.9),0_0_20px_rgba(6,182,212,0.5)]" />
-                  </motion.div>
-                </div>
               </motion.div>
             ))}
           </div>
@@ -765,243 +773,120 @@ function HomePageContent() {
 
       <SectionDivider reduceMotion={reduceMotion} />
 
-      {/* ═══ Dashboard — full-width, text overlaid ═══ */}
-      <DashboardSection copy={copy.dashboard} reduceMotion={reduceMotion} />
-
-      <SectionDivider reduceMotion={reduceMotion} />
-
-      {/* ═══ Performance — unified card ═══ */}
-      <PerformanceSection copy={copy.performance} reduceMotion={reduceMotion} />
-
-      <SectionDivider reduceMotion={reduceMotion} />
-
-      {/* ═══ Target Audience ═══ */}
-      <section className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_90%_14%,rgba(45,212,191,0.14),transparent_56%),radial-gradient(circle_at_10%_86%,rgba(139,92,246,0.1),transparent_52%),linear-gradient(168deg,rgba(7,14,22,0.82),rgba(10,5,20,0.9))] before:opacity-50">
-        <AmbientSweep
-          angle="145deg"
-          color="rgba(56,189,248,0.13)"
-          duration={23}
-          zIndex="-z-20"
-          active={!reduceMotion && audienceInView}
-        />
-        <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(45,212,191,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(125,211,252,0.1)_1px,transparent_1px)] bg-[size:46px_46px] opacity-12" />
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute left-[-18%] top-1/3 h-64 w-64 rounded-full bg-sky-300/10 blur-[110px]"
-          animate={
-            reduceMotion || !audienceInView
-              ? undefined
-              : {
-                  x: [0, 28, 0],
-                  y: [0, -18, 0],
-                  opacity: [0.08, 0.18, 0.08],
-                }
-          }
-          transition={
-            reduceMotion || !audienceInView
-              ? undefined
-              : {
-                  duration: 11,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }
-          }
-        />
-
-        {/* Section heading */}
-        <div ref={audienceRef} className="mx-auto max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-14 max-w-lg"
-          >
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300/60">
-              <HeadingChars text="Target Audience" />
-            </p>
-            <h2 className="mt-4 text-4xl font-semibold tracking-tighter bg-[linear-gradient(135deg,#ffffff,#c0c8d8,#ffffff)] bg-clip-text text-transparent">
-              <HeadingChars text="모든 빌더를 위한 플랫폼" />
-            </h2>
-          </motion.div>
-
-          {/* Mountain layout: side cards normal, center card elevated */}
-          <div className="grid max-w-7xl gap-5 md:grid-cols-3 md:items-end">
-            {copy.audience.blocks.map((item, i) => {
-              const colors = [
-                {
-                  accent: "text-cyan-300",
-                  sphere: "from-cyan-400/30 via-cyan-300/10 to-transparent",
-                  glowHover:
-                    "group-hover:shadow-[0_0_40px_rgba(34,211,238,0.25),0_-8px_30px_rgba(34,211,238,0.1)]",
-                },
-                {
-                  accent: "text-sky-300",
-                  sphere: "from-sky-400/30 via-sky-300/10 to-transparent",
-                  glowHover:
-                    "group-hover:shadow-[0_0_40px_rgba(56,189,248,0.25),0_-8px_30px_rgba(56,189,248,0.1)]",
-                },
-                {
-                  accent: "text-blue-300",
-                  sphere: "from-blue-400/30 via-blue-300/10 to-transparent",
-                  glowHover:
-                    "group-hover:shadow-[0_0_40px_rgba(96,165,250,0.25),0_-8px_30px_rgba(96,165,250,0.1)]",
-                },
-              ];
-              const c = colors[i];
-              return (
-                <motion.div
-                  key={item.title}
-                  initial={reduceMotion ? "show" : "hidden"}
-                  animate={
-                    reduceMotion ? "show" : audienceInView ? "show" : "hidden"
-                  }
-                  custom={i}
-                  variants={createIndexedRevealVariants({
-                    reduceMotion,
-                    offsetY: 24,
-                    duration: 0.45,
-                    delayStep: 0.45,
-                    ease: "easeOut",
-                  })}
-                  className={`group relative overflow-hidden rounded-2xl border-t border-l border-t-white/15 border-l-white/10 bg-slate-900/40 backdrop-blur-3xl p-6 sm:p-8 transition-all duration-500 will-change-transform hover:-translate-y-5 ${c.glowHover} ${i === 1 ? "md:-translate-y-6" : ""}`}
-                >
-                  {/* Noise texture */}
-                  <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC44IiBudW1PY3RhdmVzPSI0IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbHRlcj0idXJsKCNuKSIvPjwvc3ZnPg==')] bg-repeat" />
-
-                  {/* Glass Sphere graphic — overlapping top-right */}
-                  <div className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 sm:h-32 sm:w-32">
-                    <div
-                      className={`absolute inset-0 rounded-full bg-radial-to-br ${c.sphere} opacity-60 blur-[2px]`}
-                    />
-                    <div className="absolute inset-2 rounded-full bg-radial-to-br from-white/15 via-white/5 to-transparent" />
-                    <div className="absolute left-3 top-3 h-4 w-4 rounded-full bg-white/20 blur-[3px]" />
-                  </div>
-
-                  {/* Ambient glow blob */}
-                  <div className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 rounded-full bg-cyan-500/10 blur-[90px] transition-all duration-500 group-hover:bg-cyan-500/25" />
-
-                  {/* Giant background number */}
-                  <span
-                    className="pointer-events-none absolute -left-2 -top-4 font-mono font-black text-[120px] sm:text-[140px] leading-none tracking-tighter text-transparent select-none"
-                    style={{ WebkitTextStroke: "1px rgba(148,163,184,0.08)" }}
-                  >
-                    {`0${i + 1}`}
-                  </span>
-
-                  {/* Small label number */}
-                  <p className="relative text-xs uppercase tracking-[0.25em] text-slate-500 font-medium">
-                    {`0${i + 1}`}
-                  </p>
-
-                  <h3
-                    className={`relative mt-4 text-lg font-semibold tracking-tighter ${c.accent}`}
-                  >
-                    {item.title}
-                  </h3>
-                  <p className="relative mt-4 text-sm leading-relaxed text-slate-400">
-                    {item.desc}
-                  </p>
-
-                  {/* Glow border button */}
-                  <a
-                    href="#contact"
-                    className="group/btn relative mt-7 inline-flex min-h-11 items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-200 backdrop-blur-sm transition-all duration-300 hover:border-cyan-400/40 hover:bg-cyan-400/5 hover:text-white hover:shadow-[0_0_20px_rgba(34,211,238,0.15),inset_0_1px_0_rgba(34,211,238,0.1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
-                  >
-                    {item.action}
-                    <span className="inline-block transition-transform duration-300 group-hover/btn:translate-x-1.5">
-                      <ArrowIcon />
-                    </span>
-                  </a>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <SectionDivider reduceMotion={reduceMotion} />
-
-      {/* ═══ Ecosystem — network bg with floating cards ═══ */}
+      {/* ═══ Tokenomics ═══ */}
       <section
-        ref={ecosystemRef}
-        id="ecosystem"
-        className="relative z-10 overflow-hidden px-4 py-18 sm:px-10 sm:py-36 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_10%_20%,rgba(14,165,233,0.12),transparent_50%),radial-gradient(circle_at_80%_80%,rgba(139,92,246,0.1),transparent_50%),linear-gradient(170deg,rgba(8,12,24,0.76),rgba(12,6,24,0.86))] before:opacity-50"
+        id="tokenomics"
+        className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-28 lg:px-14 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_22%_12%,rgba(34,211,238,0.14),transparent_52%),radial-gradient(circle_at_84%_86%,rgba(56,189,248,0.1),transparent_56%),linear-gradient(170deg,rgba(8,12,24,0.8),rgba(10,6,20,0.9))] before:opacity-50"
       >
         <AmbientSweep
-          angle="-20deg"
-          color="rgba(56,189,248,0.14)"
-          duration={25}
+          angle="32deg"
+          color="rgba(34,211,238,0.14)"
+          duration={21}
           zIndex="-z-20"
-          active={!reduceMotion && ecosystemInView}
+          active={!reduceMotion}
         />
-        {/* Network bg behind everything */}
-        <div className="pointer-events-none absolute inset-0 origin-center scale-55 opacity-40 sm:scale-100">
-          <NetworkBg
-            reduceMotion={reduceMotion}
-            active={!reduceMotion && ecosystemInView}
-            convergeFactor={networkConverge}
-          />
-        </div>
-        <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(14,165,233,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,165,233,0.08)_1px,transparent_1px)] bg-[size:56px_56px] opacity-15" />
-        <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-[#070a12] via-[#070a12]/80 to-[#070a12]" />
+        <div className="pointer-events-none absolute inset-0 -z-5 bg-[linear-gradient(to_right,rgba(56,189,248,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.06)_1px,transparent_1px)] bg-[size:52px_42px] opacity-10" />
 
-        <div className="relative mx-auto max-w-7xl">
+        <div className="mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center"
+            className="max-w-3xl"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300/60">
-              <HeadingChars text={copy.ecosystem.eyebrow} />
+              <HeadingChars text={copy.tokenomics.eyebrow} />
             </p>
-            <h2 className="mt-4 text-4xl font-semibold tracking-tighter bg-[linear-gradient(135deg,#ffffff,#c0c8d8,#ffffff)] bg-clip-text text-transparent">
-              <HeadingChars text={copy.ecosystem.title} />
+            <h2 className="mt-4 text-2xl sm:text-4xl font-semibold tracking-tighter bg-[linear-gradient(135deg,#ffffff,#c0c8d8,#ffffff)] bg-clip-text text-transparent">
+              <HeadingChars text={copy.tokenomics.title} />
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-400">
-              <BodyChars text={copy.ecosystem.desc} />
+            <p className="mt-4 text-sm leading-relaxed text-slate-400">
+              <BodyChars text={copy.tokenomics.desc} />
             </p>
           </motion.div>
-          <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-16 sm:gap-4 lg:grid-cols-3 lg:grid-rows-3">
-            {copy.ecosystem.items.map((item, i) => (
-              <motion.div
-                key={item.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.5, delay: 0.05 + i * 0.06 }}
-                className={`group/eco relative overflow-hidden flex items-center gap-3 rounded-xl border-t border-t-white/20 shimmer-border bg-white/4 backdrop-blur-lg transition-all duration-500 will-change-transform hover:-translate-y-1 hover:bg-white/8 hover:backdrop-blur-2xl hover:shadow-[inset_0_1px_1px_rgba(34,211,238,0.15),0_0_20px_rgba(34,211,238,0.08)] ${
-                  i === 0
-                    ? "col-span-2 row-span-2 lg:col-span-2 lg:row-span-2 flex-col items-start px-5 py-6 sm:px-8 sm:py-8"
-                    : "px-3 py-3 sm:px-5 sm:py-4"
-                }`}
-              >
-                <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-cyan-500/20 blur-[80px] transition-all duration-500 group-hover/eco:bg-cyan-500/40" />
-                <div className="pointer-events-none absolute inset-0 rounded-xl bg-[radial-gradient(circle_at_50%_0%,rgba(34,211,238,0.12),transparent_60%)] opacity-0 transition-opacity duration-500 group-hover/eco:opacity-100" />
+
+          <div className="mt-12 grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6 }}
+              className="overflow-hidden rounded-2xl border border-white/8 bg-slate-900/35 backdrop-blur-2xl"
+            >
+              {copy.tokenomics.specs.map((item, index) => (
                 <div
-                  className={`relative flex shrink-0 items-center justify-center rounded-lg bg-white/6 ${i === 0 ? "h-12 w-12 sm:h-14 sm:w-14" : "h-8 w-8 sm:h-10 sm:w-10"}`}
+                  key={item.label}
+                  className={`grid gap-2 px-5 py-4 sm:py-6 sm:grid-cols-[130px_1fr] sm:items-center sm:px-7 ${index < copy.tokenomics.specs.length - 1 ? "border-b border-white/6" : ""}`}
                 >
-                  <EcoIcon type={item.icon} />
+                  <p className="text-sm font-medium text-slate-500">
+                    {item.label}
+                  </p>
+                  <p className="text-base font-semibold tracking-tight text-slate-100">
+                    {item.value}
+                  </p>
                 </div>
-                <div className="relative">
-                  <span
-                    className={`font-semibold tracking-tighter text-slate-200 ${i === 0 ? "text-lg" : "text-sm"}`}
+              ))}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.06 }}
+              className="rounded-2xl bg-slate-900/35 p-6 backdrop-blur-2xl sm:p-8"
+            >
+              <div className="mx-auto flex w-fit items-center justify-center rounded-full p-[1px] bg-linear-to-br from-cyan-300/30 to-cyan-500/20">
+                <motion.div
+                  className="relative h-48 w-48 rounded-full will-change-transform sm:h-64 sm:w-64"
+                  style={{
+                    background: `conic-gradient(from -90deg, ${tokenomicsGradient})`,
+                  }}
+                  animate={{ rotate: 360 }}
+                  transition={{
+                    duration: 36,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                >
+                  <div className="absolute inset-[14%] flex items-center justify-center rounded-full bg-[#070a12] ring-1 ring-white/8">
+                    <div className="text-center">
+                      <p className="text-xl font-semibold tracking-tight text-cyan-300">
+                        YIHX
+                      </p>
+                      <p className="mt-1 text-xs uppercase tracking-[0.16em] text-slate-500">
+                        YOU&I TOKEN
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+              <div className="mt-6 flex flex-wrap justify-center gap-x-4 gap-y-2">
+                {copy.tokenomics.allocations.map((item, index) => (
+                  <div
+                    key={item.label}
+                    className="inline-flex items-center gap-2 text-sm text-slate-300"
                   >
-                    <BodyChars text={item.name} />
-                  </span>
-                  {i === 0 && (
-                    <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                      {copy.ecosystem.desc}
-                    </p>
-                  )}
-                </div>
-              </motion.div>
-            ))}
+                    <span
+                      className="h-2.5 w-2.5 rounded-sm"
+                      style={{
+                        backgroundColor:
+                          tokenomicsColors[index % tokenomicsColors.length],
+                      }}
+                    />
+                    <span>{`${item.label} ${item.value}%`}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
+
+      {/* <SectionDivider reduceMotion={reduceMotion} /> */}
+
+      {/* ═══ Performance — unified card ═══ */}
+      {/* <PerformanceSection copy={copy.performance} reduceMotion={reduceMotion} /> */}
 
       <SectionDivider reduceMotion={reduceMotion} />
 
@@ -1028,7 +913,7 @@ function HomePageContent() {
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300/60">
               <HeadingChars text={copy.roadmap.eyebrow} />
             </p>
-            <h2 className="mt-4 text-4xl font-semibold tracking-tighter bg-[linear-gradient(135deg,#ffffff,#c0c8d8,#ffffff)] bg-clip-text text-transparent">
+            <h2 className="mt-4 text-2xl sm:text-4xl font-semibold tracking-tighter bg-[linear-gradient(135deg,#ffffff,#c0c8d8,#ffffff)] bg-clip-text text-transparent">
               <HeadingChars text={copy.roadmap.title} />
             </h2>
           </motion.div>
@@ -1138,13 +1023,8 @@ function HomePageContent() {
           transition={{ duration: 0.7 }}
           className="relative mx-auto flex max-w-4xl flex-col items-center gap-8 text-center"
         >
-          <h2 className="text-4xl font-semibold leading-tight tracking-tighter text-white">
-            <span className="block">
-              <HeadingChars text={copy.contact.title1} />
-            </span>
-            <span className="bg-linear-to-r from-cyan-200 to-cyan-400 bg-clip-text text-transparent">
-              <HeadingChars text={copy.contact.title2} />
-            </span>
+          <h2 className="text-2xl sm:text-4xl font-semibold leading-tight tracking-tighter bg-linear-to-r from-white via-cyan-200 to-cyan-400 bg-clip-text text-transparent">
+            <HeadingChars text={copy.contact.title1} />
           </h2>
           <p className="max-w-2xl text-sm sm:text-base lg:text-xl leading-relaxed text-slate-200">
             <BodyChars text={copy.contact.desc} />
@@ -1152,16 +1032,55 @@ function HomePageContent() {
           <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row">
             <a
               href="mailto:contact@youandi.io"
-              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-5 py-2.5 sm:px-8 sm:py-3.5 text-sm sm:text-base lg:text-xl font-semibold text-[#070a12] transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-5 py-2.5 sm:px-8 sm:py-3.5 text-sm sm:text-base lg:text-xl font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.4),0_0_30px_rgba(6,182,212,0.2)] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
-              {copy.ctaButtons.contact} <ArrowIcon />
+              <span className="bg-[linear-gradient(120deg,#000_30%,#555_50%,#000_70%)] bg-[length:200%_auto] bg-clip-text text-transparent transition-[background-position] duration-500 group-hover:bg-[position:100%_center]">
+                {copy.ctaButtons.contact}
+              </span>
+              <span className="text-[#070a12]">
+                <ArrowIcon />
+              </span>
             </a>
-            <a
-              href="#ecosystem"
-              className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 sm:px-8 sm:py-3.5 text-sm sm:text-base lg:text-xl font-semibold text-slate-200 transition-all duration-300 hover:border-white/30 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+            <motion.a
+              href="https://x.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1 }}
+              className="relative flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              aria-label="X (Twitter)"
             >
-              {copy.ctaButtons.explore} <ArrowIcon />
-            </a>
+              <div className="absolute inset-0 rounded-full bg-cyan-500/50 opacity-0 group-hover:animate-ping" />
+              <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 blur-md bg-cyan-400/30 transition-opacity" />
+              <svg
+                className="relative z-10 text-white group-hover:text-cyan-400 transition-colors"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </motion.a>
+            <motion.a
+              href="https://discord.gg"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1 }}
+              className="relative flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+              aria-label="Discord"
+            >
+              <div className="absolute inset-0 rounded-full bg-cyan-500/50 opacity-0 group-hover:animate-ping" />
+              <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 blur-md bg-cyan-400/30 transition-opacity" />
+              <svg
+                className="relative z-10 text-white group-hover:text-cyan-400 transition-colors"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+              </svg>
+            </motion.a>
           </div>
         </motion.div>
       </section>

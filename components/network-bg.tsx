@@ -51,7 +51,7 @@ function ConvergedNode({
 }: {
   node: (typeof networkBgNodes)[number];
   index: number;
-  convergeFactor?: MotionValue<number>;
+  convergeFactor: MotionValue<number>;
 }) {
   const cx = useConvergedCoord(node.x, CENTER_X, convergeFactor);
   const cy = useConvergedCoord(node.y, CENTER_Y, convergeFactor);
@@ -79,7 +79,7 @@ function ConvergedEdge({
   edgeIndex: number;
   a: number;
   b: number;
-  convergeFactor?: MotionValue<number>;
+  convergeFactor: MotionValue<number>;
 }) {
   const x1 = useConvergedCoord(networkBgNodes[a].x, CENTER_X, convergeFactor);
   const y1 = useConvergedCoord(networkBgNodes[a].y, CENTER_Y, convergeFactor);

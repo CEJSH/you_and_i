@@ -2,45 +2,47 @@ export const pageCopy = {
   ko: {
     header: {
       navLinks: [
-        { href: "#hero", label: "OVERVIEW" },
-        { href: "#features", label: "CORE" },
-        { href: "#ecosystem", label: "NETWORK" },
-        { href: "#roadmap", label: "BLUEPRINT" },
+        { href: "#ecosystem", label: "사업 소개" },
+        { href: "#differentiators", label: "왜 YOU&I인가" },
+        { href: "#tokenomics", label: "토큰" },
+        { href: "#roadmap", label: "네트워크" },
       ],
-      cta: "시작하기",
+      cta: "백서읽기",
+      ctaPrice: "가격보기",
     },
     hero: {
-      label: "Web3 Infrastructure",
-      title1: "차세대 Web3",
-      title2: "런칭 인프라 코어",
-      desc: "자산, 결제, 신원, 거버넌스를 하나의 런치 콘솔에서 제어합니다.",
-      ctaPrimary: "시작하기",
-      ctaSecondary: "기술 살펴보기",
+      label: "실물자산 토큰화",
+      title1: "실물자산의 가치를",
+      title2: "모두에게 열다",
+      desc: "200조 원 이상의 실물자산 — 부동산, 국채, 문화재 — AI와 블록체인 기반 차세대 금융 생태계를 구축합니다.",
+      credibility: "뉴욕 본사 자산운용사 · 200조 원 규모 실물 자산 포트폴리오 직접 보유",
+      ctaPrimary: "백서읽기",
+      ctaSecondary: "가격보기",
       stats: [
-        { value: "150+", label: "연동 체인" },
-        { value: "$2.4B", label: "TVL 규모" },
-        { value: "99.99%", label: "Finality" },
-        { value: "12", label: "시장·지역" },
+        { value: "200조 원+", label: "보유 자산 가치" },
+        { value: "157", label: "글로벌 네트워크 국가" },
+        { value: "$10억", label: "자본금" },
+        { value: "14", label: "핵심 자산 포트폴리오" },
       ],
       trustStrip: "Connected Networks",
       scroll: "scroll",
     },
     trustStrip: {
-      badgeLabel: "Connected Networks",
+badgeLabel: "Core Ecosystem Infrastructure", // 백서의 통합 생태계 지향 반영 [cite: 23]
       badges: [
-        { name: "LayerZero", note: "Cross-Chain" },
-        { name: "Aptos", note: "Institutional" },
-        { name: "Polygon", note: "Settlement" },
-        { name: "Arbitrum", note: "Liquidity" },
-        { name: "Flow", note: "Identity" },
-        { name: "Sui", note: "Wallet" },
-      ],
+        { name: "YIHX-Wallet", note: "Native Custody" }, // 백서 전용 지갑 명칭 반영 
+        { name: "ERC-1400", note: "STO Standard" }, // 백서에서 검토 중인 STO 전용 표준 
+        { name: "BEP-20", note: "Low-Fee Settlement" }, // 백서의 가스비 절감 및 정산 전략 
+        { name: "Smart Contract", note: "Auto-Dividend" }, // 백서의 자동 수익 분배 원칙 
+        { name: "AI Engine", note: "Resource Allocator" }, // 백서 Layer 2의 핵심 관리 시스템 
+        { name: "RWA Portal", note: "Asset Verification" }, // 백서의 실물자산 실사 및 검증 단계 반영 [cite: 136, 137]
+        ]
     },
     features: {
       eyebrow: "Product Graph",
       title1: "모듈 통합 운영 아키텍처",
       title2: "성과 중심 성장 플랫폼",
-      desc: "YOU&I Quest, Starboard, Earndrop, Passport, Score, Identity를 단일 운영 체계로 통합해 캠페인 실행, 분석 의사결정, 지급, 인증·관리까지 핵심 지표 기반의 연계 프로세스로 제공합니다.",
+      desc: "YOU&I Quest, Starboard, Earndrop, Passport, Score, Identity를 단일 운영 체계로 통합해 캠페인 실행, 분석 의사결정, 지급, 인증·관리까지 핵심 지표 기반의 연계 프로세스로 제공합니다. 이 모듈들은 AI 분산 컴퓨팅(GPU 네트워크) 인프라 위에서 실시간 추론을 수행하고, 크로스보더 커머스의 통합 포인트 정산까지 하나의 파이프라인으로 연결합니다.",
       cards: [
         {
           title: "YOU&I Quest",
@@ -80,21 +82,26 @@ export const pageCopy = {
         },
       ],
     },
+    globalNetwork: {
+      eyebrow: "글로벌 네트워크",
+      title: "독보적 네트워크",
+      desc: "WMU를 통해 36년 이상 구축된 글로벌 네트워크 — 경쟁사가 복제 불가능한 인프라.",
+    },
     launchHighlights: [
       {
-        title: "모듈형 런칭",
-        value: "99.9%",
-        desc: "모듈 간 연결 성공률",
+        title: "WMU 운영 국가",
+        value: "157",
+        desc: "WMU 조직위원회 운영 국가",
       },
       {
-        title: "자동화 배포",
-        value: "30초",
-        desc: "네트워크 업데이트 적용 속도",
+        title: "인플루언서 네트워크",
+        value: "55만+",
+        desc: "글로벌 인플루언서 네트워크",
       },
       {
-        title: "리스크 차단",
-        value: "1.2ms",
-        desc: "이상 거래 탐지 반응 속도",
+        title: "연합회 회원",
+        value: "7000만+",
+        desc: "세계중국상인연합회 회원",
       },
     ],
     dashboard: {
@@ -126,6 +133,26 @@ export const pageCopy = {
       ],
       tpsLabel: "tps",
     },
+    tokenomics: {
+      eyebrow: "토크노믹스",
+      title: "YIHX 토큰",
+      desc: "실물자산에 가치가 뒷받침되는 하이브리드(유틸리티+시큐리티) 토큰, 전 생태계를 구동합니다.",
+      specs: [
+        { label: "토큰명", value: "YOU&I (YIHX)" },
+        { label: "기반 체인", value: "ERC-20 -> BEP-20" },
+        { label: "토큰 유형", value: "하이브리드 (유틸리티 + 시큐리티)" },
+        { label: "전용 지갑", value: "YIHX-Wallet" },
+        { label: "초기 유통 비율", value: "TGE 시 약 7%" },
+        { label: "핵심 유틸리티", value: "스테이킹 · 거버넌스 · 커머스 · AI" },
+      ],
+      allocations: [
+        { label: "플랫폼", value: 50 },
+        { label: "생태계", value: 40 },
+        { label: "팀", value: 5 },
+        { label: "마케팅", value: 3 },
+        { label: "유동성", value: 2 },
+      ],
+    },
     performance: {
       eyebrow: "Performance",
       title: "대규모 트래픽을 위한 성능",
@@ -155,69 +182,81 @@ export const pageCopy = {
         },
       ],
     },
-    audience: {
-      blocks: [
+    ecosystem: {
+      eyebrow: "생태계",
+      title: "금융의 미래를 설계합니다",
+      desc: "자산 토큰화, 분산 AI, 크로스보더 커머스를 통합하는 3축 생태계.",
+      cards: [
         {
-          title: "Enterprise Clients",
-          desc: "보안·규제 리스크를 내재한 온보딩부터 네트워크 운영까지 한 번에.",
-          action: "문의하기",
+          title: "STO 플랫폼",
+          desc: "부동산, 국채, 문화재를 토큰화합니다. 스마트 컨트랙트 기반 자동 수익 분배로 토큰 보유자에게 분기별 수익을 제공합니다.",
+          icon: "sto",
         },
         {
-          title: "Developers",
-          desc: "API, 정책 엔진, 오케스트레이션을 모듈로 연결해 빠르게 배포.",
-          action: "문서 보기",
+          title: "AI 인프라",
+          desc: "3계층 분산 AI 컴퓨팅 - GPU 네트워크, 데이터 마켓플레이스, 노코드 AI 빌더. 자원 기여 시 보상을 받습니다.",
+          icon: "ai",
         },
         {
-          title: "Everyday Builders",
-          desc: "프로젝트 런칭부터 운영까지 운영 부담을 줄이는 단일 런치 콘솔.",
-          action: "시작하기",
+          title: "크로스보더 커머스",
+          desc: "AI 챗봇 기반 글로벌 전자상거래로 한국 상품을 157개국에 연결합니다. 통합 포인트 시스템으로 실물경제와 토큰경제를 연결합니다.",
+          icon: "commerce",
         },
       ],
     },
-    ecosystem: {
-      eyebrow: "Network",
-      title: "운영 레이어",
-      desc: "거버넌스, 결제, 신원, 토큰 레이어를 하나로 축약한 실행형 런칭 패브릭.",
+    differentiators: {
+      eyebrow: "차별화 요소",
+      title: "왜 YOU&I인가",
+      desc: "플랫폼이나 중개자가 아닌, 자산 소유자가 직접 실물 가치를 토큰화합니다.",
       items: [
-        { name: "Cross-chain Bridge", icon: "bridge" },
-        { name: "Institution API Mesh", icon: "api" },
-        { name: "Programmable Settlement", icon: "code" },
-        { name: "Verifiable Identity", icon: "id" },
-        { name: "Composable Custody Wallet", icon: "wallet" },
-        { name: "RWA Liquidity Gateway", icon: "gateway" },
+        {
+          number: "01",
+          title: "실물자산 직접 보유",
+          desc: "플랫폼 사업자와 달리, YOU&I Holdings는 200조 원+ 자산을 직접 보유 - 자산 소유자 주도의 토큰화.",
+        },
+        {
+          number: "02",
+          title: "다각화 포트폴리오",
+          desc: "부동산, 국채, 문화재, 에너지, 모빌리티 - 14개 핵심 자산으로 복합 섹터 리스크를 분산합니다.",
+        },
+        {
+          number: "03",
+          title: "글로벌 유통 네트워크",
+          desc: "157개국 WMU 네트워크와 55만 인플루언서 + 7,000만 세계중국상인연합회 채널 - Day 1부터 글로벌 도달.",
+        },
+        {
+          number: "04",
+          title: "자본 독립성",
+          desc: "10억 달러 자본금과 JPMorgan Chase Bank 주거래 기반. 벤처 투자에 의존하지 않는 자체 자본 구조입니다.",
+        },
       ],
     },
     roadmap: {
       eyebrow: "Roadmap",
-      title: "2026 Launch Blueprint",
+      title: "Phase 6~7",
       phases: [
         {
-          period: "Q1",
-          title: "Genesis Alpha",
-          detail: "메인넷 게이트웨이 오픈, 거버넌스와 배포 브릿지 동시 실행.",
-        },
-        {
-          period: "Q2",
-          title: "Fluid Core",
-          detail: "AI 위험 엔진 베타 배포, 기관 테스트넷을 동기화.",
+          period: "Q1-Q2",
+          title: "실물 인프라 구축",
+          detail: "사이판(1.5조 원) · 필리핀 리조트 단지 착공 및 14대 실물자산 기반 STO 2차 발행 실행.",
         },
         {
           period: "Q3",
-          title: "Global Mesh",
-          detail: "주요 L1/L2 5개 체인 동기화, 규제 대응 온보딩 공개.",
+          title: "시장 · 거버넌스 확장",
+          detail: "싱가포르 등 아태 지역 STO 서비스 확장 및 DAO 전환 프로세스 개시.",
         },
         {
           period: "Q4",
-          title: "Open Orbit",
-          detail: "SDK 공개와 런타임 마켓플레이스, 마이크로 L2 모듈 공개.",
+          title: "글로벌 생태계 완성",
+          detail: "200조 원 자산 기반 통합 금융 플랫폼 도약, 완전 DAO 전환 및 신규 자산 편입 확대.",
         },
       ],
     },
     contact: {
-      title1: "함께 미래를",
-      title2: "만들 준비가 되어있나요?",
-      desc: "YOU&I 생태계에 참여해 차세대 디지털 자산 혁신의 일원이 되어주세요. 파트너십 기회를 탐색하려면 문의하세요.",
-      contactBtn: "문의하기",
+      title1: "자산 소유의 미래에 함께하세요",
+      title2: "",
+      desc: "YOU&I가 실물자산과 블록체인 기술을 어떻게 연결하는지 백서를 통해 확인하세요.",
+      contactBtn: "백서읽기",
       ecosystemBtn: "생태계 살펴보기",
     },
     footer: {
@@ -240,32 +279,34 @@ export const pageCopy = {
       networkLine: "Network Line",
     },
     ctaButtons: {
-      contact: "문의하기",
+      contact: "백서읽기",
       explore: "생태계 살펴보기",
     },
   },
   en: {
     header: {
       navLinks: [
-        { href: "#hero", label: "Overview" },
-        { href: "#features", label: "Core" },
-        { href: "#ecosystem", label: "Network" },
-        { href: "#roadmap", label: "Blueprint" },
+        { href: "#ecosystem", label: "About" },
+        { href: "#differentiators", label: "Why YOU&I" },
+        { href: "#tokenomics", label: "Token" },
+        { href: "#roadmap", label: "Network" },
       ],
-      cta: "Get Started",
+      cta: "Read Whitepaper",
+      ctaPrice: "View Pricing",
     },
     hero: {
-      label: "Web3 Infrastructure",
-      title1: "Next-Gen Web3",
-      title2: "Launch Infrastructure Core",
-      desc: "Control assets, payments, identity, and governance from one launch console.",
-      ctaPrimary: "Get Started",
-      ctaSecondary: "Explore Technology",
+      label: "Real-World Asset Tokenization",
+      title1: "Unlocking Real Asset",
+      title2: "Value for Everyone",
+      desc: "Over $150B in real-world assets — real estate, sovereign bonds, cultural heritage — building a next-generation financial ecosystem powered by AI and blockchain.",
+      credibility: "NYC-Headquartered Asset Manager · $150B+ Real-World Asset Portfolio",
+      ctaPrimary: "Read Whitepaper",
+      ctaSecondary: "View Pricing",
       stats: [
-        { value: "150+", label: "Connected Chains" },
-        { value: "$2.4B", label: "TVL Scale" },
-        { value: "99.99%", label: "Finality" },
-        { value: "12", label: "Markets" },
+        { value: "$150B+", label: "Asset Value Held" },
+        { value: "157", label: "Global Network Countries" },
+        { value: "$1B", label: "Paid-in Capital" },
+        { value: "14", label: "Core Asset Portfolios" },
       ],
       trustStrip: "Connected Networks",
       scroll: "Scroll",
@@ -285,7 +326,7 @@ export const pageCopy = {
       eyebrow: "Product Graph",
       title1: "Modular Operating Architecture",
       title2: "Growth Platform in One Place",
-      desc: "Unify Quest, Starboard, Earndrop, Passport, Score, and Identity into one operating model that links campaign execution, analysis insights, token allocation, and identity governance.",
+      desc: "Unify Quest, Starboard, Earndrop, Passport, Score, and Identity into one operating model that links campaign execution, analysis insights, token allocation, and identity governance. These modules run real-time inference on a distributed AI compute (GPU network) layer and connect cross-border commerce with a unified point settlement pipeline.",
       cards: [
         {
           title: "YOU&I Quest",
@@ -325,21 +366,26 @@ export const pageCopy = {
         },
       ],
     },
+    globalNetwork: {
+      eyebrow: "Global Network",
+      title: "Unrivaled Network",
+      desc: "A global network built through WMU over 36+ years — infrastructure competitors cannot replicate.",
+    },
     launchHighlights: [
       {
-        title: "Modular Launch",
-        value: "99.9%",
-        desc: "Inter-module connection success rate.",
+        title: "WMU Countries",
+        value: "157",
+        desc: "Countries with WMU organizing committees",
       },
       {
-        title: "Automated Deployment",
-        value: "30s",
-        desc: "Network update rollout speed.",
+        title: "Influencer Network",
+        value: "550K+",
+        desc: "Global influencer network",
       },
       {
-        title: "Risk Blocking",
-        value: "1.2ms",
-        desc: "Anomaly detection response time.",
+        title: "Federation Members",
+        value: "70M+",
+        desc: "World Chinese Merchants Association members",
       },
     ],
     dashboard: {
@@ -371,6 +417,26 @@ export const pageCopy = {
       ],
       tpsLabel: "tps",
     },
+    tokenomics: {
+      eyebrow: "Tokenomics",
+      title: "YIHX Token",
+      desc: "A hybrid token backed by real-world asset value (utility + security), powering the full ecosystem.",
+      specs: [
+        { label: "Token Name", value: "YOU&I (YIHX)" },
+        { label: "Base Chain", value: "ERC-20 -> BEP-20" },
+        { label: "Token Type", value: "Hybrid (Utility + Security)" },
+        { label: "Dedicated Wallet", value: "YIHX-Wallet" },
+        { label: "Initial Circulation", value: "About 7% at TGE" },
+        { label: "Core Utilities", value: "Staking · Governance · Commerce · AI" },
+      ],
+      allocations: [
+        { label: "Platform", value: 50 },
+        { label: "Ecosystem", value: 40 },
+        { label: "Team", value: 5 },
+        { label: "Marketing", value: 3 },
+        { label: "Liquidity", value: 2 },
+      ],
+    },
     performance: {
       eyebrow: "Performance",
       title: "Web Scale Performance",
@@ -400,72 +466,81 @@ export const pageCopy = {
         },
       ],
     },
-    audience: {
-      blocks: [
+    ecosystem: {
+      eyebrow: "Ecosystem",
+      title: "Designing the Future of Finance",
+      desc: "A three-pillar ecosystem unifying asset tokenization, distributed AI, and cross-border commerce.",
+      cards: [
         {
-          title: "Enterprise Clients",
-          desc: "From onboarding and regulatory review to live operations, everything in one workflow.",
-          action: "Contact Us",
+          title: "STO Platform",
+          desc: "Tokenize real assets including real estate, sovereign bonds, and cultural assets. Smart-contract automation enables quarterly yield distribution to token holders.",
+          icon: "sto",
         },
         {
-          title: "Developers",
-          desc: "Compose APIs, policy engines, and orchestration modules for fast release cycles.",
-          action: "Read Docs",
+          title: "AI Infrastructure",
+          desc: "Three-layer distributed AI stack: GPU network, data marketplace, and no-code AI builder. Contributors can earn rewards for resource participation.",
+          icon: "ai",
         },
         {
-          title: "Everyday Builders",
-          desc: "Reduce operational friction from launch to growth with a single launch console.",
-          action: "Get Started",
+          title: "Cross-border Commerce",
+          desc: "AI chatbot-powered global commerce connects Korean products to 157 markets. A unified points system bridges the real and token economies.",
+          icon: "commerce",
         },
       ],
     },
-    ecosystem: {
-      eyebrow: "Network",
-      title: "Operating Layers",
-      desc: "An execution-focused launch fabric combining governance, payments, identity, and token layers.",
+    differentiators: {
+      eyebrow: "Differentiators",
+      title: "Why YOU&I",
+      desc: "Not platform-first or broker-first. Asset owners directly tokenize real-world value.",
       items: [
-        { name: "Cross-chain Bridge", icon: "bridge" },
-        { name: "Institution API Mesh", icon: "api" },
-        { name: "Programmable Settlement", icon: "code" },
-        { name: "Verifiable Identity", icon: "id" },
-        { name: "Composable Custody Wallet", icon: "wallet" },
-        { name: "RWA Liquidity Gateway", icon: "gateway" },
+        {
+          number: "01",
+          title: "Direct Asset Ownership",
+          desc: "Unlike pure platform operators, YOU&I Holdings directly owns a KRW 200T+ asset base, enabling owner-led tokenization.",
+        },
+        {
+          number: "02",
+          title: "Diversified Portfolio",
+          desc: "Real estate, sovereign bonds, cultural assets, energy, and mobility. Fourteen core assets reduce cross-sector concentration risk.",
+        },
+        {
+          number: "03",
+          title: "Global Distribution",
+          desc: "157-country WMU network plus 550K influencers and 70M World Chinese Merchants Association channels for Day 1 global reach.",
+        },
+        {
+          number: "04",
+          title: "Capital Independence",
+          desc: "Backed by USD 1B paid-in capital and a JPMorgan Chase Bank primary relationship, without dependence on venture funding.",
+        },
       ],
     },
     roadmap: {
       eyebrow: "Roadmap",
-      title: "2026 Launch Blueprint",
+      title: "Phase 6~7",
       phases: [
         {
-          period: "Q1",
-          title: "Genesis Alpha",
-          detail:
-            "Open mainnet gateway and run governance and deployment bridges in parallel.",
-        },
-        {
-          period: "Q2",
-          title: "Fluid Core",
-          detail:
-            "Deploy AI risk engine beta and synchronize with institution testnets.",
+          period: "Q1-Q2",
+          title: "Real Asset Infrastructure",
+          detail: "Break ground on Saipan (KRW 1.5T) and Philippine resort complexes; execute STO Series 2 backed by 14 core real-world assets.",
         },
         {
           period: "Q3",
-          title: "Global Mesh",
-          detail:
-            "Integrate the top five L1/L2 chains and launch compliant onboarding.",
+          title: "Regional & Governance Expansion",
+          detail: "Expand STO services to APAC markets including Singapore; initiate DAO transition process.",
         },
         {
           period: "Q4",
-          title: "Open Orbit",
-          detail: "Release SDK, runtime marketplace, and micro L2 modules.",
+          title: "Global Ecosystem Completion",
+          detail: "Launch integrated financial platform backed by $150B+ asset portfolio; complete full DAO transition and onboard new asset classes.",
         },
       ],
     },
     contact: {
-      title1: "Ready to Build the",
-      title2: "Future Together?",
-      desc: "Join the YOU&I ecosystem and become part of next-generation digital-asset innovation. Contact us to explore partnerships.",
-      contactBtn: "Contact Us",
+      title1: "Join the Future of Asset Ownership",
+      title2: "",
+      desc: "Discover how YOU&I connects real-world assets with blockchain technology in our whitepaper.",
+      contactBtn: "Read Whitepaper",
       ecosystemBtn: "Explore the Ecosystem",
     },
     footer: {
@@ -489,7 +564,7 @@ export const pageCopy = {
       networkLine: "Network Line",
     },
     ctaButtons: {
-      contact: "Contact Us",
+      contact: "Read Whitepaper",
       explore: "Explore Ecosystem",
     },
   },
