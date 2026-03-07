@@ -2,7 +2,7 @@
 
 import { Canvas, useFrame } from "@react-three/fiber"
 import * as THREE from "three"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { memo, useEffect, useMemo, useRef, useState } from "react"
 
 type NodeSeed = {
   axis: THREE.Vector3
@@ -94,7 +94,7 @@ function FluidNucleus({
   return (
     <>
       <instancedMesh ref={nodesRef} args={[undefined, undefined, seeds.length]} frustumCulled={false}>
-        <sphereGeometry args={[1, 16, 16]} />
+        <sphereGeometry args={[1, 12, 12]} />
         <meshStandardMaterial
           toneMapped={false}
           vertexColors
@@ -109,14 +109,14 @@ function FluidNucleus({
   )
 }
 
-export default function HeroFluidCanvas({
+function HeroFluidCanvasInner({
   reducedMotion,
   active = true,
 }: {
   reducedMotion: boolean
   active?: boolean
 }) {
-  const seedCount = reducedMotion ? 26 : 76
+  const seedCount = reducedMotion ? 20 : 64
   const seeds = useMemo(() => buildNodeSeeds(seedCount), [seedCount, reducedMotion])
   const [documentVisible, setDocumentVisible] = useState(true)
 
@@ -151,3 +151,15 @@ export default function HeroFluidCanvas({
     </Canvas>
   )
 }
+
+const HeroFluidCanvas = memo(function HeroFluidCanvas({
+  reducedMotion,
+  active = true,
+}: {
+  reducedMotion: boolean
+  active?: boolean
+}) {
+  return <HeroFluidCanvasInner reducedMotion={reducedMotion} active={active} />
+})
+
+export default HeroFluidCanvas

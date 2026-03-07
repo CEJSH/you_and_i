@@ -2,7 +2,6 @@
 
 import { I18nProvider } from "@/lib/i18n";
 import { useI18n } from "@/lib/i18n";
-import HeroFluidCanvas from "@/components/hero-fluid-canvas";
 import {
   motion,
   useReducedMotion,
@@ -14,6 +13,8 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 
 import { pageCopy } from "@/lib/page-copy";
 import { ArrowIcon } from "@/components/icons";
@@ -30,6 +31,30 @@ import {
 } from "@/components/animation-utils";
 // import { PerformanceSection } from "@/components/performance-section";
 import { MouseBacklight } from "@/components/mouse-backlight";
+
+const HeroFluidCanvas = dynamic(
+  () => import("@/components/hero-fluid-canvas"),
+  { ssr: false, loading: () => null },
+);
+
+const heroEnglishCopy = {
+  label: "Real-World Asset Tokenization",
+  title1: "Unlock the Value",
+  title2: "of Real-World Assets",
+  desc: "YOU&I builds AI- and blockchain-based next-generation finance infrastructure that tokenizes physical assets, bonds, and collectible assets for everyone.",
+  credibility:
+    "New York-based principal asset manager with $200T+ of directly held physical assets.",
+  ctaPrimary: "백서 읽기",
+  ctaSecondary: "가격 보기",
+  stats: [
+    { value: "$200T+", label: "Assets Under Management" },
+    { value: "157", label: "Global Network Countries" },
+    { value: "$1B", label: "Capital Base" },
+    { value: "14", label: "Core Asset Portfolios" },
+  ],
+  trustStrip: "Connected Networks",
+  scroll: "Scroll",
+};
 
 /* ── CountUp ── */
 function CountUp({
@@ -170,6 +195,7 @@ function HomePageContent() {
   const launchFxInView = useInView(launchRef, { amount: 0.25 });
   const roadmapFxInView = useInView(roadmapRef, { amount: 0.25 });
   const contactFxInView = useInView(contactRef, { amount: 0.15 });
+  const [showPointerFx, setShowPointerFx] = useState(false);
   const tokenomicsColors = [
     "rgba(34, 211, 238, 0.95)",
     "rgba(56, 189, 248, 0.9)",
@@ -191,6 +217,22 @@ function HomePageContent() {
     if (typeof window === "undefined") return;
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const pointerFineQuery = window.matchMedia("(pointer: fine)");
+    const updatePointerCapability = () => {
+      setShowPointerFx(pointerFineQuery.matches && !reduceMotion);
+    };
+
+    updatePointerCapability();
+    pointerFineQuery.addEventListener("change", updatePointerCapability);
+
+    return () => {
+      pointerFineQuery.removeEventListener("change", updatePointerCapability);
+    };
+  }, [reduceMotion]);
 
   return (
     <main className="relative isolate min-h-screen overflow-x-hidden bg-[#070a12] text-base sm:text-lg lg:text-2xl leading-[1.7] sm:leading-[1.8] lg:leading-[1.9] text-slate-100 font-semibold">
@@ -228,7 +270,7 @@ function HomePageContent() {
           }}
         />
       </div>
-      <MouseBacklight />
+      <MouseBacklight enabled={showPointerFx} />
 
       {/* Header */}
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/6 bg-[#070a12]/70 backdrop-blur-xl">
@@ -236,9 +278,17 @@ function HomePageContent() {
           <button
             type="button"
             onClick={handleLogoClick}
-            className="cursor-pointer text-base sm:text-lg lg:text-2xl font-extrabold tracking-tight text-white"
+            className="inline-flex cursor-pointer items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
+          aria-label="YOU&I 홈으로 이동"
           >
-            YOU&I
+            <Image
+              src="/youandi-header-logo.png"
+              alt="YOU&I Holdings"
+              width={571}
+              height={199}
+              priority
+              className="h-8 w-auto sm:h-9 lg:h-10"
+            />
           </button>
           <nav className="hidden items-center gap-8 md:flex">
             {copy.header.navLinks.map((link) => (
@@ -384,10 +434,12 @@ function HomePageContent() {
           <motion.div style={{ y: ambientFloat }} className="absolute inset-0">
             <div className="absolute left-1/2 top-[-18%] h-[140vh] w-[140vw] -translate-x-1/2 overflow-hidden">
               <div className="h-full w-full origin-center scale-105">
-                <HeroFluidCanvas
-                  reducedMotion={reduceMotion}
-                  active={heroCanvasActive}
-                />
+                {heroCanvasActive && showPointerFx && (
+                  <HeroFluidCanvas
+                    reducedMotion={reduceMotion}
+                    active={heroCanvasActive}
+                  />
+                )}
               </div>
             </div>
           </motion.div>
@@ -398,9 +450,12 @@ function HomePageContent() {
             variants={heroReveal.textBlock}
             className="mt-8 max-w-4xl text-4xl font-semibold leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl"
           >
-            <HeroChars text={copy.hero.title1} className="block text-white" />
             <HeroChars
-              text={copy.hero.title2}
+              text={heroEnglishCopy.title1}
+              className="block text-white"
+            />
+            <HeroChars
+              text={heroEnglishCopy.title2}
               className="mt-2 block bg-linear-to-r from-cyan-200 to-cyan-400 bg-clip-text text-transparent"
             />
           </motion.h1>
@@ -408,14 +463,14 @@ function HomePageContent() {
             variants={heroReveal.textBlock}
             className="mt-6 max-w-2xl text-sm sm:text-base lg:text-xl leading-relaxed text-slate-200"
           >
-            <HeroChars text={copy.hero.desc} />
+            <HeroChars text={heroEnglishCopy.desc} />
           </motion.p>
           <motion.p
             variants={heroReveal.textBlock}
             className="mt-4 inline-flex items-center gap-2 rounded-full border border-cyan-400/15 bg-cyan-400/5 px-4 py-1.5 text-xs sm:text-sm font-semibold tracking-wide text-cyan-300/90"
           >
             <span className="hidden md:block h-1.5 w-1.5 rounded-full bg-cyan-400/80" />
-            <HeroChars text={copy.hero.credibility} />
+            <HeroChars text={heroEnglishCopy.credibility} />
           </motion.p>
           <motion.div
             variants={heroReveal.textBlock}
@@ -427,7 +482,7 @@ function HomePageContent() {
               variants={heroReveal.textBlock}
               className="inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-5 py-2.5 sm:px-7 sm:py-3 text-sm sm:text-base lg:text-xl font-semibold text-[#070a12] transition-all duration-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.4),0_0_30px_rgba(6,182,212,0.2)] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
-              <HeroChars text={copy.hero.ctaPrimary} />
+              <HeroChars text={heroEnglishCopy.ctaPrimary} />
               <ArrowIcon />
             </motion.a>
             <motion.a
@@ -440,7 +495,7 @@ function HomePageContent() {
               <div className="absolute inset-0 rounded-full bg-cyan-500/50 opacity-0 group-hover:animate-ping" />
               <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 blur-md bg-cyan-400/30 transition-opacity" />
               <span className="relative z-10 group-hover:text-cyan-400 transition-colors">
-                <HeroChars text={copy.hero.ctaSecondary} />
+                <HeroChars text={heroEnglishCopy.ctaSecondary} />
               </span>
               <span className="relative z-10 group-hover:text-cyan-400 transition-colors">
                 <ArrowIcon />
@@ -451,7 +506,7 @@ function HomePageContent() {
             variants={heroReveal.textBlock}
             className="mt-14 sm:mt-24 grid w-full max-w-3xl grid-cols-2 items-center gap-px overflow-hidden rounded-2xl border border-white/6 bg-white/6 sm:grid-cols-4"
           >
-            {copy.hero.stats.map((stat, i) => (
+            {heroEnglishCopy.stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, y: 28 }}
@@ -487,7 +542,7 @@ function HomePageContent() {
               className="inline-flex flex-col items-center gap-2 rounded-full px-1 py-1 text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070a12]"
             >
               <span className="text-sm lg:text-base uppercase tracking-[0.2em]">
-                <HeroChars text={copy.hero.scroll} />
+                <HeroChars text={heroEnglishCopy.scroll} />
               </span>
               <svg
                 width="16"
@@ -521,7 +576,7 @@ function HomePageContent() {
       <section
         ref={ecosystemRef}
         id="ecosystem"
-        className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-30 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_18%_12%,rgba(45,212,191,0.16),transparent_52%),radial-gradient(circle_at_82%_76%,rgba(139,92,246,0.12),transparent_48%),linear-gradient(168deg,rgba(7,14,22,0.82),rgba(10,5,20,0.92))] before:opacity-50"
+        className="relative z-10 overflow-hidden px-4 py-20 sm:px-10 sm:py-36 lg:px-14 lg:py-36 before:content-[''] before:absolute before:inset-0 before:-z-10 before:bg-[radial-gradient(circle_at_18%_12%,rgba(45,212,191,0.16),transparent_52%),radial-gradient(circle_at_82%_76%,rgba(139,92,246,0.12),transparent_48%),linear-gradient(168deg,rgba(7,14,22,0.82),rgba(10,5,20,0.92))] before:opacity-50"
       >
         <AmbientSweep
           angle="145deg"
@@ -1098,7 +1153,12 @@ function HomePageContent() {
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 hover:text-cyan-400"
                 aria-label="X (Twitter)"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </a>
@@ -1109,7 +1169,12 @@ function HomePageContent() {
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition-all duration-300 hover:border-cyan-300/30 hover:bg-cyan-300/10 hover:text-cyan-400"
                 aria-label="Telegram"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
                   <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
                 </svg>
               </a>

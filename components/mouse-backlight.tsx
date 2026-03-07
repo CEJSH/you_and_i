@@ -3,7 +3,7 @@
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-export function MouseBacklight() {
+export function MouseBacklight({ enabled = true }: { enabled?: boolean }) {
   const mouseX = useMotionValue(-200);
   const mouseY = useMotionValue(-200);
 
@@ -13,7 +13,7 @@ export function MouseBacklight() {
   const pendingPoint = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
-    const shouldTrack = window.matchMedia("(pointer: fine)").matches;
+    const shouldTrack = enabled && window.matchMedia("(pointer: fine)").matches;
     if (!shouldTrack) {
       return;
     }
@@ -42,7 +42,11 @@ export function MouseBacklight() {
         rafId.current = null;
       }
     };
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, enabled]);
+
+  if (!enabled) {
+    return null;
+  }
 
   return (
     <motion.div
